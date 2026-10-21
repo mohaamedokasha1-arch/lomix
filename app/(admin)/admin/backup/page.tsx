@@ -1,6 +1,7 @@
 import { AdminCard, AdminPageHeader } from "@/components/admin/page-header";
 import { BackupPanel } from "@/components/admin/backup-panel";
 import { listBackupsAction } from "@/app/actions/admin-system";
+import { requireAdminPage } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
@@ -11,6 +12,7 @@ function sizeLabel(bytes: number) {
 }
 
 export default async function AdminBackupPage() {
+  await requireAdminPage();
   const backups = await listBackupsAction();
 
   return (

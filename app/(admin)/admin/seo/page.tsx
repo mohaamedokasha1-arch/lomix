@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { AdminCard, AdminPageHeader } from "@/components/admin/page-header";
 import { SeoSettingsForm } from "@/components/admin/seo-settings-form";
+import { requireAdminPage } from "@/lib/auth";
 import { getAllSettings } from "@/lib/settings";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminSeoPage() {
+  await requireAdminPage();
   const settings = await getAllSettings();
 
   return (

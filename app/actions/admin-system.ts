@@ -303,9 +303,26 @@ const SETTINGS_ALLOWLIST = [
   "allow_registration",
 ] as const;
 
+/** مفاتيح لا يغيّرها إلا مدير عام، حتى لو وصلت من صفحة أخرى غير محمية في الواجهة. */
+const ADMIN_ONLY_SETTINGS = [
+  "seo_default_title",
+  "seo_default_description",
+  "seo_index_titles",
+  "seo_index_genres",
+  "seo_index_people",
+  "seo_index_search",
+] as const;
+
 export async function saveSiteSettingsAction(_prev: SysState, formData: FormData): Promise<SysState> {
   const guarded = await guardStaff();
   if ("error" in guarded) return { error: guarded.error };
+
+  // صفحة SEO مقصورة على المدير، وهذا الحارس يمنع تمرير نفس الحقول من نموذج آخر
+  // بواسطة محرر (نموذج إعدادات الموقع لا يرسل هذه المفاتيح أصلًا).
+  const touchesAdminOnly = ADMIN_ONLY_SETTINGS.some((key) => formData.has(key));
+  if (touchesAdminOnly && guarded.user.role !== "ADMIN") {
+    return { error: "إعدادات SEO والفهرسة تتطلب صلاحية مدير عام." };
+  }
 
   const values: Partial<Record<SettingKey, string>> = {};
   for (const key of SETTINGS_ALLOWLIST) {
@@ -393,6 +410,8 @@ export async function createBackupAction(): Promise<SysState> {
 }
 
 export async function listBackupsAction(): Promise<{ filename: string; size: number; createdAt: string }[]> {
+  const guarded = await guardAdmin();
+  if ("error" in guarded) return [];
   try {
     await mkdir(BACKUP_DIR, { recursive: true });
     const files = (await readdir(BACKUP_DIR)).filter((file) => file.endsWith(".json"));

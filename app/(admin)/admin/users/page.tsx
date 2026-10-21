@@ -1,13 +1,14 @@
 import { AdminCard, AdminPageHeader } from "@/components/admin/page-header";
 import { UserForm } from "@/components/admin/user-form";
 import { UserRowActions } from "@/components/admin/user-row-actions";
-import { getSessionUser } from "@/lib/auth";
+import { getSessionUser, requireAdminPage } from "@/lib/auth";
 import { getSessionCount, getUsersAdmin } from "@/lib/admin-queries";
 import { ROLE_LABEL, formatDate, relativeTime } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminUsersPage() {
+  await requireAdminPage();
   const [users, currentUser, sessionCount] = await Promise.all([getUsersAdmin(), getSessionUser(), getSessionCount()]);
 
   return (

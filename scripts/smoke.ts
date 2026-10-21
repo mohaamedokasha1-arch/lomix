@@ -269,6 +269,68 @@ async function main() {
     add("warn", "تعذّر فحص /api/search");
   }
 
+  /* 11 — سياسة المحتوى: بيانات وتريلرات فقط، بلا بدائل زائفة */
+  const samplePaths = new Set<string>(["/", "/movies", "/trailers", "/search?q=%D8%B8%D9%84"]);
+  const pickPath = (pattern: RegExp) => {
+    for (const loc of locs) {
+      try {
+        const path = new URL(loc).pathname;
+        if (pattern.test(path)) return path;
+      } catch {
+        /* رابط غير صالح — يتكفّل به فحص sitemap */
+      }
+    }
+    return undefined;
+  };
+  for (const pattern of [/^\/movie\/[^/]+$/, /^\/series\/[^/]+$/, /^\/anime\/[^/]+$/, /^\/person\/[^/]+$/]) {
+    const found = pickPath(pattern);
+    if (found) samplePaths.add(found);
+  }
+
+  // عبارات تعِد بمشاهدة العمل كاملًا — ممنوعة ما لم يوجد مصدر بث مرخّص (لا يوجد).
+  const FORBIDDEN_CTAS = [
+    "مشاهدة الآن",
+    "شاهد الآن",
+    "مشاهدة الفيلم",
+    "شاهد الفيلم",
+    "تحميل الفيلم",
+    "تحميل المسلسل",
+    "watch now",
+    "full movie",
+  ];
+  // حقول غائبة تُخفى ولا تُستبدل ببديل.
+  const PLACEHOLDERS = ["N/A", "غير متوفر", "غير متاحة"];
+  const ctaHits: string[] = [];
+  const placeholderHits: string[] = [];
+  const videoHits: string[] = [];
+  const iframeHits: string[] = [];
+
+  for (const path of samplePaths) {
+    try {
+      const { response, body } = await request(path);
+      if (response.status !== 200) {
+        add("error", `صفحة مفحوصة للسياسة تعيد ${response.status}`, path);
+        continue;
+      }
+      const lower = body.toLowerCase();
+      for (const cta of FORBIDDEN_CTAS) if (lower.includes(cta.toLowerCase())) ctaHits.push(`${path}: ${cta}`);
+      for (const placeholder of PLACEHOLDERS) if (body.includes(placeholder)) placeholderHits.push(`${path}: ${placeholder}`);
+      if (/<video[\s>]/i.test(body)) videoHits.push(path);
+      if (/<iframe/i.test(body)) iframeHits.push(path);
+    } catch {
+      add("warn", `تعذّر فحص سياسة المحتوى في ${path}`);
+    }
+  }
+
+  if (ctaHits.length) add("error", `عبارات «مشاهدة كاملة» على صفحات عامة (${ctaHits.length})`, ctaHits.slice(0, 3).join(" · "));
+  else add("ok", `لا وعود مشاهدة كاملة على ${samplePaths.size} صفحات`);
+  if (placeholderHits.length) add("error", `بدائل زائفة لعناصر غائبة (${placeholderHits.length})`, placeholderHits.slice(0, 3).join(" · "));
+  else add("ok", "لا «N/A» ولا «غير متوفر» — الحقول الغائبة تُخفى");
+  if (videoHits.length) add("error", `فيديو مستضاف داخل الصفحات (${videoHits.length})`, videoHits.slice(0, 3).join(" · "));
+  else add("ok", "لا وسوم <video> — لا نستضيف محتوى مصوّرًا");
+  if (iframeHits.length) add("warn", `تضمين ظاهر في HTML أولي (${iframeHits.length})`, iframeHits.slice(0, 3).join(" · "));
+  else add("ok", "لا <iframe> في HTML الأولي — التضمين يُحمَّل عند الطلب فقط");
+
   /* 10 — زحف مختصر (اختياري) */
   if (crawl && locs.length) {
     const sample = locs.slice(0, 40);

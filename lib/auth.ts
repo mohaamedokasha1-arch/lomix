@@ -1,6 +1,7 @@
 import "server-only";
 import { createHash, randomBytes, timingSafeEqual } from "node:crypto";
 import { cookies, headers } from "next/headers";
+import { redirect } from "next/navigation";
 import { cache } from "react";
 import bcrypt from "bcryptjs";
 import { and, eq, gt, sql } from "drizzle-orm";
@@ -115,12 +116,18 @@ export type LoginResult =
   | { ok: true; user: SessionUser }
   | { ok: false; error: string; retryAfter?: number };
 
+/**
+ * حدّ محاولات الدخول لكل IP (10 افتراضيًا في 10 دقائق).
+ * يُقرأ من البيئة ليتكرر تشغيل `npm run e2e` محليًا بلا انتظار — لا ترفعه في الإنتاج.
+ */
+const LOGIN_IP_LIMIT = Math.min(Math.max(Number(process.env.RATE_LIMIT_LOGIN_MAX) || 10, 1), 200);
+
 export async function loginWithPassword(emailInput: string, password: string): Promise<LoginResult> {
   const email = emailInput.trim().toLowerCase();
   const h = await headers();
   const ip = clientIpFromHeaders(h);
 
-  const ipLimit = await rateLimit(`login:ip:${ip}`, 10, 60 * 10);
+  const ipLimit = await rateLimit(`login:ip:${ip}`, LOGIN_IP_LIMIT, 60 * 10);
   if (!ipLimit.ok) {
     return { ok: false, error: "محاولات كثيرة من هذا الجهاز. حاول بعد قليل.", retryAfter: ipLimit.retryAfterSeconds };
   }
@@ -215,6 +222,20 @@ export async function requireStaff(): Promise<SessionUser> {
 export async function requireAdmin(): Promise<SessionUser> {
   const user = await requireUser();
   if (user.role !== "ADMIN") throw new AuthError("هذه العملية تتطلب صلاحية مدير عام.", 403);
+  return user;
+}
+
+/**
+ * حارس صفحات اللوحة المقصورة على المدير العام (المستخدمون، SEO، النسخ الاحتياطي).
+ *
+ * لا يُستخدم في الإجراءات (هناك `requireAdmin` يرمي `AuthError` ليردّ برسالة)،
+ * بل في الصفحات: إعادة توجيه بدل خطأ 500. الفرق مهم لأن إخفاء رابط من الشريط
+ * الجانبي ليس حماية — الصفحة تُفتح بالرابط المباشر.
+ */
+export async function requireAdminPage() {
+  const user = await getSessionUser();
+  if (!user) redirect("/login?next=%2Fadmin");
+  if (user.role !== "ADMIN") redirect("/?forbidden=admin");
   return user;
 }
 

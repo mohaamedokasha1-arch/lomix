@@ -113,11 +113,18 @@ function sessionCookie(res: Res): string | null {
   return raw ? raw.split(";")[0] : null;
 }
 
-async function login(email: string, password: string): Promise<{ cookie: string | null; status: number }> {
+async function login(email: string, password: string): Promise<{ cookie: string | null; status: number; blocked: boolean }> {
   const page = await request("/login");
   const actionFields = hiddenInputs(page.body).filter(([name]) => name.startsWith("$"));
   const res = await postForm("/login", [...actionFields, ["email", email], ["password", password], ["next", "/admin"]]);
-  return { cookie: sessionCookie(res), status: res.status };
+  // حدّ المحاولات (10 لكل IP في 10 دقائق) قد يمنع الجلسة أثناء تشغيل متكرر.
+  // نسجّل السبب صراحةً بدل أن يظهر كفشل RBAC مضلّل.
+  const blocked = res.body.includes("محاولات كثيرة") || res.body.includes("قفل الحساب");
+  if (blocked) {
+    console.log(`\n  ! الدخول بحساب ${email} محجوب بحدّ المحاولات.`);
+    console.log("    أوقف الخادم ثم: delete from rate_limit_entries; delete from sessions; ثم أعد التشغيل.\n");
+  }
+  return { cookie: sessionCookie(res), status: res.status, blocked };
 }
 
 /** يستخرج نموذجًا يحوي معرّف الإجراء ورقم الكيان المطلوب. */
@@ -247,6 +254,111 @@ async function main() {
   const location = forbidden.headers.get("location") ?? "";
   check("المشاهد يُطرد من اللوحة", [301, 302, 303, 307, 308].includes(forbidden.status) && location.includes("forbidden"), `${forbidden.status} ${location}`);
 
+  /* 8ب — كل مسارات اللوحة محمية على الخادم، لا بإخفاء الروابط فقط */
+  const ADMIN_PATHS = [
+    "/admin",
+    "/admin/analytics",
+    "/admin/audit",
+    "/admin/backup",
+    "/admin/curated",
+    "/admin/genres",
+    "/admin/homepage",
+    "/admin/imports",
+    "/admin/imports/new",
+    "/admin/imports/1",
+    "/admin/media",
+    "/admin/messages",
+    "/admin/navigation",
+    "/admin/people",
+    "/admin/people/new",
+    "/admin/seo",
+    "/admin/settings",
+    "/admin/sources",
+    "/admin/titles",
+    "/admin/titles/bulk",
+    "/admin/titles/new",
+    "/admin/titles/1",
+    "/admin/titles/1/delete",
+    "/admin/titles/1/seasons",
+    "/admin/titles/1/seasons/1",
+    "/admin/trailers",
+    "/admin/users",
+  ];
+  const isRedirect = (status: number) => [301, 302, 303, 307, 308].includes(status);
+
+  const anonymousLeaks: string[] = [];
+  for (const path of ADMIN_PATHS) {
+    const response = await request(path);
+    const toLogin = (response.headers.get("location") ?? "").includes("/login");
+    if (!isRedirect(response.status) || !toLogin) anonymousLeaks.push(`${path} → ${response.status}`);
+  }
+  check(
+    `كل مسارات اللوحة تطلب جلسة (${ADMIN_PATHS.length})`,
+    anonymousLeaks.length === 0,
+    anonymousLeaks.slice(0, 4).join(" · "),
+  );
+
+  const viewerLeaks: string[] = [];
+  if (viewer.cookie) {
+    for (const path of ADMIN_PATHS) {
+      const response = await request(path, { headers: { cookie: viewer.cookie } });
+      const toForbidden = (response.headers.get("location") ?? "").includes("forbidden");
+      if (!isRedirect(response.status) || !toForbidden) viewerLeaks.push(`${path} → ${response.status}`);
+    }
+  }
+  check(
+    `المشاهد محجوب عن كل مسارات اللوحة (${ADMIN_PATHS.length})`,
+    Boolean(viewer.cookie) && viewerLeaks.length === 0,
+    viewerLeaks.slice(0, 4).join(" · "),
+  );
+
+  /* 8ج — المحرر: محتوى بلا حدود إدارة (المستخدمون/SEO/النسخ الاحتياطي) */
+  const editor = await login(
+    process.env.E2E_EDITOR_EMAIL ?? "editor@loomix.tv",
+    process.env.E2E_EDITOR_PASSWORD ?? "Editor@2026",
+  );
+  const ADMIN_ONLY_PAGES = ["/admin/users", "/admin/seo", "/admin/backup"];
+  const editorLeaks: string[] = [];
+  for (const path of ADMIN_ONLY_PAGES) {
+    const response = await request(path, { headers: editor.cookie ? { cookie: editor.cookie } : {} });
+    const toForbidden = (response.headers.get("location") ?? "").includes("forbidden");
+    if (!isRedirect(response.status) || !toForbidden) editorLeaks.push(`${path} → ${response.status}`);
+  }
+  check(
+    "المحرر لا يفتح صفحات المدير العام",
+    Boolean(editor.cookie) && editorLeaks.length === 0,
+    editorLeaks.join(" · "),
+  );
+  const editorContent = await request("/admin/titles", { headers: editor.cookie ? { cookie: editor.cookie } : {} });
+  check("المحرر يفتح صفحات المحتوى", editorContent.status === 200, String(editorContent.status));
+
+  // حتى لو أرسل المحرر حقول SEO من نموذج مسموح له (إعدادات الموقع)،
+  // يرفضها الإجراء على الخادم — لا يُعتمد على إخفاء الصفحة.
+  const settingsPage = await request("/admin/settings", { headers: editor.cookie ? { cookie: editor.cookie } : {} });
+  const settingsForm = (settingsPage.body.match(/<form[^>]*>[\s\S]*?<\/form>/g) ?? []).find((fragment) =>
+    fragment.includes('name="site_name"'),
+  );
+  let seoEscalationBlocked = false;
+  if (settingsForm) {
+    const actionFields = hiddenInputs(settingsForm).filter(([name]) => name.startsWith("$"));
+    const escalated = await postForm(
+      "/admin/settings",
+      [
+        ...actionFields,
+        ["site_name", "Loomix"],
+        ["site_name_ar", "لوميكس"],
+        ["tagline_ar", "دليل الاكتشاف السينمائي"],
+        ["meta_description", "وصف"],
+        ["contact_email", "hello@loomix.tv"],
+        ["trailers_mailto", "hello@loomix.tv"],
+        ["seo_index_titles", "false"],
+      ],
+      editor.cookie ?? "",
+    );
+    seoEscalationBlocked = escalated.body.includes("تتطلب صلاحية مدير عام");
+  }
+  check("المحرر لا يستطيع تغيير الفهرسة بإرسال مباشر", seoEscalationBlocked);
+
   /* 9 — حارس الرفع: محتوى نصي متنكّر كصورة */
   const fake = {
     field: "file",
@@ -263,6 +375,7 @@ async function main() {
   if (!keep) {
     await logout(cookie);
     if (viewer.cookie) await logout(viewer.cookie);
+    if (editor.cookie) await logout(editor.cookie);
     const after = await request("/admin", { headers: { cookie } });
     check(
       "الخروج يُبطل الجلسة على الخادم",
