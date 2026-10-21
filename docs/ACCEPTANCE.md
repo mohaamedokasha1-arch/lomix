@@ -104,6 +104,7 @@
 - عنوان ووصف فريدان، canonical، `sitemap.xml` (220 رابطًا كلها 200، 37 `lastmod`)،
   `robots.txt` يمنع `/admin` و`/search` — مُتحقَّق.
 - Schema.org من حقول حقيقية: `datePublished` بتاريخ كامل فقط، و`aggregateRating` مشروط بمصدر — مُتحقَّق.
+- `Organization` + `WebSite` + `SearchAction` على مستوى الموقع في كل الصفحات (JSON صالح مُختبَر على 4 مسارات) — مُتحقَّق.
 - إعدادات الفهرسة (`seo_index_*`) تعمل فعليًا: إطفاؤها يضيف `noindex` على صفحات العمل/السنة/الدولة — مُتحقَّق.
 - OG/Twitter بصورة افتراضية واحدة؛ صور OG لكل عمل **غير موجودة**.
 

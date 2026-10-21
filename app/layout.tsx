@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { kufi, manrope, plex } from "@/app/fonts";
 import { absoluteUrl } from "@/lib/utils";
+import { siteJsonLd } from "@/lib/seo";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -58,6 +59,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           تخطَّ إلى المحتوى
         </a>
         {children}
+        <script
+          type="application/ld+json"
+          // بيانات ثابتة مبنية من إعدادات الموقع فقط — لا مدخلات مستخدم.
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd()) }}
+        />
       </body>
     </html>
   );

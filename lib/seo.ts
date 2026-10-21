@@ -133,3 +133,38 @@ export async function robotsFor(key: "seo_index_titles" | "seo_index_genres" | "
   const settings = await getSettings([key]);
   return settings[key] === "true" ? undefined : { index: false, follow: true };
 }
+
+/**
+ * بيانات الموقع المنظّمة: منظمة + موقع + صندوق بحث داخلي.
+ * لا تُضاف أي حقول لا نملكها فعلًا (لا عنوان، لا تقييم، لا عملاء).
+ */
+export function siteJsonLd() {
+  const url = absoluteUrl("/");
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${url}#organization`,
+        name: "Loomix",
+        alternateName: "لوميكس",
+        url,
+        logo: absoluteUrl("/icon.svg"),
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${url}#website`,
+        name: "لوميكس",
+        alternateName: "Loomix",
+        url,
+        inLanguage: "ar",
+        publisher: { "@id": `${url}#organization` },
+        potentialAction: {
+          "@type": "SearchAction",
+          target: { "@type": "EntryPoint", urlTemplate: `${absoluteUrl("/search")}?q={search_term_string}` },
+          "query-input": "required name=search_term_string",
+        },
+      },
+    ],
+  };
+}
