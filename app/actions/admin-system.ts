@@ -778,3 +778,50 @@ export async function commitImportChunkAction(jobId: string): Promise<{ ok: bool
 
   return { ok: true, progress: { processed, total: job.total, succeeded, failed, done, errors } };
 }
+
+/* ───────────────────────── التنقل والتذييل ───────────────────────── */
+
+export async function saveNavigationAction(_prev: SysState, formData: FormData): Promise<SysState> {
+  const guarded = await guardStaff();
+  if ("error" in guarded) return { error: guarded.error };
+
+  const { NAV_BLUEPRINT, buildNavConfig, buildFooterLinks, isSafeInternalPath } = await import("@/lib/navigation");
+
+  const entries = NAV_BLUEPRINT.map((item) => ({
+    key: item.key,
+    label: String(formData.get(`label:${item.key}`) ?? item.label),
+    visible: formData.get(`visible:${item.key}`) === "on",
+  }));
+
+  if (!entries.some((entry) => entry.visible)) {
+    return { error: "يجب إبقاء رابط تنقل واحد ظاهرًا على الأقل." };
+  }
+  if (entries.some((entry) => entry.label.trim().length === 0)) {
+    return { error: "لا يمكن ترك عنوان رابط فارغًا." };
+  }
+
+  const labels = formData.getAll("footerLabel").map(String);
+  const hrefs = formData.getAll("footerHref").map(String);
+  const footerLinks = labels
+    .map((label, index) => ({ label, href: hrefs[index] ?? "" }))
+    .filter((link) => link.label.trim() || link.href.trim());
+
+  if (footerLinks.length > 10) return { error: "الحد الأقصى 10 روابط في التذييل." };
+  const unsafe = footerLinks.find((link) => !isSafeInternalPath(link.href));
+  if (unsafe) {
+    return { error: `مسار غير صالح: «${unsafe.href}». المسموح مسار داخلي يبدأ بـ / فقط.` };
+  }
+
+  await saveSettings({ nav_config: buildNavConfig(entries), footer_links: buildFooterLinks(footerLinks) });
+  await logAudit({
+    userId: guarded.user.id,
+    action: "NAVIGATION_UPDATE",
+    entity: "settings",
+    details: { nav: entries.map((e) => `${e.key}:${e.visible ? "on" : "off"}`), footerLinks: footerLinks.length },
+    ip: guarded.ip,
+  });
+
+  revalidatePath("/", "layout");
+  revalidatePath("/admin/navigation");
+  return { ok: true, message: "حُفظ التنقل والتذييل، وظهر التغيير في كل الصفحات." };
+}

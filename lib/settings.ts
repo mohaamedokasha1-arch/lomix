@@ -23,6 +23,9 @@ export const SETTING_DEFAULTS = {
   show_demo_notice: "true",
   allow_registration: "true",
   trailers_mailto: "dmca@loomix.tv",
+  // JSON مُتحقَّق منه في lib/navigation.ts — ليس HTML حرًّا.
+  nav_config: '{"home":{"label":"الرئيسية","visible":true},"movies":{"label":"الأفلام","visible":true},"series":{"label":"المسلسلات","visible":true},"anime":{"label":"الأنمي","visible":true},"trailers":{"label":"التريلرات","visible":true}}',
+  footer_links: '[{"label":"أحدث الإضافات","href":"/latest"},{"label":"الرائج الآن","href":"/trending"},{"label":"الأعلى تقييمًا","href":"/top-rated"},{"label":"الأكثر مشاهدة","href":"/most-viewed"}]',
 } as const;
 
 export type SettingKey = keyof typeof SETTING_DEFAULTS;

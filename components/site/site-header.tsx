@@ -20,13 +20,7 @@ import { ROLE_LABEL, cn } from "@/lib/utils";
 
 type SessionUser = { id: string; name: string; email: string; role: "ADMIN" | "EDITOR" | "VIEWER" };
 
-const NAV = [
-  { href: "/", label: "الرئيسية" },
-  { href: "/movies", label: "الأفلام" },
-  { href: "/series", label: "المسلسلات" },
-  { href: "/anime", label: "الأنمي" },
-  { href: "/trailers", label: "التريلرات" },
-];
+export type HeaderNavItem = { href: string; label: string };
 
 const DISCOVER = [
   { href: "/latest", label: "أحدث الإضافات", hint: "ما وصل حديثًا" },
@@ -35,7 +29,7 @@ const DISCOVER = [
   { href: "/most-viewed", label: "الأكثر مشاهدة", hint: "من عدّاد مشاهدات فعلي" },
 ];
 
-export function SiteHeader({ user }: { user: SessionUser | null }) {
+export function SiteHeader({ user, nav }: { user: SessionUser | null; nav: HeaderNavItem[] }) {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -110,7 +104,7 @@ export function SiteHeader({ user }: { user: SessionUser | null }) {
             </Link>
 
             <nav aria-label="التنقل الرئيسي" className="hidden items-center gap-1 lg:flex">
-              {NAV.map((item) => (
+              {nav.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
@@ -289,7 +283,7 @@ export function SiteHeader({ user }: { user: SessionUser | null }) {
 
           <div className="flex-1 overflow-y-auto px-3 py-4">
             <nav aria-label="التنقل في الهاتف" className="space-y-1">
-              {NAV.map((item) => (
+              {nav.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}

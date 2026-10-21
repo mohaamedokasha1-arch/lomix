@@ -8,6 +8,7 @@ import {
   Bookmark,
   ChevronLeft,
   Clapperboard,
+  Database,
   DatabaseBackup,
   Film,
   FolderTree,
@@ -18,6 +19,7 @@ import {
   Mail,
   Menu,
   MonitorPlay,
+  Navigation,
   Search,
   Settings,
   Shield,
@@ -55,12 +57,14 @@ const GROUPS: NavGroup[] = [
     items: [
       { href: "/admin/homepage", label: "الأقسام والترتيب", Icon: ListOrdered },
       { href: "/admin/curated", label: "قوائم الترند والمميزة", Icon: Bookmark },
+      { href: "/admin/navigation", label: "التنقل والتذييل", Icon: Navigation },
     ],
   },
   {
     title: "الاستيراد والرسائل",
     items: [
       { href: "/admin/imports", label: "سجل الاستيراد", Icon: Import },
+      { href: "/admin/sources", label: "مصادر البيانات", Icon: Database },
       { href: "/admin/messages", label: "الرسائل والطلبات", Icon: Mail },
     ],
   },

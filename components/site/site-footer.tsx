@@ -3,6 +3,7 @@ import { AtSign, Camera, Mail, Play, Send } from "lucide-react";
 import { Logo } from "@/components/brand/logo";
 import { getAllSettings } from "@/lib/settings";
 import { cachedFooterData } from "@/lib/queries-extra";
+import { getFooterSectionLinks } from "@/lib/navigation";
 
 const COLUMNS = [
   {
@@ -12,15 +13,6 @@ const COLUMNS = [
       { href: "/series", label: "مسلسلات" },
       { href: "/anime", label: "أنمي" },
       { href: "/trailers", label: "التريلرات" },
-    ],
-  },
-  {
-    title: "أقسام",
-    links: [
-      { href: "/latest", label: "أحدث الإضافات" },
-      { href: "/trending", label: "الرائج الآن" },
-      { href: "/top-rated", label: "الأعلى تقييمًا" },
-      { href: "/most-viewed", label: "الأكثر مشاهدة" },
     ],
   },
   {
@@ -35,7 +27,9 @@ const COLUMNS = [
 ];
 
 export async function SiteFooter() {
-  const [settings, meta] = await Promise.all([getAllSettings(), cachedFooterData()]);
+  const [settings, meta, sectionLinks] = await Promise.all([getAllSettings(), cachedFooterData(), getFooterSectionLinks()]);
+  // عمود «أقسام» يأتي من إعدادات التنقل، والبقية ثابتة لأنها صفحات قانونية/أساسية.
+  const columns = [COLUMNS[0]!, { title: "أقسام", links: sectionLinks }, COLUMNS[1]!];
   const socials = [
     { href: settings.twitter_url, label: "X / تويتر", Icon: AtSign },
     { href: settings.instagram_url, label: "إنستغرام", Icon: Camera },
@@ -86,7 +80,7 @@ export async function SiteFooter() {
             </div>
           </div>
 
-          {COLUMNS.map((column) => (
+          {columns.map((column) => (
             <nav key={column.title} aria-label={column.title}>
               <h2 className="text-[0.68rem] font-semibold tracking-[0.24em] text-ink-500">{column.title}</h2>
               <ul className="mt-4 space-y-2.5">
