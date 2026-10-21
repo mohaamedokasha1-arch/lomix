@@ -33,7 +33,7 @@ export function PageHeader({
 
 export function PosterGrid({ items }: { items: TitleCardData[] }) {
   return (
-    <div className="grid grid-cols-2 gap-x-3.5 gap-y-7 sm:grid-cols-3 md:gap-x-4 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+    <div className="grid grid-cols-3 gap-x-2.5 gap-y-5 sm:grid-cols-4 sm:gap-x-3 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8">
       {items.map((item, index) => (
         // أول صفّين على الهاتف فحسب: طلب 6 نسخ مسبقًا كان ينافس صورة LCP ويستهلك نقلًا.
         <TitleCard key={item.id} title={item} priority={index < 2} />

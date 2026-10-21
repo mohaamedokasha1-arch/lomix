@@ -17,7 +17,7 @@ export function CatalogSkeleton({ cards = 12, filters = true }: { cards?: number
         </div>
       )}
 
-      <div className="mt-8 grid grid-cols-2 gap-x-3.5 gap-y-7 sm:grid-cols-3 md:gap-x-4 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+      <div className="mt-8 grid grid-cols-3 gap-x-2.5 gap-y-5 sm:grid-cols-4 sm:gap-x-3 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8">
         {Array.from({ length: cards }).map((_, index) => (
           <div key={index}>
             <div className="skeleton aspect-[2/3] w-full rounded-xl" />

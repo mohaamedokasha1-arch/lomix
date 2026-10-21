@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { ArrowLeft, Clapperboard, Sparkles } from "lucide-react";
 import { Hero } from "@/components/home/hero";
-import { TitleRow } from "@/components/titles/title-row";
+import { PosterGrid } from "@/components/titles/poster-grid";
+import { QuickNav } from "@/components/home/quick-nav";
 import { TrailerCard } from "@/components/titles/trailer-card";
 import { SectionHeader } from "@/components/site/section-header";
 import { TitleCard } from "@/components/titles/title-card";
@@ -53,8 +54,9 @@ export default async function HomePage() {
   return (
     <>
       <Hero items={hero} trailers={heroTrailers} />
+      <QuickNav genres={facets.genres} />
 
-      <div className="container-page space-y-16 pt-14 md:space-y-20 md:pt-20">
+      <div className="container-page space-y-12 pt-10 md:space-y-14 md:pt-12">
         {visibleSections.map((section, position) => {
           if (section.kind === "HERO") return null;
 
@@ -112,7 +114,7 @@ export default async function HomePage() {
                 subtitle={section.subtitleAr}
                 moreHref={data.href}
               />
-              <TitleRow items={data.items} showRank={section.source === "TRENDING"} />
+              <PosterGrid items={data.items.slice(0, 12)} label={section.titleAr} />
             </section>
           );
         })}

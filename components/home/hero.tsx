@@ -56,7 +56,7 @@ export function Hero({
     <section
       aria-label="أعمال مختارة"
       aria-roledescription="عرض دوّار"
-      className="relative -mt-[4.5rem] h-[88svh] min-h-[600px] w-full overflow-hidden md:-mt-20 md:max-h-[900px]"
+      className="relative -mt-[4.5rem] h-[64svh] min-h-[440px] max-h-[640px] w-full overflow-hidden md:-mt-20"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocusCapture={() => setPaused(true)}
