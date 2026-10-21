@@ -14,6 +14,7 @@ type Suggestion = {
   releaseYear: number | null;
   posterPath: string | null;
   ratingValue: number | null;
+  ratingSource?: string | null;
 };
 
 const TYPE_ROUTE: Record<string, string> = {
@@ -210,7 +211,7 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
                     <span className="mt-0.5 flex items-center gap-2 text-xs text-ink-300">
                       <span>{TITLE_TYPE_LABEL[item.type]}</span>
                       {item.releaseYear && <span className="num">{item.releaseYear}</span>}
-                      {item.ratingValue != null && (
+                      {item.ratingValue != null && item.ratingSource && (
                         <span className="num text-brass-300">★ {item.ratingValue.toFixed(1)}</span>
                       )}
                     </span>

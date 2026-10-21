@@ -504,6 +504,7 @@ export async function searchSuggestions(query: string, limit = 6) {
       releaseYear: schema.titles.releaseYear,
       posterPath: schema.titles.posterPath,
       ratingValue: schema.titles.ratingValue,
+      ratingSource: schema.titles.ratingSource,
     })
     .from(schema.titles)
     .where(

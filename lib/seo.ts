@@ -25,7 +25,6 @@ export function buildTitleMetadata(title: TitleDetail): Metadata {
       description,
       url: absoluteUrl(path),
       images: [{ url: image, alt: `بوستر ${title.titleAr}` }],
-      ...(title.releaseYear ? { releaseDate: undefined } : {}),
     },
     twitter: {
       card: "summary_large_image",
@@ -56,8 +55,11 @@ export function buildTitleJsonLd(title: TitleDetail) {
 
   if (title.titleEn) data.alternateName = title.titleEn;
   if (title.posterPath) data.image = absoluteUrl(title.posterPath);
-  if (title.releaseDate) data.datePublished = title.releaseDate.toISOString().slice(0, 10);
-  else if (title.releaseYear) data.datePublished = String(title.releaseYear);
+  if (title.releaseDate) {
+    const published = new Date(title.releaseDate);
+    if (!Number.isNaN(published.getTime())) data.datePublished = published.toISOString().slice(0, 10);
+  }
+  if (!data.datePublished && title.releaseYear) data.datePublished = String(title.releaseYear);
   if (title.genres.length) data.genre = title.genres.map((g) => g.nameAr);
   if (title.countryNameAr) data.countryOfOrigin = title.countryNameAr;
   if (title.language) data.inLanguage = title.language;
