@@ -10,13 +10,15 @@
     "typecheck": "tsc --noEmit",
     "db:seed": "tsx db/seed.ts",
     "db:reset": "rm -rf .data/pglite && tsx db/migrate.ts && tsx db/seed.ts",
-    "art:generate": "node scripts/generate-art.mjs",
+    "art:generate": "tsx scripts/generate-art.ts",
     "admin:password": "tsx scripts/set-admin-password.ts",
-    "backup": "node scripts/backup.mjs",
+    "backup": "tsx scripts/backup.ts",
     "setup": "npm run art:generate && npm run db:reset",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx db/migrate.ts",
-    "db:setup": "tsx db/migrate.ts && tsx db/seed.ts"
+    "db:setup": "tsx db/migrate.ts && tsx db/seed.ts",
+    "check:data": "tsx scripts/check-data.ts",
+    "verify": "npm run typecheck && npm run check:data"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.10",
