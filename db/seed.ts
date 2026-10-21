@@ -154,9 +154,9 @@ async function main() {
           item.credits.map((c) => `${c.nameAr} ${c.nameEn}`).join(" "),
         ]),
         publishedAt,
-        viewsCount: Math.round(
-          (item.rating.count ?? 500) * 0.6 + (item.featured ? 4200 : 0) + (item.type === "ANIME" ? 2600 : 800),
-        ),
+        // العدد يبدأ من صفر: «الأكثر مشاهدة» لا تُبنى إلا على زيارات حقيقية
+        // سجّلها /api/views، ولا يُختلق عدّاد تجريبي يوهم بقياس غير موجود.
+        viewsCount: 0,
       })
       .returning({ id: schema.titles.id, slug: schema.titles.slug });
 
