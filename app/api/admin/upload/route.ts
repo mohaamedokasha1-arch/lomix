@@ -5,6 +5,8 @@ import { getDb, schema } from "@/db";
 import { AuthError, requireStaff } from "@/lib/auth";
 import { logAudit } from "@/lib/audit";
 import { putImage, storageDriver, uploadMaxMb } from "@/lib/storage";
+import { rateLimit } from "@/lib/rate-limit";
+import { arabicCount } from "@/lib/utils";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
@@ -13,6 +15,11 @@ export const maxDuration = 30;
 // قبل وصول الطلب إلينا) — انظر uploadMaxMb في lib/storage.ts.
 const MAX_MB = uploadMaxMb();
 const MAX_BYTES = MAX_MB * 1024 * 1024;
+
+// حدّ رفع لكل موظف: كل صورة تُنتج ثلاث نسخ WebP وعملية sharp، فبلا حدّ يستطيع
+// حساب مخترق (أو محرر مخطئ) استهلاك حصة الدوال والحِزمة في دقائق.
+const UPLOAD_LIMIT = Math.min(Math.max(Number(process.env.RATE_LIMIT_UPLOAD_MAX) || 20, 1), 500);
+const UPLOAD_WINDOW_SECONDS = 600;
 
 /** فحص نوع الملف من البايتات الأولى، لا من اسم الملف أو Content-Type. */
 function detectImageType(buffer: Buffer): { mime: string; ext: string } | null {
@@ -32,6 +39,22 @@ export async function POST(request: Request) {
   } catch (error) {
     const status = error instanceof AuthError ? error.status : 403;
     return NextResponse.json({ error: "غير مصرّح." }, { status });
+  }
+
+  const limit = await rateLimit(`upload:${user.id}`, UPLOAD_LIMIT, UPLOAD_WINDOW_SECONDS);
+  if (!limit.ok) {
+    return NextResponse.json(
+      {
+        error: `تجاوزت حدّ الرفع (${UPLOAD_LIMIT} صورة كل 10 دقائق). أعد المحاولة بعد ${arabicCount(
+          Math.max(1, Math.ceil(limit.retryAfterSeconds / 60)),
+          "دقيقة واحدة",
+          "دقيقتين",
+          "دقائق",
+          "دقيقة",
+        )}.`,
+      },
+      { status: 429, headers: { "retry-after": String(limit.retryAfterSeconds) } },
+    );
   }
 
   const formData = await request.formData().catch(() => null);
