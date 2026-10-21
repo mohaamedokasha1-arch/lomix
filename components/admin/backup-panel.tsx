@@ -71,17 +71,29 @@ export function BackupPanel() {
           الاستعادة تستبدل كل البيانات الحالية. تُنفَّذ داخل معاملة واحدة: إن فشل أي جدول يُلغى كل شيء. خذ نسخة قبل المتابعة.
         </p>
         <FormBanner state={state} />
+        <label className="block text-[0.62rem] text-ink-400" htmlFor="restore-file">
+          ملف النسخة الاحتياطية (JSON)
+        </label>
         <input
+          id="restore-file"
           type="file"
           name="file"
           accept="application/json,.json"
           required
           className="block w-full text-[0.68rem] text-ink-300 file:me-2 file:rounded-md file:border-0 file:bg-white/10 file:px-2.5 file:py-1.5 file:text-[0.64rem] file:text-ink-100"
         />
-        <label className="block text-[0.62rem] text-ink-400">
+        <label className="block text-[0.62rem] text-ink-400" htmlFor="restore-confirm">
           للتأكيد اكتب <span dir="ltr" className="font-bold text-signal-red">RESTORE</span>
         </label>
-        <input name="confirm" required className="field h-8 text-[0.7rem]" placeholder="RESTORE" dir="ltr" autoComplete="off" />
+        <input
+          id="restore-confirm"
+          name="confirm"
+          required
+          className="field h-8 text-[0.7rem]"
+          placeholder="RESTORE"
+          dir="ltr"
+          autoComplete="off"
+        />
         <button type="submit" className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-signal-red/30 bg-signal-red/10 px-3 text-[0.68rem] text-signal-red hover:bg-signal-red/20">
           <Upload className="h-3 w-3" /> تنفيذ الاستعادة
         </button>

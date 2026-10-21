@@ -246,6 +246,7 @@ export function TitleForm({
           value={personQuery}
           onChange={(event) => setPersonQuery(event.target.value)}
           placeholder="ابحث عن شخص لإضافته…"
+          aria-label="ابحث عن شخص لإضافته إلى طاقم العمل"
           className="field mb-3 h-9 text-xs"
         />
 
