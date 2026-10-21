@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit",
     "db:seed": "tsx db/seed.ts",
     "db:reset": "rm -rf .data/pglite && tsx db/migrate.ts && tsx db/seed.ts",
+    "demo:flush": "tsx scripts/flush-demo.ts",
     "art:generate": "tsx scripts/generate-art.ts",
     "admin:password": "tsx scripts/set-admin-password.ts",
     "backup": "tsx scripts/backup.ts",

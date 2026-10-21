@@ -60,6 +60,7 @@ npm run preflight    # جاهزية النشر (-- --prod يتشدّد) — يخ
 npm run smoke -- https://your-domain.com --prod --crawl   # فحص دخان بعد النشر (HTTP فقط)
 npm run e2e          # فحص شامل عبر HTTP (يحتاج خادمًا يعمل) — ينشئ عملًا مؤقتًا ثم يحذفه
 npm run db:reset     # مسح + إعادة تهيئة كاملة (محليًا)
+npm run demo:flush   # حذف المحتوى التجريبي فقط (يحتاج --yes؛ --people لحذف الأشخاص)
 npm run admin:password -- admin@example.com "كلمة-مرور-قوية"   # يُنشئ/يحدّث مديرًا ويُبطل جلساته
 npm run backup       # نسخة JSON في backups/ (أو -- --out /path/file.json)
 npm run art:generate # إعادة توليد الأعمال الفنية الأصلية (resvg + sharp)
@@ -117,15 +118,17 @@ docs/
 ## محتوى تجريبي: كيف تتخلص منه
 
 ```bash
-npm run db:reset     # يمسح كل شيء ويعيد البيانات التجريبية
-
+npm run demo:flush                     # معاينة: يعرض ما سيُحذف دون تنفيذ
+npm run demo:flush -- --yes            # يحذف الأعمال الموسومة is_demo وملحقاتها
+npm run demo:flush -- --yes --people   # مع حذف الأشخاص التجريبيين الذين بلا أرصدة
 ```
 
-أو احذف `db/seed.ts` من سكربت التهيئة ثم:
+- الحذف يتسلسل إلى المواسم والحلقات والتريلرات والطوابع والتصنيفات المرتبطة والمشاهدات.
+- يُطفئ `show_demo_notice` تلقائيًا، ويسجّل `DEMO_FLUSH` في سجل التدقيق.
+- محمي: يرفض `NODE_ENV=production` إلا مع `FLUSH_DEMO=1`، ويحتاج `--yes` صريحًا.
+- على PGlite أوقف الخادم أولًا؛ ثم `npm run check:data`.
 
-```bash
-npm run db:migrate && npm run admin:password -- you@example.com "كلمة-قوية"
-```
+بديل كامل (يمسح كل شيء ويعيد البذرة): `npm run db:reset`.
 
 شارة «تجريبي» تظهر تلقائيًا على أي عمل `isDemo = true`، ويمكن إخفاء الشريط العام من إعدادات الموقع
 (`show_demo_notice`) — لكن الوسم على العمل نفسه يبقى حتى يستبدله محتوى حقيقي.

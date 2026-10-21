@@ -174,7 +174,9 @@ async function checkDatabase() {
       add(
         noticeOn ? "warn" : "error",
         `محتوى تجريبي: ${row.demo} عملًا`,
-        noticeOn ? "اللافتة مفعّلة — نظّفه قبل الانطلاق (npm run db:reset يمسح كل شيء)." : "اللافتة مطفأة والمحتوى التجريبي ظاهر للجمهور!",
+        noticeOn
+          ? "اللافتة مفعّلة — نظّفه قبل الانطلاق: npm run demo:flush -- --yes --people"
+          : "اللافتة مطفأة والمحتوى التجريبي ظاهر للجمهور!",
       );
     } else {
       add("ok", "لا محتوى تجريبي موسوم");
