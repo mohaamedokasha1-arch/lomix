@@ -2,10 +2,17 @@
  * تطبيق ملفات الهجرة على قاعدة البيانات الحالية.
  * محليًا: PGlite. في الإنتاج: Postgres عبر DATABASE_URL.
  */
-import { isLocalDatabase } from "./index";
+import { isLocalDatabase, isServerlessRuntime } from "./index";
 
 async function main() {
   const url = process.env.DATABASE_URL ?? "";
+
+  // على Vercel (حتى أثناء البناء) يجب أن تكون DATABASE_URL مضبوطة.
+  // بدونها نفشل بوضوح بدل أن نكتب قاعدة PGlite محلية على خادم البناء ونُبلغ بالنجاح.
+  if (isServerlessRuntime() && isLocalDatabase(url)) {
+    console.error("✗ DATABASE_URL غير مضبوط في Vercel — أضفه في Environment Variables (Production وPreview) ثم أعد النشر.");
+    process.exit(1);
+  }
 
   if (isLocalDatabase(url)) {
     const { PGlite } = await import("@electric-sql/pglite");
