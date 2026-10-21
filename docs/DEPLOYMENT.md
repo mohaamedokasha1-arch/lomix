@@ -9,9 +9,9 @@
 
 | المكوّن | محليًا | في الإنتاج |
 |---|---|---|
-| Next.js 15 (App Router) | `next dev` | منصة تدعم Node ≥ 20 (مثل Vercel) |
+| Next.js 16.4.2 (App Router · Turbopack) | `next dev` | منصة تدعم Node ≥ 20.9 (مثل Vercel) |
 | قاعدة بيانات Postgres | PGlite داخل `.data/pglite` | Postgres مُدار (Neon / Supabase / غيرها) |
-| الملفات المرفوعة | `public/uploads` | تخزين كائنات (S3 / R2) — **إلزامي** |
+| الملفات المرفوعة | `public/uploads` | Vercel Blob (جاهز بلا تعديل كود) أو S3/R2 — **إلزامي** |
 | التريلرات | تضمين YouTube | تضمين YouTube فقط |
 
 PGlite **للتطوير فقط**: ملفاتها على القرص المحلي، وسلوكها مع دوال Serverless غير مناسب.

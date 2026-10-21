@@ -27,8 +27,8 @@ async function guard() {
 }
 
 function invalidateCatalog(slug?: string, type?: string) {
-  revalidateTag("catalog");
-  revalidateTag("homepage");
+  revalidateTag("catalog", "max");
+  revalidateTag("homepage", "max");
   revalidatePath("/");
   revalidatePath("/movies");
   revalidatePath("/series");

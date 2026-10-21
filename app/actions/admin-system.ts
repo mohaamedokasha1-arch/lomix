@@ -38,8 +38,8 @@ async function guardAdmin() {
 }
 
 function refreshPublic() {
-  revalidateTag("catalog");
-  revalidateTag("homepage");
+  revalidateTag("catalog", "max");
+  revalidateTag("homepage", "max");
   revalidatePath("/");
   revalidatePath("/trending");
   revalidatePath("/latest");
@@ -342,7 +342,7 @@ export async function saveSiteSettingsAction(_prev: SysState, formData: FormData
   await saveSettings(values);
   await logAudit({ userId: guarded.user.id, action: "SETTINGS_UPDATE", entity: "settings", details: { keys: Object.keys(values) }, ip: guarded.ip });
   // إعدادات SEO تُقرأ داخل generateMetadata المخزّن — يجب إبطال الكاش معها.
-  revalidateTag("catalog");
+  revalidateTag("catalog", "max");
   revalidatePath("/", "layout");
   revalidatePath("/admin/settings");
   revalidatePath("/admin/seo");

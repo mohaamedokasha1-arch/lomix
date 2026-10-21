@@ -13,14 +13,20 @@ export const LOCAL_ART_PREFIXES = ["/media/", "/uploads/", "/art/"] as const;
 
 const BLOB_HOST = /(^|\.)blob\.vercel-storage\.com$/i;
 
+/**
+ * جذر الصور المحلي. ثابت ومحصورة داخل `public/` حتى يعرف المحزّم أنه يحتاج هذا
+ * المجلد فقط؛ تمرير مسار ديناميكي هنا كان يجعل Turbopack يتتبّع المستودع كله
+ * ويحزّمه مع دالة الصور (تحذير بناء في Next 16).
+ */
+const PUBLIC_ROOT = path.join(process.cwd(), "public");
+
 /** صورة محلية داخل `public`؛ يُرفض أي مسار يخرج عنها عبر `..` أو مسار مطلق. */
-export function localArtFile(candidate: string, publicDir = path.join(process.cwd(), "public")): string | null {
+export function localArtFile(candidate: string): string | null {
   if (!candidate.startsWith("/") || candidate.startsWith("//")) return null;
   const normalized = path.posix.normalize(candidate);
   if (!LOCAL_ART_PREFIXES.some((prefix) => normalized.startsWith(prefix))) return null;
-  const normalRoot = path.resolve(publicDir);
-  const absolute = path.resolve(normalRoot, `.${normalized}`);
-  return absolute.startsWith(normalRoot + path.sep) ? absolute : null;
+  const absolute = path.resolve(PUBLIC_ROOT, `.${normalized}`);
+  return absolute.startsWith(PUBLIC_ROOT + path.sep) ? absolute : null;
 }
 
 /** رابط صورة على نطاق Vercel Blob فقط. */
