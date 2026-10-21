@@ -751,7 +751,7 @@ export async function deleteTrailerAction(formData: FormData) {
  * فحص صلاحية رابط التريلر عبر oEmbed الرسمي.
  * عند تعذّر الاتصال بالشبكة لا نخمّن: نُبقي الحالة «لم يُفحص» ونُبلغ المدير.
  */
-export async function checkTrailerHealthAction(formData: FormData): Promise<AdminState> {
+export async function checkTrailerHealthAction(_prev: AdminState, formData: FormData): Promise<AdminState> {
   const guarded = await guard();
   if ("error" in guarded) return { error: guarded.error };
   const id = String(formData.get("id") ?? "");

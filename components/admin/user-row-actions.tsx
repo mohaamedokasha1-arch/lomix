@@ -1,9 +1,18 @@
 "use client";
 
-import { useTransition } from "react";
-import { Trash2 } from "lucide-react";
 import { deleteUserAction, setUserRoleAction, toggleUserActiveAction } from "@/app/actions/admin-system";
+import { RowActionForm, RowSubmit } from "./row-action-form";
 
+const ROLES = [
+  { value: "ADMIN", label: "مدير" },
+  { value: "EDITOR", label: "محرر" },
+  { value: "VIEWER", label: "مشاهد" },
+];
+
+/**
+ * إجراءات المستخدم — كلها نماذج خادم حقيقية تعمل بلا JavaScript.
+ * تغيير الدور يُرسَل تلقائيًا عند توفّر JS، وله زر «تطبيق» ظاهر لمن يعمل بلا سكربتات.
+ */
 export function UserRowActions({
   id,
   role,
@@ -17,68 +26,38 @@ export function UserRowActions({
   name: string;
   isSelf: boolean;
 }) {
-  const [pending, startTransition] = useTransition();
-
-  const run = (action: (formData: FormData) => Promise<void>) => (formData: FormData) => {
-    startTransition(() => {
-      void action(formData);
-    });
-  };
-
   if (isSelf) {
     return <span className="text-[0.58rem] text-ink-500">لا يمكنك تعديل حسابك من هنا</span>;
   }
 
   return (
     <div className="flex items-center gap-1">
-      <form action={run(setUserRoleAction)}>
+      <form action={setUserRoleAction} className="flex items-center gap-1">
         <input type="hidden" name="id" value={id} />
         <select
           name="role"
           defaultValue={role}
-          onChange={(event) => {
-            const form = event.currentTarget.form;
-            if (form) form.requestSubmit();
-          }}
+          onChange={(event) => event.currentTarget.form?.requestSubmit()}
           className="h-6 rounded border border-white/12 bg-ink-900 px-1 text-[0.58rem] text-ink-200"
           aria-label={`دور ${name}`}
-          disabled={pending}
         >
-          <option value="ADMIN">مدير</option>
-          <option value="EDITOR">محرر</option>
-          <option value="VIEWER">مشاهد</option>
+          {ROLES.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
         </select>
+        <RowSubmit variant="chip" label="تطبيق" ariaLabel={`تطبيق دور ${name}`} />
       </form>
 
-      <form action={run(toggleUserActiveAction)}>
+      <form action={toggleUserActiveAction}>
         <input type="hidden" name="id" value={id} />
-        <button
-          type="submit"
-          disabled={pending}
-          className="rounded border border-white/12 px-1.5 py-0.5 text-[0.58rem] text-ink-300 hover:border-white/30 disabled:opacity-50"
-        >
-          {isActive ? "إيقاف" : "تفعيل"}
-        </button>
+        <RowSubmit variant="chip" label={isActive ? "إيقاف" : "تفعيل"} ariaLabel={`${isActive ? "إيقاف" : "تفعيل"} ${name}`} />
       </form>
 
-      <form
-        action={(formData) => {
-          if (!window.confirm(`حذف حساب «${name}» وكل جلساته؟`)) return;
-          startTransition(() => {
-            void deleteUserAction(formData);
-          });
-        }}
-      >
-        <input type="hidden" name="id" value={id} />
-        <button
-          type="submit"
-          disabled={pending}
-          aria-label={`حذف ${name}`}
-          className="flex h-6 w-6 items-center justify-center rounded text-ink-500 hover:bg-signal-red/10 hover:text-signal-red disabled:opacity-50"
-        >
-          <Trash2 className="h-3 w-3" />
-        </button>
-      </form>
+      <RowActionForm action={deleteUserAction} fields={{ id }} confirm={`حذف حساب «${name}» وكل جلساته؟`}>
+        <RowSubmit variant="icon" ariaLabel={`حذف ${name}`} />
+      </RowActionForm>
     </div>
   );
 }
