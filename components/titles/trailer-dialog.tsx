@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Info, Pause, Play, VolumeX, X } from "lucide-react";
 import { TRAILER_KIND_LABEL, cn } from "@/lib/utils";
+import { useDialogFocus } from "@/components/ui/use-dialog-focus";
 
 export type TrailerLike = {
   id?: string;
@@ -17,7 +18,7 @@ export type TrailerLike = {
 /**
  * مشغّل التريلر:
  * - يعرض تضمين يوتيوب الرسمي (youtube-nocookie) عند وجود معرّف حقيقي.
- * - يعرض «معاينة بصرية أصلية» عندما يكون المعرّف تجريبيًا (demo-*)،
+ * - يعرض «معاينة بصرية مولّدة» عندما يكون المعرّف مولّدًا داخليًا (demo-*)،
  *   مع توضيح صريح أن هذه ليست تريلرًا حقيقيًا.
  * - لا تشغيل تلقائي مع صوت في أي صفحة؛ التشغيل يبدأ بقرار المستخدم فقط.
  */
@@ -37,6 +38,8 @@ export function TrailerDialog({
   detailsHref?: string;
 }) {
   const closeRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(open && !!trailer, dialogRef);
   const [playing, setPlaying] = useState(true);
 
   useEffect(() => {
@@ -71,6 +74,7 @@ export function TrailerDialog({
         tabIndex={-1}
       />
       <div
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-label={`تريلر ${titleAr}`}
@@ -83,7 +87,7 @@ export function TrailerDialog({
               <span className="rounded border border-white/12 px-1.5 py-0.5 text-ink-300">
                 {TRAILER_KIND_LABEL[trailer.kind] ?? trailer.kind}
               </span>
-              {isDemo && <span className="text-brass-300/80">معاينة بصرية أصلية</span>}
+              {isDemo && <span className="text-brass-300/80">معاينة بصرية مولّدة</span>}
             </p>
           </div>
           <button
@@ -170,7 +174,7 @@ export function TrailerDialog({
             <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
             <span>
               {isDemo
-                ? "العرض تجريبي بمادة أصلية. لا يستضيف لوميكس أي فيديو محمي، والتضمين الرسمي هو الطريق الوحيد لعرض التريلرات."
+                ? "المعاينة مولّدة داخل المشروع. لا يستضيف لوميكس أي فيديو محمي، والتضمين الرسمي هو الطريق الوحيد لعرض التريلرات."
                 : "يُعرض التريلر عبر تضمين رسمي من المنصة المصدر، ولا يُعاد استضافته على خوادم لوميكس."}
             </span>
           </p>

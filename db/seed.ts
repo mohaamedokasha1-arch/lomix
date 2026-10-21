@@ -101,7 +101,7 @@ async function main() {
     },
     {
       email: "viewer@loomix.tv",
-      name: "زائر تجريبي",
+      name: "زائر اختبار",
       passwordHash: await bcrypt.hash("Viewer@2026", 10),
       role: "VIEWER",
     },

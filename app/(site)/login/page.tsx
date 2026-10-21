@@ -51,7 +51,7 @@ export default async function LoginPage({
 
         {showDemoCredentials && (
           <div className="mt-6 rounded-xl border border-white/6 bg-white/[0.02] p-3 text-center text-[0.68rem] leading-6 text-ink-500">
-            حساب تجريبي للتجربة:{" "}
+            حساب اختبار داخلي:{" "}
             <span dir="ltr" className="num">
               {demoEmail}
               {demoPassword ? ` / ${demoPassword}` : ""}

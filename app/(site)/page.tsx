@@ -170,7 +170,7 @@ export default async function HomePage() {
         {!hero.length && (
           <section className="rounded-2xl border border-dashed border-white/12 p-10 text-center">
             <h2 className="display text-xl font-semibold text-ink-100">لا يوجد محتوى منشور بعد</h2>
-            <p className="mt-2 text-sm text-ink-300">ابدأ بإضافة أول عمل من لوحة التحكم، أو نفّذ أمر التعبئة التجريبية.</p>
+            <p className="mt-2 text-sm text-ink-300">ابدأ بإضافة أول عمل من لوحة التحكم، أو نفّذ أمر التعبئة الأولية (seed).</p>
             <div className="mt-5 flex justify-center gap-3">
               <Link href="/admin/titles/new" className="rounded-xl bg-brass-400 px-4 py-2 text-sm font-semibold text-[#171006]">
                 إضافة عمل

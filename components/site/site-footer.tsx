@@ -43,7 +43,7 @@ export async function SiteFooter() {
         <div className="border-b border-brass-400/15 bg-brass-400/[0.06]">
           <div className="container-page flex flex-col gap-1 py-3 text-[0.72rem] leading-6 text-brass-200/90 sm:flex-row sm:items-center sm:justify-between">
             <span>
-              نسخة عرض تجريبية: الأعمال المعروضة خيالية وأصلية، والبوسترات مُولّدة داخل المشروع — لا تحتوي أي مادة محمية.
+              الأعمال المعروضة حاليًا مولّدة داخل المشروع ولا تمثل بيانات حقيقية، والبوسترات مُولّدة داخل المشروع — لا تحتوي أي مادة محمية.
             </span>
             <Link href="/admin/settings" className="shrink-0 underline decoration-brass-400/40 underline-offset-4 hover:text-brass-100">
               إخفاء اللافتة

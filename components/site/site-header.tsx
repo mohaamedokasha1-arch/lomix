@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { Logo, LogoMark } from "@/components/brand/logo";
 import { SearchDialog } from "@/components/site/search-dialog";
+import { useDialogFocus } from "@/components/ui/use-dialog-focus";
 import { logoutAction } from "@/app/actions/auth";
 import { ROLE_LABEL, cn } from "@/lib/utils";
 
@@ -38,6 +39,8 @@ export function SiteHeader({ user, nav }: { user: SessionUser | null; nav: Heade
   const [accountOpen, setAccountOpen] = useState(false);
   const discoverRef = useRef<HTMLDivElement>(null);
   const accountRef = useRef<HTMLDivElement>(null);
+  const mobileDialogRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(mobileOpen, mobileDialogRef);
 
   const isHome = pathname === "/";
 
@@ -75,6 +78,15 @@ export function SiteHeader({ user, nav }: { user: SessionUser | null; nav: Heade
     document.addEventListener("mousedown", onClick);
     return () => document.removeEventListener("mousedown", onClick);
   }, []);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const onEsc = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMobileOpen(false);
+    };
+    document.addEventListener("keydown", onEsc);
+    return () => document.removeEventListener("keydown", onEsc);
+  }, [mobileOpen]);
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
@@ -255,12 +267,14 @@ export function SiteHeader({ user, nav }: { user: SessionUser | null; nav: Heade
           mobileOpen ? "pointer-events-auto" : "pointer-events-none",
         )}
         aria-hidden={!mobileOpen}
+        inert={!mobileOpen}
       >
         <div
           className={cn("absolute inset-0 bg-ink-950/75 backdrop-blur-sm transition-opacity duration-300", mobileOpen ? "opacity-100" : "opacity-0")}
           onClick={() => setMobileOpen(false)}
         />
         <div
+          ref={mobileDialogRef}
           role="dialog"
           aria-modal="true"
           aria-label="قائمة التنقل"

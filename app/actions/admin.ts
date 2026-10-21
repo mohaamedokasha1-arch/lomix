@@ -763,7 +763,7 @@ export async function checkTrailerHealthAction(_prev: AdminState, formData: Form
 
   if (trailer.youtubeId.startsWith("demo-")) {
     await db.update(schema.trailers).set({ health: "UNVERIFIED", lastCheckedAt: new Date() }).where(eq(schema.trailers.id, id));
-    return { ok: true, message: "معاينة تجريبية أصلية — لا يوجد رابط خارجي لفحصه." };
+    return { ok: true, message: "معاينة مولّدة داخل المشروع — لا يوجد رابط خارجي لفحصه." };
   }
 
   try {

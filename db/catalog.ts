@@ -127,7 +127,7 @@ export const CATALOG: CatalogTitle[] = [
     countryNameAr: "مصر",
     language: "العربية",
     genres: ["drama", "adventure", "mystery"],
-    rating: { value: 8.4, source: "تقييم تجريبي", count: 4210 },
+    rating: { value: 8.4, source: "تقييم مولّد", count: 4210 },
     featured: true,
     editorNote: "تصوير طبيعي يمنح الصحراء شخصية مستقلة، ونهاية تُغلق الدائرة بهدوء نادر.",
     art: { variant: "dunes", palette: "sand" },
@@ -157,7 +157,7 @@ export const CATALOG: CatalogTitle[] = [
     countryNameAr: "فرنسا",
     language: "الفرنسية",
     genres: ["scifi", "drama", "mystery"],
-    rating: { value: 8.1, source: "تقييم تجريبي", count: 2860 },
+    rating: { value: 8.1, source: "تقييم مولّد", count: 2860 },
     featured: true,
     editorNote: "خيال علمي حميمي، يبني رهبته من الفراغ بدل المؤثرات.",
     art: { variant: "eclipse", palette: "indigo" },
@@ -185,7 +185,7 @@ export const CATALOG: CatalogTitle[] = [
     countryNameAr: "مصر",
     language: "العربية",
     genres: ["mystery", "drama", "fantasy"],
-    rating: { value: 8.7, source: "تقييم تجريبي", count: 6120 },
+    rating: { value: 8.7, source: "تقييم مولّد", count: 6120 },
     featured: true,
     editorNote: "الفيلم الذي يحتفل بالسينما كفعل ذاكرة جماعي.",
     art: { variant: "arch", palette: "brass" },
@@ -214,7 +214,7 @@ export const CATALOG: CatalogTitle[] = [
     countryNameAr: "مصر",
     language: "العربية",
     genres: ["drama", "romance", "comedy"],
-    rating: { value: 7.9, source: "تقييم تجريبي", count: 3310 },
+    rating: { value: 7.9, source: "تقييم مولّد", count: 3310 },
     art: { variant: "beam", palette: "ember" },
     credits: [
       { nameAr: "هالة فتحي", nameEn: "Hala Fathy", role: "DIRECTOR" },
@@ -240,7 +240,7 @@ export const CATALOG: CatalogTitle[] = [
     countryNameAr: "مصر",
     language: "العربية",
     genres: ["thriller", "crime", "drama"],
-    rating: { value: 8.0, source: "تقييم تجريبي", count: 3890 },
+    rating: { value: 8.0, source: "تقييم مولّد", count: 3890 },
     art: { variant: "grid", palette: "steel" },
     credits: [
       { nameAr: "طارق منصور", nameEn: "Tarek Mansour", role: "DIRECTOR" },
@@ -266,7 +266,7 @@ export const CATALOG: CatalogTitle[] = [
     countryNameAr: "المغرب",
     language: "العربية",
     genres: ["drama", "mystery", "fantasy"],
-    rating: { value: 8.2, source: "تقييم تجريبي", count: 1980 },
+    rating: { value: 8.2, source: "تقييم مولّد", count: 1980 },
     art: { variant: "dunes", palette: "teal" },
     credits: [
       { nameAr: "نجاة العمراني", nameEn: "Najat El-Amrani", role: "DIRECTOR" },
@@ -291,7 +291,7 @@ export const CATALOG: CatalogTitle[] = [
     countryNameAr: "مصر",
     language: "العربية",
     genres: ["action", "adventure", "drama"],
-    rating: { value: 7.6, source: "تقييم تجريبي", count: 5240 },
+    rating: { value: 7.6, source: "تقييم مولّد", count: 5240 },
     art: { variant: "rings", palette: "ember" },
     credits: [
       { nameAr: "شريف كامل", nameEn: "Sherif Kamel", role: "DIRECTOR" },
@@ -316,7 +316,7 @@ export const CATALOG: CatalogTitle[] = [
     countryNameAr: "مصر",
     language: "العربية",
     genres: ["drama", "romance"],
-    rating: { value: 7.8, source: "تقييم تجريبي", count: 2470 },
+    rating: { value: 7.8, source: "تقييم مولّد", count: 2470 },
     art: { variant: "eclipse", palette: "brass" },
     credits: [
       { nameAr: "منى رأفت", nameEn: "Mona Raafat", role: "DIRECTOR" },
@@ -341,7 +341,7 @@ export const CATALOG: CatalogTitle[] = [
     countryNameAr: "لبنان",
     language: "العربية",
     genres: ["fantasy", "mystery", "family"],
-    rating: { value: 8.3, source: "تقييم تجريبي", count: 1740 },
+    rating: { value: 8.3, source: "تقييم مولّد", count: 1740 },
     art: { variant: "arch", palette: "violet" },
     credits: [
       { nameAr: "ندى خوري", nameEn: "Nada Khoury", role: "DIRECTOR" },
@@ -366,7 +366,7 @@ export const CATALOG: CatalogTitle[] = [
     countryNameAr: "مصر",
     language: "العربية",
     genres: ["crime", "thriller", "action"],
-    rating: { value: 7.7, source: "تقييم تجريبي", count: 4820 },
+    rating: { value: 7.7, source: "تقييم مولّد", count: 4820 },
     art: { variant: "grid", palette: "oxblood" },
     credits: [
       { nameAr: "أيمن قنديل", nameEn: "Ayman Kandil", role: "DIRECTOR" },
@@ -391,7 +391,7 @@ export const CATALOG: CatalogTitle[] = [
     countryNameAr: "تونس",
     language: "العربية",
     genres: ["drama", "family"],
-    rating: { value: 7.5, source: "تقييم تجريبي", count: 890 },
+    rating: { value: 7.5, source: "تقييم مولّد", count: 890 },
     art: { variant: "eclipse", palette: "teal" },
     credits: [
       { nameAr: "أنيس بن حميدة", nameEn: "Anis Ben Hamida", role: "DIRECTOR" },
@@ -416,7 +416,7 @@ export const CATALOG: CatalogTitle[] = [
     countryNameAr: "مصر",
     language: "العربية",
     genres: ["comedy", "drama", "family"],
-    rating: { value: 7.4, source: "تقييم تجريبي", count: 2610 },
+    rating: { value: 7.4, source: "تقييم مولّد", count: 2610 },
     art: { variant: "beam", palette: "brass" },
     credits: [
       { nameAr: "إنجي شولي", nameEn: "Engy Shawky", role: "DIRECTOR" },
@@ -441,7 +441,7 @@ export const CATALOG: CatalogTitle[] = [
     countryNameAr: "مصر",
     language: "العربية",
     genres: ["crime", "thriller", "drama"],
-    rating: { value: 8.6, source: "تقييم تجريبي", count: 7340 },
+    rating: { value: 8.6, source: "تقييم مولّد", count: 7340 },
     featured: true,
     editorNote: "أفضل كتابة تلفزيونية مصرية عن المدينة في السنوات الأخيرة.",
     art: { variant: "grid", palette: "ember" },
@@ -498,7 +498,7 @@ export const CATALOG: CatalogTitle[] = [
     countryNameAr: "مصر",
     language: "العربية",
     genres: ["drama", "family", "comedy"],
-    rating: { value: 8.0, source: "تقييم تجريبي", count: 3980 },
+    rating: { value: 8.0, source: "تقييم مولّد", count: 3980 },
     art: { variant: "arch", palette: "sand" },
     credits: [
       { nameAr: "سمير عبد العزيز", nameEn: "Samir Abdel Aziz", role: "DIRECTOR" },
@@ -549,7 +549,7 @@ export const CATALOG: CatalogTitle[] = [
     countryNameAr: "مصر",
     language: "العربية",
     genres: ["crime", "mystery", "thriller"],
-    rating: { value: 8.2, source: "تقييم تجريبي", count: 2200 },
+    rating: { value: 8.2, source: "تقييم مولّد", count: 2200 },
     art: { variant: "rings", palette: "steel" },
     credits: [
       { nameAr: "لينا عبد الحكيم", nameEn: "Lina Abdel Hakim", role: "DIRECTOR" },
@@ -587,7 +587,7 @@ export const CATALOG: CatalogTitle[] = [
     countryNameAr: "سوريا",
     language: "العربية",
     genres: ["history", "drama", "family"],
-    rating: { value: 8.5, source: "تقييم تجريبي", count: 2870 },
+    rating: { value: 8.5, source: "تقييم مولّد", count: 2870 },
     art: { variant: "arch", palette: "oxblood" },
     credits: [
       { nameAr: "غسان الحلبي", nameEn: "Ghassan Halabi", role: "DIRECTOR" },
@@ -624,7 +624,7 @@ export const CATALOG: CatalogTitle[] = [
     countryNameAr: "مصر",
     language: "العربية",
     genres: ["thriller", "mystery", "drama"],
-    rating: { value: 8.3, source: "تقييم تجريبي", count: 1520 },
+    rating: { value: 8.3, source: "تقييم مولّد", count: 1520 },
     art: { variant: "monolith", palette: "violet" },
     credits: [
       { nameAr: "بسنت مراد", nameEn: "Bassant Morad", role: "DIRECTOR" },
@@ -662,7 +662,7 @@ export const CATALOG: CatalogTitle[] = [
     countryNameAr: "تونس",
     language: "العربية",
     genres: ["history", "drama"],
-    rating: { value: 8.1, source: "تقييم تجريبي", count: 1120 },
+    rating: { value: 8.1, source: "تقييم مولّد", count: 1120 },
     art: { variant: "dunes", palette: "steel" },
     credits: [
       { nameAr: "محمود بوزيد", nameEn: "Mahmoud Bouzid", role: "DIRECTOR" },
@@ -699,7 +699,7 @@ export const CATALOG: CatalogTitle[] = [
     countryNameAr: "الأردن",
     language: "العربية",
     genres: ["thriller", "action", "mystery"],
-    rating: { value: 7.9, source: "تقييم تجريبي", count: 980 },
+    rating: { value: 7.9, source: "تقييم مولّد", count: 980 },
     art: { variant: "rings", palette: "cyan" },
     credits: [
       { nameAr: "رنا الفاعوري", nameEn: "Rana Fauri", role: "DIRECTOR" },
@@ -736,7 +736,7 @@ export const CATALOG: CatalogTitle[] = [
     countryNameAr: "مصر",
     language: "العربية",
     genres: ["comedy", "drama", "family"],
-    rating: { value: 7.6, source: "تقييم تجريبي", count: 1340 },
+    rating: { value: 7.6, source: "تقييم مولّد", count: 1340 },
     art: { variant: "beam", palette: "teal" },
     credits: [
       { nameAr: "سارة البنا", nameEn: "Sara El-Banna", role: "DIRECTOR" },
@@ -775,7 +775,7 @@ export const CATALOG: CatalogTitle[] = [
     countryNameAr: "اليابان",
     language: "اليابانية",
     genres: ["animation", "fantasy", "action", "adventure"],
-    rating: { value: 8.9, source: "تقييم تجريبي", count: 9420 },
+    rating: { value: 8.9, source: "تقييم مولّد", count: 9420 },
     art: { variant: "eclipse", palette: "indigo" },
     credits: [
       { nameAr: "كينجي يامادا", nameEn: "Kenji Yamada", role: "DIRECTOR" },
@@ -813,7 +813,7 @@ export const CATALOG: CatalogTitle[] = [
     countryNameAr: "اليابان",
     language: "اليابانية",
     genres: ["animation", "scifi", "mystery", "drama"],
-    rating: { value: 8.4, source: "تقييم تجريبي", count: 5210 },
+    rating: { value: 8.4, source: "تقييم مولّد", count: 5210 },
     art: { variant: "grid", palette: "cyan" },
     credits: [
       { nameAr: "ميو تاكاهاشي", nameEn: "Mio Takahashi", role: "DIRECTOR" },
@@ -848,7 +848,7 @@ export const CATALOG: CatalogTitle[] = [
     countryNameAr: "اليابان",
     language: "اليابانية",
     genres: ["animation", "adventure", "family", "fantasy"],
-    rating: { value: 8.5, source: "تقييم تجريبي", count: 3620 },
+    rating: { value: 8.5, source: "تقييم مولّد", count: 3620 },
     art: { variant: "monolith", palette: "forest" },
     credits: [
       { nameAr: "ياسوكو هيرانو", nameEn: "Yasuko Hirano", role: "DIRECTOR" },
@@ -883,7 +883,7 @@ export const CATALOG: CatalogTitle[] = [
     countryNameAr: "اليابان",
     language: "اليابانية",
     genres: ["animation", "drama", "romance"],
-    rating: { value: 8.0, source: "تقييم تجريبي", count: 210 },
+    rating: { value: 8.0, source: "تقييم مولّد", count: 210 },
     art: { variant: "dunes", palette: "cyan" },
     credits: [
       { nameAr: "ناوكي فوجي", nameEn: "Naoki Fuji", role: "DIRECTOR" },

@@ -19,7 +19,7 @@ export const SETTING_DEFAULTS = {
   seo_index_genres: "true",
   seo_index_people: "true",
   seo_index_search: "false",
-  show_demo_notice: "true",
+  show_demo_notice: "false",
   allow_registration: "true",
   trailers_mailto: "dmca@loomix.tv",
   // JSON مُتحقَّق منه في lib/navigation.ts — ليس HTML حرًّا.
