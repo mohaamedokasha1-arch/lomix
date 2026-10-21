@@ -108,6 +108,17 @@ export function initials(name: string) {
   return parts.map((p) => p[0]?.toUpperCase() ?? "").join("");
 }
 
+/**
+ * صيغة العدد العربية: مفرد/مثنى/جمع قلة/تمييز مفرد.
+ * تُستخدم في عناوين SEO حتى لا يظهر «1 أعمال» أو «11 حلقات».
+ */
+export function arabicCount(n: number, one: string, two: string, few: string, many: string) {
+  if (n === 1) return one;
+  if (n === 2) return two;
+  const mod = n % 100;
+  return mod >= 3 && mod <= 10 ? `${n} ${few}` : `${n} ${many}`;
+}
+
 export function truncate(text: string, max = 160) {
   if (text.length <= max) return text;
   return `${text.slice(0, max).trimEnd()}…`;

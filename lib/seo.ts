@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getSettings } from "@/lib/settings";
-import { absoluteUrl, truncate } from "@/lib/utils";
+import { absoluteUrl, arabicCount, formatDate, truncate } from "@/lib/utils";
 import type { TitleDetail } from "@/lib/queries";
 
 const ROUTE: Record<string, string> = { MOVIE: "/movie", SERIES: "/series", ANIME: "/anime" };
@@ -185,6 +185,148 @@ export function collectionItems(
     name: title.titleAr,
     path: `${ROUTE[title.type] ?? "/movie"}/${title.slug}`,
   }));
+}
+
+/* -------------------------------------------------------------------------- */
+/*                         أوصاف SEO للصفحات الديناميكية                       */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * أوصاف صفحات الشخص/الموسم/الحلقة/التصنيف.
+ *
+ * القاعدة: كل وصف يُبنى من بيانات مسجّلة فعلًا (عدد الأعمال، مجالاتها، سنواتها،
+ * الحلقات وتواريخها ومدّتها) — لا عبارات تسويقية فارغة ولا أرقام مخترعة. الهدف
+ * طول قراءة مفيد (70 حرفًا على الأقل، وسقف ~158 حتى لا يُقتطع في نتائج البحث).
+ */
+
+const PERSON_ROLE_LABEL: Record<string, string> = {
+  ACTOR: "التمثيل",
+  DIRECTOR: "الإخراج",
+  WRITER: "الكتابة",
+  COMPOSER: "الموسيقى",
+};
+
+export function buildPersonDescription(
+  person: { nameAr: string; bioAr: string | null },
+  works: { role: string; releaseYear: number | null }[],
+) {
+  const bio = person.bioAr?.trim();
+  if (bio && bio.length >= 70) return truncate(bio, 158);
+
+  if (!works.length) {
+    return `صفحة ${person.nameAr} على لوميكس: لم تُسجَّل لها أعمال منشورة بعد، وستُضاف السيرة والأعمال والتريلرات الرسمية عند توفّرها.`;
+  }
+
+  const order = Object.keys(PERSON_ROLE_LABEL);
+  const roles = [...new Set(works.map((w) => w.role))]
+    .filter((role) => role in PERSON_ROLE_LABEL)
+    .sort((a, b) => order.indexOf(a) - order.indexOf(b))
+    .map((role) => PERSON_ROLE_LABEL[role]);
+
+  // المدى الزمني من سنوات الإصدار المسجّلة فقط؛ لا نخمّن سنة غير موجودة.
+  const years = works.map((w) => w.releaseYear).filter((y): y is number => typeof y === "number");
+  const span = years.length
+    ? (() => {
+        const min = Math.min(...years);
+        const max = Math.max(...years);
+        return min === max ? ` سنة ${min}` : ` بين ${min} و${max}`;
+      })()
+    : "";
+
+  const count = arabicCount(works.length, "عمل واحد", "عملان", "أعمال", "عملًا");
+  const rolePart = roles.length ? ` في ${roles.join(" و")}` : "";
+
+  return truncate(
+    `أعمال ${person.nameAr} على لوميكس: ${count}${rolePart}${span}، مع بيانات كل عمل وطاقمه والتريلرات الرسمية المتاحة.`,
+    158,
+  );
+}
+
+function totalRuntimeLabel(total: number) {
+  const hours = Math.floor(total / 60);
+  const minutes = total % 60;
+  const hourText = arabicCount(hours, "ساعة واحدة", "ساعتان", "ساعات", "ساعة");
+  const minuteText = arabicCount(minutes, "دقيقة واحدة", "دقيقتان", "دقائق", "دقيقة");
+  if (!hours) return minuteText;
+  return minutes ? `${hourText} و${minuteText}` : hourText;
+}
+
+export function buildSeasonDescription(data: {
+  titleAr: string;
+  titleType: string;
+  releaseYear: number | null;
+  season: { nameAr: string | null; number: number; year: number | null };
+  episodes: { airDate: Date | string | null; runtime: number | null }[];
+  siblings?: { number: number }[];
+}) {
+  const seasonName = data.season.nameAr?.trim() || `الموسم ${data.season.number}`;
+  const seasonYear = data.season.year ?? data.releaseYear;
+  const year = seasonYear ? ` (${seasonYear})` : "";
+  const kind = data.titleType === "ANIME" ? "أنمي" : "مسلسل";
+  const count = arabicCount(data.episodes.length, "حلقة واحدة", "حلقتان", "حلقات", "حلقة");
+
+  const dated = data.episodes.filter((episode) => episode.airDate);
+  const first = dated[0]?.airDate;
+  const last = dated.length > 1 ? dated[dated.length - 1]?.airDate : null;
+  const monthYear = (value: Date | string | null | undefined) =>
+    formatDate(value, { day: undefined, month: "long", year: "numeric" });
+  const firstLabel = first ? monthYear(first) : "";
+  const lastLabel = last ? monthYear(last) : "";
+  // إن وقعت كل الحلقات في الشهر نفسه فلا معنى لصيغة «بين … و…».
+  const dates = firstLabel
+    ? lastLabel && lastLabel !== firstLabel
+      ? `، عُرضت بين ${firstLabel} و${lastLabel}`
+      : `، عُرضت في ${firstLabel}`
+    : "";
+
+  // مجموع المدّة يُذكر فقط إذا كانت كل حلقات الموسم مسجّلة المدّة — وإلا فهو ناقص.
+  const runtimes = data.episodes.map((episode) => episode.runtime).filter((r): r is number => !!r && r > 0);
+  const runtime =
+    data.episodes.length > 0 && runtimes.length === data.episodes.length
+      ? `، بمجموع ${totalRuntimeLabel(runtimes.reduce((sum, r) => sum + r, 0))}`
+      : "";
+
+  const hasSiblings = (data.siblings?.length ?? 0) > 1;
+  const head = `${data.titleAr}${year} — ${seasonName} (${kind}): ${count}${dates}${runtime}.`;
+  const tail = hasSiblings
+    ? " مع أسماء الحلقات وتواريخ العرض والمدّة والتنقّل بين المواسم."
+    : " مع أسماء الحلقات وتواريخ العرض والمدّة.";
+  const full = `${head}${tail}`;
+  return full.length <= 165 ? full : truncate(head, 158);
+}
+
+export function buildEpisodeDescription(data: {
+  titleAr: string;
+  season: { nameAr: string | null; number: number };
+  episode: {
+    number: number;
+    nameAr: string;
+    overviewAr: string | null;
+    airDate: Date | string | null;
+    runtime: number | null;
+  };
+}) {
+  const seasonName = data.season.nameAr?.trim() || `الموسم ${data.season.number}`;
+  const head = `الحلقة ${data.episode.number} «${data.episode.nameAr}» من ${seasonName} من ${data.titleAr}`;
+  const facts = [
+    data.episode.airDate ? `عُرضت في ${formatDate(data.episode.airDate)}` : null,
+    data.episode.runtime ? `مدّتها ${data.episode.runtime} دقيقة` : null,
+  ]
+    .filter(Boolean)
+    .join("، ");
+
+  const overview = data.episode.overviewAr?.trim();
+  if (overview && overview.length >= 60) {
+    const room = Math.max(60, 158 - head.length - 2);
+    return `${head}: ${truncate(overview, room)}`;
+  }
+
+  const full = `${head}${facts ? `، ${facts}` : ""}. تفاصيل الحلقة والحلقات السابقة والتالية في الموسم.`;
+  return full.length <= 165 ? full : truncate(full, 158);
+}
+
+export function buildGenreDescription(nameAr: string) {
+  return `تصفّح أعمال ${nameAr} على لوميكس — أفلام ومسلسلات وأنمي — مع الفلاتر حسب النوع والسنة والبلد، وبيانات كل عمل وطاقمه وتريلراته الرسمية.`;
 }
 
 export function personJsonLd(person: { nameAr: string; nameEn: string | null; slug: string; bioAr: string | null; imagePath: string | null }) {

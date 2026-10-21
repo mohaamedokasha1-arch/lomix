@@ -22,6 +22,7 @@
     "verify": "npm run typecheck && npm run check:data && npm run check:art",
     "preflight": "tsx scripts/preflight.ts",
     "smoke": "tsx scripts/smoke.ts",
+    "seo:audit": "tsx scripts/seo-audit.ts",
     "e2e": "tsx scripts/e2e.ts",
     "check:art": "tsx scripts/check-art-source.ts"
   },

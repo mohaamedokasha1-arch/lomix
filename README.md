@@ -58,6 +58,7 @@ npm run check:data   # فحص سلامة البيانات (تقييم بلا م�
 npm run verify       # typecheck + check:data معًا
 npm run preflight    # جاهزية النشر (-- --prod يتشدّد) — يخرج بكود 1 عند وجود خطأ
 npm run smoke -- https://your-domain.com --prod --crawl   # فحص دخان بعد النشر (HTTP فقط)
+npm run seo:audit -- https://your-domain.com              # طول/تكرار أوصاف كل صفحات sitemap
 npm run e2e          # فحص شامل عبر HTTP (يحتاج خادمًا يعمل) — ينشئ عملًا مؤقتًا ثم يحذفه
 npm run db:reset     # مسح + إعادة تهيئة كاملة (محليًا)
 npm run demo:flush   # حذف المحتوى التجريبي فقط (يحتاج --yes؛ --people لحذف الأشخاص)

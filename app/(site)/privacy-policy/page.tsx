@@ -4,7 +4,8 @@ import { getSettings } from "@/lib/settings";
 
 export const metadata: Metadata = {
   title: "سياسة الخصوصية",
-  description: "كيف يجمع لوميكس البيانات ويستخدمها ويحميها، وحقوقك تجاهها.",
+  description:
+    "سياسة الخصوصية في لوميكس: البيانات التي نجمعها ولماذا، ما لا نفعله بها، مشاركتها مع أطراف أخرى، مدة الاحتفاظ، وحقوقك في الوصول إلى بياناتك وحذفها.",
   alternates: { canonical: "/privacy-policy" },
 };
 

@@ -6,7 +6,8 @@ import { getAllSettings } from "@/lib/settings";
 
 export const metadata: Metadata = {
   title: "التواصل والدعم",
-  description: "تواصل مع فريق لوميكس للاستفسارات والاقتراحات أو الإبلاغ عن مشكلة.",
+  description:
+    "تواصل مع فريق لوميكس للاستفسارات والاقتراحات، أو للإبلاغ عن تريلر معطّل أو خطأ في البيانات، أو لطلبات حقوق الملكية — وقت الرد من يوم إلى ثلاثة أيام عمل.",
   alternates: { canonical: "/contact" },
 };
 

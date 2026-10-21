@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ChevronLeft, ChevronRight, Clock, CalendarDays } from "lucide-react";
 import { cachedEpisode } from "@/lib/queries";
 import { formatDate } from "@/lib/utils";
+import { buildEpisodeDescription } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string; n: string; m: string }> };
 
@@ -13,7 +14,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!data) return { title: "الحلقة غير موجودة", robots: { index: false } };
   return {
     title: `${data.titleAr} — ${data.episode.nameAr}`,
-    description: data.episode.overviewAr ?? `تفاصيل الحلقة ${data.episode.number} من الموسم ${n} من ${data.titleAr}.`,
+    description: buildEpisodeDescription(data),
     alternates: { canonical: `/series/${slug}/season/${n}/episode/${m}` },
   };
 }

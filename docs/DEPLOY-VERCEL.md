@@ -99,6 +99,7 @@ npm run check:data                                   # فحص سلامة الب�
 ```bash
 npm run smoke -- https://your-project.vercel.app --prod
 npm run smoke -- https://your-project.vercel.app --crawl
+npm run seo:audit -- https://your-project.vercel.app
 curl -s https://your-project.vercel.app/api/health
 ```
 
@@ -301,6 +302,7 @@ npm run check:data
 - [ ] `preflight --prod` بلا أخطاء (سيشتكي من PGlite/localhost/بيانات العرض أثناء التطوير فقط).
 - [ ] مخزن Blob مربوط (أو مزوّد كائنات بديل) قبل أول رفع من اللوحة.
 - [ ] `npm run smoke -- https://… --prod --crawl` = 0 خطأ.
+- [ ] `npm run seo:audit -- https://…` = 0 خطأ (كل الأوصاف 70–165 حرفًا بلا تكرار).
 - [ ] `/privacy-policy` و`/terms` و`/dmca` تحتوي بيانات تواصل صحيحة (بريد + جهة قانونية).
 - [ ] `sitemap.xml` يحوي النطاق الصحيح، و`robots.txt` يمنع `/admin`.
 - [ ] نسخة `pg_dump` أولى محفوظة خارج المنصة، ونسخة من مخزن الصور.

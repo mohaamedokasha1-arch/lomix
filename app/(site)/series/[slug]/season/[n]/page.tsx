@@ -6,6 +6,7 @@ import { CalendarDays, ChevronLeft, Clock, ListVideo } from "lucide-react";
 import { cachedSeason } from "@/lib/queries";
 import { formatDate } from "@/lib/utils";
 import { absoluteUrl } from "@/lib/utils";
+import { buildSeasonDescription } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string; n: string }> };
 
@@ -16,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!data || data.state !== "PUBLISHED") return { title: "الموسم غير موجود", robots: { index: false } };
   return {
     title: `${data.titleAr} — ${data.season.nameAr ?? `الموسم ${data.season.number}`}`,
-    description: `قائمة حلقات ${data.season.nameAr ?? `الموسم ${data.season.number}`} من ${data.titleAr} مع تواريخ العرض والمدّة.`,
+    description: buildSeasonDescription(data),
     alternates: { canonical: `/series/${slug}/season/${seasonNumber}` },
     openGraph: {
       title: `${data.titleAr} — الموسم ${seasonNumber}`,

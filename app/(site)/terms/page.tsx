@@ -4,7 +4,8 @@ import { getSettings } from "@/lib/settings";
 
 export const metadata: Metadata = {
   title: "شروط الاستخدام",
-  description: "شروط استخدام منصة لوميكس وحدود الخدمة والمسؤوليات.",
+  description:
+    "شروط استخدام لوميكس: حدود الخدمة، مسؤوليات الحساب والمستخدم، قواعد الاستخدام المسموح وبيانات الأفلام والتريلرات، إنهاء الحساب، والاتصال بالإدارة.",
   alternates: { canonical: "/terms" },
 };
 

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { CalendarDays } from "lucide-react";
 import { PageHeader, PosterGrid } from "@/components/titles/catalog-view";
 import { cachedPerson } from "@/lib/queries";
-import { breadcrumbJsonLd, personJsonLd, robotsFor } from "@/lib/seo";
+import { breadcrumbJsonLd, buildPersonDescription, personJsonLd, robotsFor } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
 import { initials } from "@/lib/utils";
 
@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!data) return { title: "الصفحة غير موجودة", robots: { index: false } };
   return {
     title: data.person.nameAr,
-    description: data.person.bioAr ?? `أعمال ${data.person.nameAr} على لوميكس.`,
+    description: buildPersonDescription(data.person, data.works),
     alternates: { canonical: `/person/${slug}` },
     robots: await robotsFor("seo_index_people"),
   };

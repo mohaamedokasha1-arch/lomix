@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CatalogView, PageHeader } from "@/components/titles/catalog-view";
 import { cachedFacets, cachedGenres, cachedList, getGenreBySlug } from "@/lib/queries";
-import { robotsFor } from "@/lib/seo";
+import { buildGenreDescription, robotsFor } from "@/lib/seo";
 import { collectionItems, collectionJsonLd } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/json-ld";
 
@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!genre) return { title: "تصنيف غير موجود", robots: { index: false } };
   return {
     title: `أفلام ومسلسلات ${genre.nameAr}`,
-    description: `كل أعمال ${genre.nameAr} على لوميكس مع بياناتها وتريلراتها الرسمية.`,
+    description: buildGenreDescription(genre.nameAr),
     alternates: { canonical: `/genre/${genre.slug}` },
     robots: await robotsFor("seo_index_genres"),
   };
