@@ -46,6 +46,11 @@ const nextConfig: NextConfig = {
     "/movie/[slug]/opengraph-image*": ["./assets/fonts/**"],
     "/series/[slug]/opengraph-image*": ["./assets/fonts/**"],
     "/anime/[slug]/opengraph-image*": ["./assets/fonts/**"],
+    "/genre/[slug]/opengraph-image*": ["./assets/fonts/**"],
+    "/year/[year]/opengraph-image*": ["./assets/fonts/**"],
+    "/country/[code]/opengraph-image*": ["./assets/fonts/**"],
+    "/person/[slug]/opengraph-image*": ["./assets/fonts/**"],
+    "/trailers/opengraph-image*": ["./assets/fonts/**"],
   },
   images: {
     // الصور تُخزَّن محليًا في مرحلة العرض التجريبي. في الإنتاج تُستخدم خدمة

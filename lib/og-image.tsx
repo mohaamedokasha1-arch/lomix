@@ -67,43 +67,161 @@ async function artwork(
   }
 }
 
-/** نص مختلط عربي/لاتيني: كل كلمة عنصر مستقل، والفصل عبر `gap` لا محارف مسافة. */
-function MixedText({
+/**
+ * نص عربي/لاتيني لبطاقات المشاركة.
+ *
+ * Satori لا يطبّق خوارزمية bidi: يُشكّل كل كلمة عربية صحيحًا لكنه يضع الكلمات
+ * بترتيب منطقي من اليسار لليمين. لذلك نعكس ترتيب الكلمات للنص العربي حتى
+ * تُقرأ من اليمين. (اختُبر بأربع صيغ متجاورة: عقدة واحدة، direction:rtl،
+ * spans طبيعية، spans معكوسة — الأخيرة وحدها أعطت الترتيب الصحيح.)
+ */
+function TextBlock({
   text,
   weight,
+  size,
+  color,
   align = "right",
-  gap = 18,
+  lineHeight = 1.25,
+  maxChars,
 }: {
   text: string;
   weight: 400 | 600 | 700;
+  size: number;
+  color: string;
   align?: "right" | "center";
-  gap?: number;
+  lineHeight?: number;
+  maxChars?: number;
 }) {
-  // Satori يوزّع أبناء flex بترتيب DOM من اليسار لليمين ولا يحترم `direction: rtl`
-  // في هذا الموضع، لذلك نعكس الترتيب كي تظهر أول كلمة في أقصى اليمين.
-  const words = text.split(/\s+/).filter(Boolean).reverse();
+  const shared = { fontSize: size, color, lineHeight, fontWeight: weight } as const;
+
+  // لاتيني فقط: عقدة واحدة بلا عكس.
+  if (!ARABIC_RANGE.test(text)) {
+    return (
+      <div
+        style={{
+          ...shared,
+          display: "flex",
+          fontFamily: "PlexLatin",
+          direction: "ltr",
+          justifyContent: align === "center" ? "center" : "flex-start",
+        }}
+      >
+        {text}
+      </div>
+    );
+  }
+
+  const words = text.split(/\s+/).filter(Boolean);
+  // تقسيم يدوي إلى سطرين متوازنين: لفّ Satori التلقائي يقلب ترتيب السطور.
+  const lines: string[][] = [];
+  if (maxChars && text.length > maxChars && words.length > 1) {
+    let best = 1;
+    let bestDiff = Infinity;
+    for (let index = 1; index < words.length; index += 1) {
+      const first = words.slice(0, index).join(" ").length;
+      const second = words.slice(index).join(" ").length;
+      const diff = Math.abs(first - second);
+      if (diff < bestDiff) {
+        bestDiff = diff;
+        best = index;
+      }
+    }
+    lines.push(words.slice(0, best), words.slice(best));
+  } else {
+    lines.push(words);
+  }
+
+  return (
+    <div
+      style={{
+        ...shared,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: align === "center" ? "center" : "flex-end",
+      }}
+    >
+      {lines.map((line, lineIndex) => (
+        <div key={lineIndex} style={{ display: "flex", flexDirection: "row", gap: size * 0.26 }}>
+          {[...line].reverse().map((word, index) => (
+            <span
+              key={`${word}-${index}`}
+              style={{ fontFamily: ARABIC_RANGE.test(word) ? "PlexArabic" : "PlexLatin" }}
+            >
+              {word}
+            </span>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+
+/** يقسم عنوانًا إلى سطر أو سطرين متوازنين، ويختار مقاسًا يضمن عدم تجاوز العمود. */
+function layoutTitle(text: string, maxWidth: number): { lines: string[][]; size: number } {
+  const words = text.split(/\s+/).filter(Boolean);
+  // متوسط عرض المحرف في Plex Arabic كبير (حروف متصلة مع مسافات بين الكلمات)،
+  // وقد قِسنا تجاوزًا عند 0.52، فنستخدم 0.66 وهو حدّ آمن.
+  const avgChar = 0.66;
+  if (words.length < 2 || text.length <= 16) {
+    return { lines: [words], size: Math.max(44, Math.min(92, maxWidth / (text.length * avgChar))) };
+  }
+  let best = 1;
+  let bestDiff = Infinity;
+  for (let index = 1; index < words.length; index += 1) {
+    const first = words.slice(0, index).join(" ").length;
+    const second = words.slice(index).join(" ").length;
+    const diff = Math.abs(first - second);
+    if (diff < bestDiff) {
+      bestDiff = diff;
+      best = index;
+    }
+  }
+  const lines = [words.slice(0, best), words.slice(best)];
+  const longest = Math.max(...lines.map((line) => line.join(" ").length));
+  return { lines, size: Math.max(38, Math.min(76, maxWidth / (longest * avgChar))) };
+}
+
+/** يرسم أسطرًا عربية معكوسة الترتيب (Satori بلا bidi) بمقاس واحد. */
+function TitleLines({
+  lines,
+  size,
+  color,
+  align = "right",
+}: {
+  lines: string[][];
+  size: number;
+  color: string;
+  align?: "right" | "center";
+}) {
   return (
     <div
       style={{
         display: "flex",
-        flexWrap: "wrap",
-        direction: "rtl",
-        justifyContent: align === "center" ? "center" : "flex-end",
-        gap,
+        flexDirection: "column",
+        alignItems: align === "center" ? "center" : "flex-end",
+        rowGap: size * 0.18,
       }}
     >
-      {words.map((word, wordIndex) => (
-        <div key={`${word}-${wordIndex}`} style={{ display: "flex" }}>
-          {(word.match(/[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]+|[^\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]+/g) ?? [word]).map(
-            (part, index) => (
-              <span
-                key={index}
-                style={{ fontFamily: ARABIC_RANGE.test(part) ? "PlexArabic" : "PlexLatin", fontWeight: weight }}
-              >
-                {part}
-              </span>
-            ),
-          )}
+      {lines.map((line, lineIndex) => (
+        <div
+          key={lineIndex}
+          style={{ display: "flex", flexDirection: "row", gap: size * 0.24, whiteSpace: "nowrap" }}
+        >
+          {[...line].reverse().map((word, index) => (
+            <span
+              key={`${word}-${index}`}
+              style={{
+                fontFamily: ARABIC_RANGE.test(word) ? "PlexArabic" : "PlexLatin",
+                fontSize: size,
+                fontWeight: 700,
+                color,
+                lineHeight: 1.18,
+              }}
+            >
+              {word}
+            </span>
+          ))}
         </div>
       ))}
     </div>
@@ -149,8 +267,8 @@ export async function renderTitleOg(input: OgTitleInput): Promise<ImageResponse>
     artwork(input.posterPath ?? input.backdropPath, posterWidth, posterHeight, 72),
   ]);
 
-  const name = shorten(input.titleAr, 60);
-  const titleSize = name.length > 34 ? 58 : name.length > 24 ? 72 : 86;
+  const name = shorten(input.titleAr, 64);
+  const titleLines = layoutTitle(name, 580);
   const meta = [TYPE_LABEL[input.type] ?? null, ...(input.genres ?? []).slice(0, 3)]
     .filter(Boolean)
     .join(" · ");
@@ -214,13 +332,13 @@ export async function renderTitleOg(input: OgTitleInput): Promise<ImageResponse>
             <span style={{ fontSize: 34, fontWeight: 700, color: "#d9a441" }}>لوميكس</span>
           </div>
 
-          <div style={{display: "flex", marginTop: 40, fontSize: titleSize, color: "#f7f7fa", lineHeight: 1.2}}>
-            <MixedText text={name} weight={700} gap={titleSize * 0.26} />
+          <div style={{ display: "flex", marginTop: 40 }}>
+            <TitleLines lines={titleLines.lines} size={titleLines.size} color="#f7f7fa" />
           </div>
 
           {meta ? (
-            <div style={{ display: "flex", marginTop: 22, fontSize: 27, color: "#d7d7e0" }}>
-              <MixedText text={meta} weight={600} gap={8} />
+            <div style={{ display: "flex", marginTop: 22 }}>
+              <TextBlock text={meta} weight={600} size={27} color="#d7d7e0" />
             </div>
           ) : null}
 
@@ -264,6 +382,72 @@ export async function renderTitleOg(input: OgTitleInput): Promise<ImageResponse>
   );
 }
 
+/**
+ * بطاقة صفحة قائمة (تصنيف/سنة/دولة/شخص): نص كبير + سطر توضيحي، والعلامة في الأعلى.
+ * لا صور مُختلقة: الخلفية تدرّج فقط، والأرقام تأتي من عدّ حقيقي في القاعدة.
+ */
+export async function renderCollectionOg(
+  heading: string,
+  eyebrow?: string | null,
+  footnote?: string | null,
+): Promise<ImageResponse> {
+  const fonts = await loadFonts();
+  const headingLayout = layoutTitle(shorten(heading, 60), 980);
+
+  return new ImageResponse(
+    (
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          alignItems: "flex-end",
+          padding: "56px 64px",
+          backgroundColor: "#0b0b0f",
+          backgroundImage:
+            "radial-gradient(circle at 78% 22%, rgba(217,164,65,0.20) 0%, rgba(11,11,15,0) 60%)",
+          fontFamily: "PlexArabic",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <span
+            style={{
+              fontFamily: "PlexLatin",
+              fontSize: 21,
+              letterSpacing: 7,
+              color: "#b9b9c6",
+              fontWeight: 600,
+            }}
+          >
+            LOOMIX
+          </span>
+          <span style={{ width: 6, height: 6, borderRadius: 3, backgroundColor: "#d9a441", display: "flex" }} />
+          <span style={{ fontSize: 34, fontWeight: 700, color: "#d9a441" }}>لوميكس</span>
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
+          {eyebrow ? (
+            <div style={{ display: "flex", marginBottom: 16 }}>
+              <TextBlock text={eyebrow} weight={600} size={26} color="#d9a441" />
+            </div>
+          ) : null}
+          <div style={{ display: "flex" }}>
+            <TitleLines lines={headingLayout.lines} size={headingLayout.size} color="#f7f7fa" />
+          </div>
+          {footnote ? (
+            <div style={{ display: "flex", marginTop: 22 }}>
+              <TextBlock text={footnote} weight={400} size={25} color="#a9a9b8" />
+            </div>
+          ) : null}
+        </div>
+      </div>
+    ),
+    { ...OG_SIZE, fonts },
+  );
+}
+
 /** بطاقة العلامة العامة — تُستخدم للروابط غير الموجودة وللصفحات التي لا عمل لها. */
 export async function renderBrandOg(subtitle?: string): Promise<ImageResponse> {
   const fonts = await loadFonts();
@@ -288,8 +472,8 @@ export async function renderBrandOg(subtitle?: string): Promise<ImageResponse> {
           LOOMIX
         </div>
         {subtitle ? (
-          <div style={{ marginTop: 30, fontSize: 30, color: "#b9b9c6", display: "flex" }}>
-            <MixedText text={subtitle} weight={400} align="center" />
+          <div style={{ display: "flex", marginTop: 30 }}>
+            <TextBlock text={subtitle} weight={400} size={30} color="#b9b9c6" align="center" />
           </div>
         ) : null}
       </div>
