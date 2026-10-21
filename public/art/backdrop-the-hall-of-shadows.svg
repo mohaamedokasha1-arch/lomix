@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img">
+    <defs>
+    <linearGradient id="a19pzxjy-sky" x1="0" y1="0" x2="0.15" y2="1">
+      <stop offset="0" stop-color="#05070B"/>
+      <stop offset="0.55" stop-color="#0C131C"/>
+      <stop offset="1" stop-color="#1E2B3B"/>
+    </linearGradient>
+    <radialGradient id="a19pzxjy-sun" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FFE7BE" stop-opacity="1"/>
+      <stop offset="0.28" stop-color="#E8B466" stop-opacity="0.85"/>
+      <stop offset="0.62" stop-color="#E8B466" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#E8B466" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="a19pzxjy-halo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#E8B466" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#E8B466" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="a19pzxjy-beam" x1="0" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#FFE7BE" stop-opacity="0.55"/>
+      <stop offset="0.3" stop-color="#E8B466" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#E8B466" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="a19pzxjy-slab" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#05070B"/>
+      <stop offset="0.7" stop-color="#0C131C"/>
+      <stop offset="1" stop-color="#1E2B3B"/>
+    </linearGradient>
+    <linearGradient id="a19pzxjy-rim" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FFE7BE" stop-opacity="0"/>
+      <stop offset="0.55" stop-color="#FFE7BE" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#FFE7BE" stop-opacity="0.1"/>
+    </linearGradient>
+    <radialGradient id="a19pzxjy-vig" cx="0.5" cy="0.42" r="0.8">
+      <stop offset="0.5" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.45"/>
+    </radialGradient>
+    <linearGradient id="a19pzxjy-floorlight" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#E8B466" stop-opacity="0.4"/>
+      <stop offset="1" stop-color="#E8B466" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="a19pzxjy-safe" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#05070B" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#05070B" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.92"/>
+    </linearGradient>
+    <filter id="a19pzxjy-soft"><feGaussianBlur stdDeviation="67.2"/></filter>
+    <filter id="a19pzxjy-grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="11" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+  </defs>
+    <g>
+    <rect width="1920" height="1080" fill="url(#a19pzxjy-sky)"/>
+    <ellipse cx="960" cy="889.06" rx="960" ry="378" fill="url(#a19pzxjy-halo)" opacity="0.35" filter="url(#a19pzxjy-soft)"/>
+    <path d="M 543.65 907.2 L 543.65 562.63 A 402.46 402.46 0 0 1 1348.57 562.63 L 1348.57 907.2 Z" fill="#1E2B3B"/>
+    <path d="M 543.65 907.2 L 543.65 562.63 A 402.46 402.46 0 0 1 1348.57 562.63 L 1348.57 907.2 Z" fill="url(#a19pzxjy-sun)" opacity="0.55"/>
+    <clipPath id="a19pzxjy-clip"><path d="M 543.65 907.2 L 543.65 562.63 A 402.46 402.46 0 0 1 1348.57 562.63 L 1348.57 907.2 Z"/></clipPath>
+    <g clip-path="url(#a19pzxjy-clip)">
+      <rect x="543.65" y="522.39" width="804.92" height="1080" fill="#05070B" opacity="0.55"/>
+      <rect x="881.72" y="441.89" width="128.79" height="1080" fill="#FFE7BE" opacity="0.14"/>
+      <rect x="591.95" y="562.63" width="36.22" height="907.2" fill="#05070B" opacity="0.5"/><rect x="744.88" y="562.63" width="36.22" height="907.2" fill="#05070B" opacity="0.5"/><rect x="897.82" y="562.63" width="36.22" height="907.2" fill="#05070B" opacity="0.5"/><rect x="1050.75" y="562.63" width="36.22" height="907.2" fill="#05070B" opacity="0.5"/><rect x="1203.69" y="562.63" width="36.22" height="907.2" fill="#05070B" opacity="0.5"/>
+    </g>
+    <path d="M 543.65 907.2 L 543.65 562.63 A 402.46 402.46 0 0 1 1348.57 562.63 L 1348.57 907.2 Z" fill="none" stroke="#E8B466" stroke-opacity="0.75" stroke-width="2"/>
+    <path d="M 543.65 907.2 L 543.65 562.63 A 402.46 402.46 0 0 1 1348.57 562.63 L 1348.57 907.2 Z" fill="none" stroke="#FFE7BE" stroke-opacity="0.18" stroke-width="7"/>
+    <rect x="0" y="907.2" width="1920" height="172.8" fill="#05070B"/>
+    <rect x="0" y="907.2" width="1920" height="97.2" fill="url(#a19pzxjy-floorlight)" opacity="0.4"/>
+    <line x1="0" y1="907.2" x2="1920" y2="907.2" stroke="#E8B466" stroke-opacity="0.4" stroke-width="1.5"/>
+  </g>
+    <rect width="1920" height="1080" fill="url(#a19pzxjy-vig)"/>
+    <rect width="1920" height="1080" filter="url(#a19pzxjy-grain)" opacity="0.045"/>
+    <rect y="486" width="1920" height="594" fill="url(#a19pzxjy-safe)"/>
+    <g opacity="0.55">
+    <line x1="882" y1="1053" x2="922" y2="1053" stroke="#FFE7BE" stroke-opacity="0.45" stroke-width="1"/>
+    <line x1="998" y1="1053" x2="1038" y2="1053" stroke="#FFE7BE" stroke-opacity="0.45" stroke-width="1"/>
+    <text x="960" y="1058" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12" letter-spacing="8" fill="#FFE7BE">LOOMIX</text>
+  </g>
+  </svg>
