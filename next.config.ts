@@ -45,6 +45,9 @@ const nextConfig: NextConfig = {
     // تخزين كائنات خارجية ويُضاف نطاقها هنا (انظر docs/DEPLOYMENT.md).
     remotePatterns: [],
     formats: ["image/avif", "image/webp"],
+    // أعرض أصل عندنا 1584px (لقطات الهيرو) والبوسترات أصغر بكثير.
+    // السماح بعرض 3840 يجعل المحسّن يُكبّر أصلًا صغيرًا ويرسل بايتات لا تفيد.
+    deviceSizes: [640, 750, 828, 1080, 1200, 1600, 1920],
   },
   experimental: {
     serverActions: {

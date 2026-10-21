@@ -78,6 +78,9 @@ export function CatalogView({
     return `${basePath}${qs ? `?${qs}` : ""}`;
   };
 
+  // صفحة خارج النطاق ليست «لا نتائج»: القائمة فيها نتائج، لكن الرقم أكبر من عدد الصفحات.
+  const outOfRange = total > 0 && page > totalPages;
+
   return (
     <>
       <FilterBar facets={facets} total={total} showSort={showSort} showSearch={showSearch} lockedType={lockedType} />
@@ -88,12 +91,16 @@ export function CatalogView({
         ) : (
           <EmptyState
             icon={<SearchX className="h-5 w-5" />}
-            title={emptyTitle}
-            description={emptyDescription}
+            title={outOfRange ? "لا توجد صفحة بهذا الرقم" : emptyTitle}
+            description={
+              outOfRange
+                ? `النتائج موزّعة على ${totalPages} ${totalPages === 1 ? "صفحة واحدة" : "صفحات"} فقط. ابدأ من الصفحة الأولى أو عدّل الفلاتر.`
+                : emptyDescription
+            }
             action={
               <div className="flex flex-wrap justify-center gap-2">
-                <ButtonLink href="/trending" variant="secondary" size="sm">
-                  الأعمال الرائجة
+                <ButtonLink href={outOfRange ? buildHref(1) : "/trending"} variant="secondary" size="sm">
+                  {outOfRange ? "الصفحة الأولى" : "الأعمال الرائجة"}
                 </ButtonLink>
                 <ButtonLink href={basePath} variant="ghost" size="sm">
                   مسح الفلاتر
