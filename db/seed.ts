@@ -52,7 +52,27 @@ async function wipe(db: Awaited<ReturnType<typeof getDb>>) {
   }
 }
 
+/**
+ * حارس ضد مسح قاعدة بيانات حقيقية بالخطأ.
+ * التعبئة تبدأ بـ TRUNCATE لكل الجداول، لذا لا تعمل على قاعدة شبكية (Postgres مُدار)
+ * ولا في بيئة إنتاج إلا بتأكيد صريح: SEED_DEMO=1
+ */
+function guardTarget() {
+  const url = process.env.DATABASE_URL ?? "";
+  const remote = /^postgres(ql)?:\/\//.test(url);
+  const prod = process.env.NODE_ENV === "production" || Boolean(process.env.VERCEL_ENV);
+  if (!remote && !prod) return;
+  if (process.env.SEED_DEMO === "1") return;
+
+  console.error("✗ أُلغيت التعبئة: هذه القاعدة ليست قاعدة تطوير محلية.");
+  console.error(`  الهدف: ${remote ? "Postgres عبر الشبكة" : "بيئة إنتاج"} — والتعبئة تمسح كل الجداول أولًا.`);
+  console.error("  لإعداد بيئة إنتاج نظيفة: npm run db:migrate ثم npm run admin:password -- <email> \"<password>\"");
+  console.error("  لزرع بيانات العرض على هذه القاعدة صراحةً: SEED_DEMO=1 npm run db:seed");
+  process.exit(1);
+}
+
 async function main() {
+  guardTarget();
   const db = await getDb();
   console.log("→ تهيئة قاعدة البيانات…");
   await wipe(db);

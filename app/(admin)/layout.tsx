@@ -29,8 +29,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     >
       <noscript>
         <p className="mb-4 rounded-lg border border-signal-amber/40 bg-signal-amber/10 px-3 py-2 text-xs leading-5 text-signal-amber">
-          لوحة الإدارة تحتاج JavaScript: معظم النماذج تُرسَل عبر إجراءات الخادم التفاعلية. لا تعطّل
-          المتصفحَ سكربتاتها إن أردت الإضافة أو التعديل.
+          تعمل نماذج الإضافة والتعديل بلا JavaScript، لكن الإجراءات السريعة في القوائم (حذف، إخفاء/نشر،
+          ترتيب بالسحب) واختيار التصنيفات والأشخاص تحتاج JavaScript. فعّل السكربتات للحصول على اللوحة كاملة.
         </p>
       </noscript>
       {children}

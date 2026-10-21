@@ -43,7 +43,7 @@ npm run db:migrate
 # 2) في الإنتاج: طبّق الهجرات على قاعدة البيانات المُدارة
 DATABASE_URL="postgresql://…" npm run db:migrate
 
-# 3) أنشئ حساب المدير (بدون بيانات تجريبية)
+# 3) أنشئ حساب المدير (بدون بيانات تجريبية — db:seed محظور على قاعدة شبكية)
 DATABASE_URL="postgresql://…" npm run admin:password -- admin@example.com "كلمة-قوية"
 
 بعد الاستعادة أو أي تغيير في البيانات، شغّل فحص السلامة:
@@ -55,7 +55,19 @@ DATABASE_URL="postgresql://…" npm run admin:password -- admin@example.com "ك�
 # 4) ابنِ وتحقّق
 npm run typecheck
 npm run build
+
+# 5) الفحص النهائي قبل النشر (يقرأ البيئة ويتصل بالقاعدة)
+DATABASE_URL="postgresql://…" NEXT_PUBLIC_SITE_URL="https://your-domain.com" \
+  SHOW_DEMO_CREDENTIALS=0 npm run preflight -- --prod
 ```
+
+`preflight` يفشل (كود 1) عند: سر تشغيلي ضعيف أو مثال، PGlite في الإنتاج، رابط موقع يشير إلى
+localhost، تفعيل بيانات الدخول التجريبية، بقاء كلمة مرور افتراضية لأي حساب إداري، غياب حساب
+مدير، أو غياب لافتة المحتوى التجريبي مع وجود محتوى موسوم. ويحذّر عند تخزين الصور على قرص
+محلي في بيئة بلا تخزين دائم.
+
+`db:seed` يحرس نفسه: يرفض العمل على قاعدة شبكية أو في بيئة إنتاج إلا مع `SEED_DEMO=1`،
+لأنه يبدأ بمسح كل الجداول.
 
 على Vercel: اربط المستودع، أضف المتغيّرات، واضبط أمر البناء `npm run build`.
 البيانات التجريبية (24 عملًا) ليست للنشر العلني؛ استخدم `npm run db:reset` للمسح وإعادة التهيئة محليًا،

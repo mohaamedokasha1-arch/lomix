@@ -18,7 +18,8 @@
     "db:migrate": "tsx db/migrate.ts",
     "db:setup": "tsx db/migrate.ts && tsx db/seed.ts",
     "check:data": "tsx scripts/check-data.ts",
-    "verify": "npm run typecheck && npm run check:data"
+    "verify": "npm run typecheck && npm run check:data",
+    "preflight": "tsx scripts/preflight.ts"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.10",

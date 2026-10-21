@@ -56,6 +56,7 @@ npm run typecheck    # TypeScript صارم، بلا أخطاء
 npm run build        # بناء إنتاجي
 npm run check:data   # فحص سلامة البيانات (تقييم بلا مصدر، تكرار، صفوف مكسورة…)
 npm run verify       # typecheck + check:data معًا
+npm run preflight    # جاهزية النشر (-- --prod يتشدّد) — يخرج بكود 1 عند وجود خطأ
 npm run db:reset     # مسح + إعادة تهيئة كاملة (محليًا)
 npm run admin:password -- admin@example.com "كلمة-مرور-قوية"   # يُنشئ/يحدّث مديرًا ويُبطل جلساته
 npm run backup       # نسخة JSON في backups/ (أو -- --out /path/file.json)
