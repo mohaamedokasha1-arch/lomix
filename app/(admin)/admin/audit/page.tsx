@@ -52,6 +52,7 @@ const ACTION_LABEL: Record<string, string> = {
   NAVIGATION_UPDATE: "تحديث روابط التنقل",
   PASSWORD_CHANGE: "تغيير كلمة المرور",
   PASSWORD_RESET_CLI: "إعادة تعيين كلمة المرور (سطر أوامر)",
+  USER_PASSWORD_RESET: "إعادة تعيين كلمة مرور مستخدم (اللوحة)",
   PROFILE_UPDATE: "تحديث الملف الشخصي",
   REGISTER: "إنشاء حساب جديد",
   TITLES_BULK_UPDATE: "تحديث جماعي للأعمال",

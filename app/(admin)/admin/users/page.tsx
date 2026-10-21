@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { AdminCard, AdminPageHeader } from "@/components/admin/page-header";
 import { UserForm } from "@/components/admin/user-form";
 import { UserRowActions } from "@/components/admin/user-row-actions";
@@ -7,8 +8,14 @@ import { ROLE_LABEL, formatDate, relativeTime } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
-export default async function AdminUsersPage() {
+export default async function AdminUsersPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
   await requireAdminPage();
+  const sp = await searchParams;
+  const resetEmail = typeof sp.reset === "string" ? sp.reset : null;
   const [users, currentUser, sessionCount] = await Promise.all([getUsersAdmin(), getSessionUser(), getSessionCount()]);
 
   return (
@@ -17,6 +24,13 @@ export default async function AdminUsersPage() {
         title="المستخدمون والصلاحيات"
         description={`${users.length} حسابًا · ${sessionCount} جلسة نشطة. الأدوار تُفحص على الخادم في كل إجراء — إخفاء الأزرار ليس حماية.`}
       />
+
+      {resetEmail && (
+        <div className="mb-5 rounded-xl border border-signal-teal/30 bg-signal-teal/10 px-4 py-3 text-[0.75rem] text-signal-teal">
+          تم تعيين كلمة مرور جديدة لـ<span dir="ltr" className="mx-1">{resetEmail}</span> وإنهاء جلساته.
+          بلّغه بها عبر قناة آمنة، وذكّره بتغييرها من صفحة ملفه بعد الدخول.
+        </div>
+      )}
 
       <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
         <AdminCard title="الحسابات">
@@ -41,6 +55,13 @@ export default async function AdminUsersPage() {
                 <span className={`text-[0.58rem] ${user.isActive ? "text-signal-teal" : "text-signal-red"}`}>{user.isActive ? "نشط" : "موقوف"}</span>
                 <span className="num hidden text-[0.58rem] text-ink-500 sm:inline">{user.sessionCount} جلسة</span>
                 <span className="hidden text-[0.58rem] text-ink-500 md:inline">{user.lastLoginAt ? relativeTime(user.lastLoginAt) : "لم يدخل"}</span>
+                <Link
+                  href={`/admin/users/${user.id}/password`}
+                  className="text-[0.6rem] text-brass-200 hover:underline"
+                  title={`إعادة تعيين كلمة مرور ${user.name}`}
+                >
+                  كلمة المرور
+                </Link>
                 <UserRowActions id={user.id} role={user.role} isActive={user.isActive} name={user.name} isSelf={user.id === currentUser?.id} />
               </li>
             ))}

@@ -112,6 +112,24 @@ async function main() {
     add("error", "تعذّر جلب /api/health", error instanceof Error ? error.message : String(error));
   }
 
+  // مهمة الصيانة يجب ألا تكون مفتوحة لأي زائر: 401 بلا سرّ، أو 503 إن لم يُضبط السرّ أصلًا.
+  // أي 200 هنا يعني أن أي شخص يستطيع حذف الصفوف المنتهية وتشغيل المهمة بلا حدّ.
+  try {
+    const { response } = await request("/api/cron/maintenance");
+    if (response.status === 200) {
+      add("error", "مهمة الصيانة مفتوحة بلا مصادقة — أي زائر يستطيع تشغيلها");
+    } else if (response.status === 401 || response.status === 503) {
+      add("ok", `مهمة الصيانة محمية بلا مصادقة (${response.status})`);
+    } else {
+      add("warn", `مهمة الصيانة تعيد ${response.status} بلا مصادقة`);
+    }
+    if (!/no-store/.test(response.headers.get("cache-control") ?? "")) {
+      add("error", "استجابة مهمة الصيانة قابلة للتخزين المؤقت");
+    }
+  } catch (error) {
+    add("error", "تعذّر جلب /api/cron/maintenance", error instanceof Error ? error.message : String(error));
+  }
+
   let locs: string[] = [];
   try {
     const { response, body } = await request("/sitemap.xml");

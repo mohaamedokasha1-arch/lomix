@@ -44,6 +44,7 @@ const ACTION_LABEL: Record<string, string> = {
   MESSAGE_STATUS: "تحديث رسالة",
   BACKUP_RESTORE: "استعادة نسخة",
   DEMO_FLUSH: "تنظيف المحتوى التجريبي",
+  USER_PASSWORD_RESET: "إعادة تعيين كلمة مرور",
   PASSWORD_CHANGE: "تغيير كلمة المرور",
   PROFILE_UPDATE: "تحديث الملف الشخصي",
   REGISTER: "إنشاء حساب",

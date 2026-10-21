@@ -2,6 +2,7 @@
 
 import { revalidatePath, revalidateTag } from "next/cache";
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import { and, asc, eq, inArray, ne, sql } from "drizzle-orm";
 import { z } from "zod";
 import { getDb, schema } from "@/db";
@@ -246,6 +247,53 @@ export async function setUserRoleAction(formData: FormData) {
   await db.update(schema.users).set({ role: role as "ADMIN" }).where(eq(schema.users.id, id));
   await logAudit({ userId: guarded.user.id, action: "USER_ROLE_CHANGE", entity: "user", entityId: id, details: { role }, ip: guarded.ip });
   revalidatePath("/admin/users");
+}
+
+/**
+ * إعادة تعيين كلمة مرور مستخدم من اللوحة (مدير عام فقط).
+ *
+ * لا يوجد بريد صادر في هذه النسخة، فالإعادة «بمساعدة الإدارة»: المدير يكتب كلمة
+ * مرور جديدة ويبلّغها لصاحب الحساب خارج المنصة. كل جلسات الحساب تُحذف فورًا،
+ * ويُسجَّل الحدث في سجل العمليات بلا كلمة المرور ولا تجزئتها.
+ */
+export async function setUserPasswordAction(_prev: SysState, formData: FormData): Promise<SysState> {
+  const guarded = await guardAdmin();
+  if ("error" in guarded) return { error: guarded.error };
+
+  const id = String(formData.get("id") ?? "");
+  const password = String(formData.get("password") ?? "");
+  const confirm = String(formData.get("confirm") ?? "");
+
+  if (!id) return { error: "حساب غير محدد." };
+  if (password.length < 10) return { error: "كلمة المرور يجب أن تكون 10 أحرف على الأقل." };
+  if (Buffer.byteLength(password, "utf8") > 72) return { error: "كلمة المرور أطول من الحد الذي يقبله bcrypt (72 بايت)." };
+  if (password !== confirm) return { error: "التأكيد لا يطابق كلمة المرور." };
+  if (["password", "123456789", "loomix2026"].includes(password.toLowerCase())) {
+    return { error: "كلمة المرور شائعة جدًا — اختر كلمة أقوى." };
+  }
+
+  const db = await getDb();
+  const [user] = await db
+    .select({ id: schema.users.id, email: schema.users.email, name: schema.users.name })
+    .from(schema.users)
+    .where(eq(schema.users.id, id))
+    .limit(1);
+  if (!user) return { error: "الحساب غير موجود." };
+
+  await db.update(schema.users).set({ passwordHash: await hashPassword(password) }).where(eq(schema.users.id, id));
+  const revoked = await db.delete(schema.sessions).where(eq(schema.sessions.userId, id)).returning({ id: schema.sessions.id });
+
+  await logAudit({
+    userId: guarded.user.id,
+    action: "USER_PASSWORD_RESET",
+    entity: "user",
+    entityId: id,
+    details: { email: user.email, sessionsRevoked: revoked.length },
+    ip: guarded.ip,
+  });
+
+  revalidatePath("/admin/users");
+  redirect(`/admin/users?reset=${encodeURIComponent(user.email)}`);
 }
 
 export async function toggleUserActiveAction(formData: FormData) {

@@ -283,6 +283,7 @@ async function main() {
     "/admin/titles/1/seasons/1",
     "/admin/trailers",
     "/admin/users",
+    "/admin/users/1/password",
   ];
   const isRedirect = (status: number) => [301, 302, 303, 307, 308].includes(status);
 
@@ -317,7 +318,7 @@ async function main() {
     process.env.E2E_EDITOR_EMAIL ?? "editor@loomix.tv",
     process.env.E2E_EDITOR_PASSWORD ?? "Editor@2026",
   );
-  const ADMIN_ONLY_PAGES = ["/admin/users", "/admin/seo", "/admin/backup"];
+  const ADMIN_ONLY_PAGES = ["/admin/users", "/admin/users/1/password", "/admin/seo", "/admin/backup"];
   const editorLeaks: string[] = [];
   for (const path of ADMIN_ONLY_PAGES) {
     const response = await request(path, { headers: editor.cookie ? { cookie: editor.cookie } : {} });
