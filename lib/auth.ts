@@ -121,6 +121,8 @@ export type LoginResult =
  * يُقرأ من البيئة ليتكرر تشغيل `npm run e2e` محليًا بلا انتظار — لا ترفعه في الإنتاج.
  */
 const LOGIN_IP_LIMIT = Math.min(Math.max(Number(process.env.RATE_LIMIT_LOGIN_MAX) || 10, 1), 200);
+/** حدّ المحاولات لكل حساب (8 افتراضيًا في 15 دقيقة) — نفس منطق التجاوز للاختبار المحلي. */
+const LOGIN_ID_LIMIT = Math.min(Math.max(Number(process.env.RATE_LIMIT_LOGIN_ID_MAX) || 8, 1), 200);
 
 export async function loginWithPassword(emailInput: string, password: string): Promise<LoginResult> {
   const email = emailInput.trim().toLowerCase();
@@ -131,7 +133,7 @@ export async function loginWithPassword(emailInput: string, password: string): P
   if (!ipLimit.ok) {
     return { ok: false, error: "محاولات كثيرة من هذا الجهاز. حاول بعد قليل.", retryAfter: ipLimit.retryAfterSeconds };
   }
-  const identifierLimit = await rateLimit(`login:id:${email}`, 8, 60 * 15);
+  const identifierLimit = await rateLimit(`login:id:${email}`, LOGIN_ID_LIMIT, 60 * 15);
   if (!identifierLimit.ok) {
     return { ok: false, error: "محاولات كثيرة على هذا الحساب. حاول لاحقًا.", retryAfter: identifierLimit.retryAfterSeconds };
   }
