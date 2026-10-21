@@ -8,7 +8,7 @@ import { safeNextPath } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "تسجيل الدخول",
-  description: "سجّل الدخول إلى لوميكس للوصول إلى قائمة المشاهدة وملفك الشخصي.",
+  description: "سجّل الدخول إلى لوميكس فيلم للوصول إلى قائمة المشاهدة وملفك الشخصي.",
   robots: { index: false, follow: true },
 };
 

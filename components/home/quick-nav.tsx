@@ -27,7 +27,7 @@ export function QuickNav({ genres }: { genres: { slug: string; nameAr: string; c
           <Link
             key={chip.href}
             href={chip.href}
-            className="inline-flex h-8 shrink-0 items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-3.5 text-[0.78rem] text-ink-200 transition hover:border-brass-400/40 hover:text-brass-200"
+            className="inline-flex h-8 shrink-0 items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-3.5 text-[0.78rem] text-ink-200 transition hover:border-ember-400/40 hover:text-ember-200"
           >
             {chip.label}
             {chip.count !== undefined && <span className="num text-[0.65rem] text-ink-500">{chip.count}</span>}

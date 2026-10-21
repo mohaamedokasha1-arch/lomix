@@ -7,7 +7,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 
 export const metadata: Metadata = {
   title: "الأعلى تقييمًا",
-  description: "الأعمال الأعلى تقييمًا على لوميكس. التقييم يُعرض فقط مع مصدره المسجّل في قاعدة البيانات.",
+  description: "الأعمال الأعلى تقييمًا على لوميكس فيلم. التقييم يُعرض فقط مع مصدره المسجّل في قاعدة البيانات.",
   alternates: { canonical: "/top-rated" },
 };
 

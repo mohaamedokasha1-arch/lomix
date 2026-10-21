@@ -70,7 +70,7 @@ export function ContactForm({ kind = "CONTACT" }: { kind?: "CONTACT" | "DMCA" })
           rows={7}
           placeholder={
             kind === "DMCA"
-              ? "اذكر رابط الصفحة على لوميكس، وصف المحتوى، وسندك في حقوق الملكية، وبيانات التواصل القانونية."
+              ? "اذكر رابط الصفحة على لوميكس فيلم، وصف المحتوى، وسندك في حقوق الملكية، وبيانات التواصل القانونية."
               : "اكتب تفاصيل استفسارك أو اقتراحك…"
           }
         />
@@ -84,7 +84,7 @@ export function ContactForm({ kind = "CONTACT" }: { kind?: "CONTACT" | "DMCA" })
         <button
           type="submit"
           disabled={pending}
-          className="inline-flex h-11 items-center gap-2 rounded-xl bg-brass-400 px-5 text-sm font-bold text-[#171006] transition hover:bg-brass-300 disabled:opacity-60"
+          className="inline-flex h-11 items-center gap-2 rounded-xl bg-ember-400 px-5 text-sm font-bold text-[#171006] transition hover:bg-ember-300 disabled:opacity-60"
         >
           {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
           إرسال

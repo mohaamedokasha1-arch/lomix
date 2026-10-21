@@ -9,7 +9,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 
 export const metadata: Metadata = {
   title: "الأكثر مشاهدة",
-  description: "الأعمال الأكثر مشاهدة على لوميكس حسب عدّاد مشاهدات حقيقي مسجّل في قاعدة البيانات.",
+  description: "الأعمال الأكثر مشاهدة على لوميكس فيلم حسب عدّاد مشاهدات حقيقي مسجّل في قاعدة البيانات.",
   alternates: { canonical: "/most-viewed" },
 };
 
@@ -35,7 +35,7 @@ export default async function MostViewedPage() {
       />
 
       <div className="mb-7 flex items-start gap-2.5 rounded-xl border border-white/8 bg-ink-900/50 px-4 py-3 text-[0.75rem] leading-6 text-ink-300">
-        <Info className="mt-0.5 h-4 w-4 shrink-0 text-brass-300" aria-hidden="true" />
+        <Info className="mt-0.5 h-4 w-4 shrink-0 text-ember-300" aria-hidden="true" />
         <p>
           لا يظهر هنا أي عمل لم تُسجَّل له مشاهدة واحدة على الأقل. عند تجاوز عدّاد المشاهدات لأي سبب تقني، تُخفى هذه الصفحة
           من التنقل بدل عرض أرقام غير موثوقة.

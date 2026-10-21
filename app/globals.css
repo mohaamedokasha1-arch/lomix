@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 /* ─────────────────────────────────────────────────────────────
-   Loomix Design System
-   سينمائي داكن، إضاءة مركّزة، لون مميز نحاسي دافئ.
+   لوميكس فيلم — نظام التصميم (الإصدار الثاني)
+   سينمائي داكن، إضاءة جمرية، لون مميز مرجاني دافئ.
    ───────────────────────────────────────────────────────────── */
 
 @theme {
@@ -22,16 +22,17 @@
   --color-ink-100: #c9d0d9;
   --color-ink-50: #f2f0ea;
 
-  --color-brass-50: #fdf6e9;
-  --color-brass-100: #f8e8c8;
-  --color-brass-200: #f0d49c;
-  --color-brass-300: #eac483;
-  --color-brass-400: #e3b269;
-  --color-brass-500: #d29a4c;
-  --color-brass-600: #b07c34;
-  --color-brass-700: #8a5f28;
-  --color-brass-800: #5f411c;
-  --color-brass-900: #33230f;
+  /* لوحة «الجمر»: كهرماني مائل للمرجاني — بديل الذهبي النحاسي (هوية الإصدار الثاني). */
+  --color-ember-50: #fff4ef;
+  --color-ember-100: #ffe2d4;
+  --color-ember-200: #ffc2a6;
+  --color-ember-300: #ffa27a;
+  --color-ember-400: #ff7f50;
+  --color-ember-500: #f06238;
+  --color-ember-600: #c94a22;
+  --color-ember-700: #9a3618;
+  --color-ember-800: #6a250f;
+  --color-ember-900: #36140a;
 
   --color-signal-teal: #6ed0b6;
   --color-signal-green: #7dcf9b;
@@ -42,8 +43,8 @@
   --font-sans: var(--font-body), "IBM Plex Sans Arabic", Tahoma, sans-serif;
   --font-latin: var(--font-latin), "Manrope", "Helvetica Neue", Arial, sans-serif;
 
-  --shadow-glow: 0 0 0 1px color-mix(in oklab, var(--color-brass-400) 30%, transparent),
-    0 18px 60px -20px color-mix(in oklab, var(--color-brass-400) 45%, transparent);
+  --shadow-glow: 0 0 0 1px color-mix(in oklab, var(--color-ember-400) 30%, transparent),
+    0 18px 60px -20px color-mix(in oklab, var(--color-ember-400) 45%, transparent);
   --shadow-card: 0 20px 40px -24px rgba(0, 0, 0, 0.9);
 
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
@@ -81,6 +82,9 @@ html {
 
 body {
   background-color: var(--page);
+  background-image: radial-gradient(60% 38% at 85% -4%, rgba(255, 127, 80, 0.10), transparent 70%),
+    radial-gradient(45% 30% at 5% 0%, rgba(201, 74, 34, 0.08), transparent 70%);
+  background-repeat: no-repeat;
   color: var(--color-ink-50);
   font-family: var(--font-sans);
   font-feature-settings: "kern", "liga", "calt";
@@ -106,8 +110,8 @@ body {
 }
 
 ::selection {
-  background: var(--color-brass-400);
-  color: #14100a;
+  background: var(--color-ember-400);
+  color: #171006;
 }
 
 /* تمرير أنيق */
@@ -129,7 +133,7 @@ body {
 
 /* حلقة تركيز واضحة لإتاحة الوصول */
 :focus-visible {
-  outline: 2px solid var(--color-brass-300);
+  outline: 2px solid var(--color-ember-300);
   outline-offset: 3px;
   border-radius: 6px;
 }
@@ -162,9 +166,9 @@ body {
   background: linear-gradient(
     90deg,
     transparent 0%,
-    color-mix(in oklab, var(--color-brass-400) 80%, transparent) 18%,
-    var(--color-brass-200) 50%,
-    color-mix(in oklab, var(--color-brass-400) 80%, transparent) 82%,
+    color-mix(in oklab, var(--color-ember-400) 80%, transparent) 18%,
+    var(--color-ember-200) 50%,
+    color-mix(in oklab, var(--color-ember-400) 80%, transparent) 82%,
     transparent 100%
   );
 }
@@ -260,8 +264,8 @@ body {
 }
 .field:focus {
   outline: none;
-  border-color: var(--color-brass-400);
-  box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-brass-400) 18%, transparent);
+  border-color: var(--color-ember-400);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-ember-400) 18%, transparent);
   background: var(--color-ink-850);
 }
 .field:disabled {

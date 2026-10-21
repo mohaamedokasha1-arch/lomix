@@ -81,7 +81,7 @@ export function TitleRow({
         {moreHref && (
           <Link
             href={moreHref}
-            className="flex w-[43%] shrink-0 snap-start flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-white/12 bg-ink-900/40 text-sm text-ink-300 transition hover:border-brass-400/35 hover:text-brass-200 sm:w-[30%] md:w-[23%] lg:w-[18.5%] xl:w-[16%]"
+            className="flex w-[43%] shrink-0 snap-start flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-white/12 bg-ink-900/40 text-sm text-ink-300 transition hover:border-ember-400/35 hover:text-ember-200 sm:w-[30%] md:w-[23%] lg:w-[18.5%] xl:w-[16%]"
           >
             <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/12">
               <ArrowLeft className="h-4 w-4" />
@@ -97,7 +97,7 @@ export function TitleRow({
             type="button"
             onClick={() => scrollByDir(-1)}
             aria-label="السابق"
-            className="pointer-events-auto flex h-9 w-9 items-center justify-center rounded-full border border-white/12 bg-ink-900/90 text-ink-100 shadow-lg backdrop-blur transition hover:border-brass-400/40 hover:text-brass-200"
+            className="pointer-events-auto flex h-9 w-9 items-center justify-center rounded-full border border-white/12 bg-ink-900/90 text-ink-100 shadow-lg backdrop-blur transition hover:border-ember-400/40 hover:text-ember-200"
           >
             <ArrowRight className="h-4 w-4" />
           </button>
@@ -109,7 +109,7 @@ export function TitleRow({
             type="button"
             onClick={() => scrollByDir(1)}
             aria-label="التالي"
-            className="pointer-events-auto flex h-9 w-9 items-center justify-center rounded-full border border-white/12 bg-ink-900/90 text-ink-100 shadow-lg backdrop-blur transition hover:border-brass-400/40 hover:text-brass-200"
+            className="pointer-events-auto flex h-9 w-9 items-center justify-center rounded-full border border-white/12 bg-ink-900/90 text-ink-100 shadow-lg backdrop-blur transition hover:border-ember-400/40 hover:text-ember-200"
           >
             <ArrowLeft className="h-4 w-4" />
           </button>

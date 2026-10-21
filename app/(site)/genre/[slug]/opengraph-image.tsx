@@ -1,7 +1,7 @@
 import { getGenreBySlug } from "@/lib/queries";
 import { OG_SIZE, renderBrandOg, renderCollectionOg } from "@/lib/og-image";
 
-export const alt = "بطاقة تصنيف على لوميكس";
+export const alt = "بطاقة تصنيف على لوميكس فيلم";
 export const size = OG_SIZE;
 export const contentType = "image/png";
 

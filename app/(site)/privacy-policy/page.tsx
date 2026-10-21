@@ -5,7 +5,7 @@ import { getSettings } from "@/lib/settings";
 export const metadata: Metadata = {
   title: "سياسة الخصوصية",
   description:
-    "سياسة الخصوصية في لوميكس: البيانات التي نجمعها ولماذا، ما لا نفعله بها، مشاركتها مع أطراف أخرى، مدة الاحتفاظ، وحقوقك في الوصول إلى بياناتك وحذفها.",
+    "سياسة الخصوصية في لوميكس فيلم: البيانات التي نجمعها ولماذا، ما لا نفعله بها، مشاركتها مع أطراف أخرى، مدة الاحتفاظ، وحقوقك في الوصول إلى بياناتك وحذفها.",
   alternates: { canonical: "/privacy-policy" },
 };
 
@@ -75,7 +75,7 @@ export default async function PrivacyPage() {
       <h2>حقوقك</h2>
       <p>
         يمكنك طلب الاطلاع على بياناتك أو تصحيحها أو حذف حسابك عبر{" "}
-        <a href={`mailto:${settings.contact_email}`} dir="ltr" className="text-brass-300 underline underline-offset-4">
+        <a href={`mailto:${settings.contact_email}`} dir="ltr" className="text-ember-300 underline underline-offset-4">
           {settings.contact_email}
         </a>
         . سنستجيب في مدة معقولة بعد التحقق من هويتك.
@@ -90,7 +90,7 @@ export default async function PrivacyPage() {
       <h2>التواصل</h2>
       <p>
         لأي سؤال خصوصية:{" "}
-        <a href={`mailto:${settings.contact_email}`} dir="ltr" className="text-brass-300 underline underline-offset-4">
+        <a href={`mailto:${settings.contact_email}`} dir="ltr" className="text-ember-300 underline underline-offset-4">
           {settings.contact_email}
         </a>
       </p>

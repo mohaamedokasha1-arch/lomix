@@ -16,7 +16,7 @@ const COLUMNS = [
     ],
   },
   {
-    title: "لوميكس",
+    title: "لوميكس فيلم",
     links: [
       { href: "/contact", label: "التواصل والدعم" },
       { href: "/dmca", label: "حقوق الملكية (DMCA)" },
@@ -40,12 +40,12 @@ export async function SiteFooter() {
   return (
     <footer className="mt-24 border-t border-white/8 bg-ink-950">
       {meta.hasDemo && meta.showDemoNotice && (
-        <div className="border-b border-brass-400/15 bg-brass-400/[0.06]">
-          <div className="container-page flex flex-col gap-1 py-3 text-[0.72rem] leading-6 text-brass-200/90 sm:flex-row sm:items-center sm:justify-between">
+        <div className="border-b border-ember-400/15 bg-ember-400/[0.06]">
+          <div className="container-page flex flex-col gap-1 py-3 text-[0.72rem] leading-6 text-ember-200/90 sm:flex-row sm:items-center sm:justify-between">
             <span>
               الأعمال المعروضة حاليًا مولّدة داخل المشروع ولا تمثل بيانات حقيقية، والبوسترات مُولّدة داخل المشروع — لا تحتوي أي مادة محمية.
             </span>
-            <Link href="/admin/settings" className="shrink-0 underline decoration-brass-400/40 underline-offset-4 hover:text-brass-100">
+            <Link href="/admin/settings" className="shrink-0 underline decoration-ember-400/40 underline-offset-4 hover:text-ember-100">
               إخفاء اللافتة
             </Link>
           </div>
@@ -60,7 +60,7 @@ export async function SiteFooter() {
             <div className="mt-5 flex flex-wrap items-center gap-3">
               <a
                 href={`mailto:${settings.contact_email}`}
-                className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-3 py-1.5 text-xs text-ink-200 transition hover:border-brass-400/40 hover:text-brass-200"
+                className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-3 py-1.5 text-xs text-ink-200 transition hover:border-ember-400/40 hover:text-ember-200"
               >
                 <Mail className="h-3.5 w-3.5" />
                 <span dir="ltr">{settings.contact_email}</span>
@@ -72,7 +72,7 @@ export async function SiteFooter() {
                   target="_blank"
                   rel="noopener noreferrer nofollow"
                   aria-label={label}
-                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 text-ink-300 transition hover:border-brass-400/40 hover:text-brass-200"
+                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 text-ink-300 transition hover:border-ember-400/40 hover:text-ember-200"
                 >
                   <Icon className="h-3.5 w-3.5" />
                 </a>
@@ -101,7 +101,7 @@ export async function SiteFooter() {
         </p>
 
         <div className="mt-6 flex flex-col-reverse items-start justify-between gap-4 border-t border-white/6 pt-6 text-[0.7rem] text-ink-500 sm:flex-row sm:items-center">
-          <p>© {new Date().getFullYear()} لوميكس. جميع الحقوق محفوظة.</p>
+          <p>© {new Date().getFullYear()} لوميكس فيلم. جميع الحقوق محفوظة.</p>
           <div className="flex flex-wrap items-center gap-4">
             <span className="num">{meta.titleCount} عمل</span>
             <span aria-hidden="true">·</span>

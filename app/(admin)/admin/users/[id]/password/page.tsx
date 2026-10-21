@@ -63,7 +63,7 @@ export default async function UserPasswordPage({ params }: { params: Promise<{ i
           </p>
           <Link
             href="/admin/users"
-            className="mt-4 inline-flex items-center gap-1.5 text-[0.7rem] text-brass-200 hover:underline"
+            className="mt-4 inline-flex items-center gap-1.5 text-[0.7rem] text-ember-200 hover:underline"
           >
             <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
             العودة إلى المستخدمين

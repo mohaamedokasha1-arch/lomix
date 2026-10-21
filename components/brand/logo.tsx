@@ -1,8 +1,9 @@
 import { cn } from "@/lib/utils";
 
 /**
- * هوية Loomix: عدسة مفتوحة + شعاع ضوء.
- * العلامة تُرسم بالكامل بـ SVG (حجم صغير، حِدّة في كل المقاسات، بلا صور).
+ * علامة لوميكس فيلم — «البكرة الجمرية»:
+ * ثلاث أقواس تمثل بكرة فيلم دوّارة، في مركزها مثلث التشغيل، وشعاع ضوء
+ * يخرج من الزاوية العلوية. تُرسم بالكامل بـ SVG (بلا صور، حادّة في كل المقاسات).
  *
  * `uid` إلزامي عمليًا عند عرض أكثر من نسخة في الصفحة نفسها: SVG يعرّف
  * <linearGradient> بمعرّف، وتكرار المعرّف في HTML غير صالح وقد يجعل النسخة
@@ -18,29 +19,32 @@ export function LogoMark({
   /** بادئة معرّفات التدرّجات — فريدة لكل نسخة معروضة في الصفحة نفسها. */
   uid?: string;
 }) {
-  const markId = `${uid}-mark`;
-  const beamsId = `${uid}-beams`;
+  const ember = `${uid}-ember`;
+  const beam = `${uid}-beam`;
 
   return (
     <svg width={size} height={size} viewBox="0 0 40 40" fill="none" aria-hidden="true" className={className}>
       <defs>
-        <linearGradient id={markId} x1="6" y1="4" x2="34" y2="36" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#F3CE8E" />
-          <stop offset="0.55" stopColor="#E3B269" />
-          <stop offset="1" stopColor="#B07C34" />
+        <linearGradient id={ember} x1="6" y1="4" x2="34" y2="36" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#FFC2A6" />
+          <stop offset="0.5" stopColor="#FF7F50" />
+          <stop offset="1" stopColor="#C94A22" />
         </linearGradient>
-        <linearGradient id={beamsId} x1="20" y1="2" x2="20" y2="38" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#FFE7BE" stopOpacity="0.95" />
-          <stop offset="1" stopColor="#E3B269" stopOpacity="0.1" />
+        <linearGradient id={beam} x1="27" y1="13" x2="36" y2="4" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#FFE2D4" />
+          <stop offset="1" stopColor="#FF7F50" stopOpacity="0" />
         </linearGradient>
       </defs>
-      <rect x="1" y="1" width="38" height="38" rx="11" fill="#0B0E15" stroke={`url(#${markId})`} strokeOpacity="0.55" />
-      <path d="M20 6.5A13.5 13.5 0 1 0 33.5 20" stroke={`url(#${markId})`} strokeWidth="2.6" strokeLinecap="round" />
-      <path d="M20 12.5A7.5 7.5 0 1 0 27.5 20" stroke={`url(#${markId})`} strokeWidth="2.2" strokeLinecap="round" opacity="0.75" />
-      <circle cx="20" cy="20" r="3.1" fill={`url(#${markId})`} />
-      <path d="M20 3.5 L20 36.5" stroke={`url(#${beamsId})`} strokeWidth="1.1" opacity="0.65" />
-      <path d="M23.6 4.6 L33.8 34.2" stroke={`url(#${beamsId})`} strokeWidth="0.9" opacity="0.35" />
-      <path d="M16.4 4.6 L6.2 34.2" stroke={`url(#${beamsId})`} strokeWidth="0.9" opacity="0.35" />
+      <rect x="1" y="1" width="38" height="38" rx="12" fill="#0B0D13" stroke={`url(#${ember})`} strokeOpacity="0.5" />
+      {/* ثلاث أقواس = البكرة (فجوات 20° بينها) */}
+      <path d="M15.55 7.78 A13 13 0 0 1 32.8 17.74" stroke={`url(#${ember})`} strokeWidth="3" strokeLinecap="round" />
+      <path d="M32.8 22.26 A13 13 0 0 1 15.55 32.22" stroke={`url(#${ember})`} strokeWidth="3" strokeLinecap="round" opacity="0.72" />
+      <path d="M11.64 29.96 A13 13 0 0 1 11.64 10.04" stroke={`url(#${ember})`} strokeWidth="3" strokeLinecap="round" opacity="0.45" />
+      {/* مثلث التشغيل */}
+      <path d="M17.2 15.4 L24.6 20 L17.2 24.6 Z" fill={`url(#${ember})`} strokeLinejoin="round" />
+      {/* شعاع الضوء */}
+      <path d="M27.5 12.5 L35.5 4.5" stroke={`url(#${beam})`} strokeWidth="1.4" strokeLinecap="round" />
+      <circle cx="36" cy="4" r="1.3" fill="#FFE2D4" />
     </svg>
   );
 }
@@ -61,13 +65,13 @@ export function Logo({
       <LogoMark size={size} uid={uid} />
       <span className="flex flex-col leading-none">
         <span
-          className="font-[family-name:var(--font-latin)] text-[1.35rem] font-extrabold tracking-[-0.02em] text-ink-50"
+          className="font-[family-name:var(--font-latin)] text-[1.3rem] font-extrabold tracking-[-0.02em] text-ink-50"
           dir="ltr"
         >
-          loomix
+          loomix <span className="text-ember-300">film</span>
         </span>
         {showArabic && (
-          <span className="mt-1 text-[0.62rem] font-medium tracking-[0.32em] text-ink-300">لوميكس</span>
+          <span className="mt-1 text-[0.62rem] font-medium tracking-[0.28em] text-ink-300">لوميكس فيلم</span>
         )}
       </span>
     </span>

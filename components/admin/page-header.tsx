@@ -67,7 +67,7 @@ export function StatCard({
 }) {
   const toneClass =
     tone === "accent"
-      ? "border-brass-400/25 bg-brass-400/[0.06]"
+      ? "border-ember-400/25 bg-ember-400/[0.06]"
       : tone === "warning"
         ? "border-signal-amber/25 bg-signal-amber/[0.05]"
         : tone === "danger"

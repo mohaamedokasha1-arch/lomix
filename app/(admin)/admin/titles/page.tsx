@@ -60,7 +60,7 @@ export default async function AdminTitlesPage({
             <Link href="/admin/titles/bulk" className="inline-flex h-9 items-center rounded-lg border border-white/15 px-3 text-xs text-ink-100 hover:border-white/30">
               تحديث جماعي
             </Link>
-            <Link href="/admin/titles/new" className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-brass-400 px-3.5 text-xs font-bold text-[#171006] hover:bg-brass-300">
+            <Link href="/admin/titles/new" className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-ember-400 px-3.5 text-xs font-bold text-[#171006] hover:bg-ember-300">
               <Plus className="h-3.5 w-3.5" /> عمل جديد
             </Link>
           </>
@@ -152,7 +152,7 @@ export default async function AdminTitlesPage({
                           name="ids"
                           value={row.id}
                           form="bulk-titles"
-                          className="h-3.5 w-3.5 accent-brass-400"
+                          className="h-3.5 w-3.5 accent-ember-400"
                           aria-label={`تحديد ${row.titleAr}`}
                         />
                       </td>
@@ -162,7 +162,7 @@ export default async function AdminTitlesPage({
                             {row.posterPath && <Image src={row.posterPath} alt="" fill sizes="32px" className="object-cover" />}
                           </div>
                           <div className="min-w-0">
-                            <Link href={`/admin/titles/${row.id}`} className="block truncate font-medium text-ink-100 hover:text-brass-200">
+                            <Link href={`/admin/titles/${row.id}`} className="block truncate font-medium text-ink-100 hover:text-ember-200">
                               {row.titleAr}
                             </Link>
                             <p className="truncate text-[0.62rem] text-ink-500" dir="ltr">

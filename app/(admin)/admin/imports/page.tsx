@@ -16,7 +16,7 @@ const STATUS_LABEL: Record<string, string> = {
 
 const STATUS_CLASS: Record<string, string> = {
   QUEUED: "bg-white/8 text-ink-400",
-  RUNNING: "bg-brass-400/15 text-brass-200",
+  RUNNING: "bg-ember-400/15 text-ember-200",
   DONE: "bg-signal-teal/12 text-signal-teal",
   PARTIAL: "bg-signal-amber/12 text-signal-amber",
   FAILED: "bg-signal-red/12 text-signal-red",
@@ -31,7 +31,7 @@ export default async function AdminImportsPage() {
         title="سجل الاستيراد"
         description="كل مهمة استيراد مع عدد الصفوف الناجحة والفاشلة. التقرير التفصيلي محفوظ لكل مهمة."
         actions={
-          <Link href="/admin/imports/new" className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-brass-400 px-3.5 text-xs font-bold text-[#171006] hover:bg-brass-300">
+          <Link href="/admin/imports/new" className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-ember-400 px-3.5 text-xs font-bold text-[#171006] hover:bg-ember-300">
             <Plus className="h-3.5 w-3.5" /> استيراد جديد
           </Link>
         }
@@ -41,7 +41,7 @@ export default async function AdminImportsPage() {
         {jobs.length === 0 ? (
           <div className="py-12 text-center">
             <p className="text-sm text-ink-300">لا مهام استيراد بعد.</p>
-            <Link href="/admin/imports/new" className="mt-2 inline-block text-[0.7rem] text-brass-200 underline">
+            <Link href="/admin/imports/new" className="mt-2 inline-block text-[0.7rem] text-ember-200 underline">
               ابدأ أول استيراد
             </Link>
           </div>
@@ -81,7 +81,7 @@ export default async function AdminImportsPage() {
                     </td>
                     <td className="py-2 text-[0.62rem] text-ink-500">{job.userName ?? "—"}</td>
                     <td className="py-2 text-end">
-                      <Link href={`/admin/imports/${job.id}`} className="text-[0.6rem] text-brass-200 underline">
+                      <Link href={`/admin/imports/${job.id}`} className="text-[0.6rem] text-ember-200 underline">
                         التقرير
                       </Link>
                     </td>

@@ -45,13 +45,13 @@ export function ImportResume({ jobId, processed, total }: { jobId: string; proce
         <span className="num">{Math.round((current / Math.max(1, total)) * 100)}%</span>
       </div>
       <div className="h-1.5 overflow-hidden rounded-full bg-white/8">
-        <div className="h-full bg-brass-400 transition-all" style={{ width: `${(current / Math.max(1, total)) * 100}%` }} />
+        <div className="h-full bg-ember-400 transition-all" style={{ width: `${(current / Math.max(1, total)) * 100}%` }} />
       </div>
       <button
         type="button"
         onClick={run}
         disabled={running || current >= total}
-        className="inline-flex h-8 items-center gap-1.5 rounded-lg bg-brass-400 px-3 text-[0.68rem] font-bold text-[#171006] hover:bg-brass-300 disabled:opacity-40"
+        className="inline-flex h-8 items-center gap-1.5 rounded-lg bg-ember-400 px-3 text-[0.68rem] font-bold text-[#171006] hover:bg-ember-300 disabled:opacity-40"
       >
         {running ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Play className="h-3.5 w-3.5" />}
         متابعة الدفعات المتبقية

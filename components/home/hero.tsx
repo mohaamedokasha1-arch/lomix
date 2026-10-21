@@ -96,9 +96,9 @@ export function Hero({
       <div className="container-page relative flex h-full flex-col justify-end pb-16 pt-28 md:pb-24">
         <div key={current.id} className="max-w-2xl rise">
           <div className="mb-4 flex flex-wrap items-center gap-2.5 text-[0.7rem]">
-            <span className="inline-flex items-center gap-1.5 rounded-md border border-brass-400/35 bg-brass-400/10 px-2 py-1 font-semibold text-brass-200">
-              <span className="h-1 w-1 rounded-full bg-brass-300" />
-              مختارات لوميكس
+            <span className="inline-flex items-center gap-1.5 rounded-md border border-ember-400/35 bg-ember-400/10 px-2 py-1 font-semibold text-ember-200">
+              <span className="h-1 w-1 rounded-full bg-ember-300" />
+              مختارات لوميكس فيلم
             </span>
             <span className="rounded-md border border-white/12 bg-black/30 px-2 py-1 text-ink-200 backdrop-blur-sm">
               {TITLE_TYPE_LABEL[current.type]}
@@ -106,8 +106,8 @@ export function Hero({
             {current.releaseYear && <span className="num text-ink-300">{current.releaseYear}</span>}
             {runtime && <span className="num text-ink-300">{runtime}</span>}
             {current.ratingValue != null && (
-              <span className="inline-flex items-center gap-1 text-brass-200">
-                <Star className="h-3 w-3 fill-brass-300 text-brass-300" aria-hidden="true" />
+              <span className="inline-flex items-center gap-1 text-ember-200">
+                <Star className="h-3 w-3 fill-ember-300 text-ember-300" aria-hidden="true" />
                 <span className="num font-semibold">{current.ratingValue.toFixed(1)}</span>
               </span>
             )}
@@ -132,7 +132,7 @@ export function Hero({
               <Link
                 key={genre.slug}
                 href={`/genre/${genre.slug}`}
-                className="rounded-full border border-white/12 px-2.5 py-1 text-[0.7rem] text-ink-200 transition hover:border-brass-400/40 hover:text-brass-200"
+                className="rounded-full border border-white/12 px-2.5 py-1 text-[0.7rem] text-ink-200 transition hover:border-ember-400/40 hover:text-ember-200"
               >
                 {genre.nameAr}
               </Link>
@@ -150,7 +150,7 @@ export function Hero({
               <button
                 type="button"
                 onClick={() => setTrailerOpen(true)}
-                className="inline-flex h-12 items-center gap-2.5 rounded-xl bg-brass-400 px-6 text-sm font-bold text-[#171006] shadow-[0_16px_40px_-18px_rgba(227,178,105,0.8)] transition hover:bg-brass-300"
+                className="inline-flex h-12 items-center gap-2.5 rounded-xl bg-ember-400 px-6 text-sm font-bold text-[#171006] shadow-[0_16px_40px_-18px_rgba(255,127,80,0.75)] transition hover:bg-ember-300"
               >
                 <Play className="h-4 w-4 fill-current" aria-hidden="true" />
                 مشاهدة التريلر
@@ -194,7 +194,7 @@ export function Hero({
                 {i === index && (
                   <span
                     key={`${index}-${paused}`}
-                    className="absolute inset-y-0 start-0 rounded-full bg-brass-300"
+                    className="absolute inset-y-0 start-0 rounded-full bg-ember-300"
                     style={{
                       animation: paused ? "none" : `heroProgress ${DURATION}ms linear forwards`,
                       width: paused ? "50%" : undefined,

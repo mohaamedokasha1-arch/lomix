@@ -24,12 +24,12 @@ export function RegisterForm() {
 
       <div>
         <label className="flex items-start gap-2 text-[0.72rem] leading-6 text-ink-300">
-          <input type="checkbox" name="accept" className="mt-1 h-3.5 w-3.5 rounded border-white/20 bg-ink-900 accent-brass-400" />
+          <input type="checkbox" name="accept" className="mt-1 h-3.5 w-3.5 rounded border-white/20 bg-ink-900 accent-ember-400" />
           <span>
             أوافق على{" "}
-            <Link href="/terms" className="text-brass-300 underline-offset-4 hover:underline">شروط الاستخدام</Link>{" "}
+            <Link href="/terms" className="text-ember-300 underline-offset-4 hover:underline">شروط الاستخدام</Link>{" "}
             و{" "}
-            <Link href="/privacy-policy" className="text-brass-300 underline-offset-4 hover:underline">سياسة الخصوصية</Link>.
+            <Link href="/privacy-policy" className="text-ember-300 underline-offset-4 hover:underline">سياسة الخصوصية</Link>.
           </span>
         </label>
         {errors.accept && <p className="mt-1 text-[0.7rem] text-signal-red">{errors.accept}</p>}
@@ -38,7 +38,7 @@ export function RegisterForm() {
       <button
         type="submit"
         disabled={pending}
-        className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-brass-400 text-sm font-bold text-[#171006] transition hover:bg-brass-300 disabled:opacity-60"
+        className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-ember-400 text-sm font-bold text-[#171006] transition hover:bg-ember-300 disabled:opacity-60"
       >
         {pending && <Loader2 className="h-4 w-4 animate-spin" />}
         إنشاء الحساب
@@ -46,7 +46,7 @@ export function RegisterForm() {
 
       <p className="text-center text-[0.72rem] text-ink-400">
         لديك حساب؟{" "}
-        <Link href="/login" className="text-brass-300 underline-offset-4 hover:underline">تسجيل الدخول</Link>
+        <Link href="/login" className="text-ember-300 underline-offset-4 hover:underline">تسجيل الدخول</Link>
       </p>
     </form>
   );

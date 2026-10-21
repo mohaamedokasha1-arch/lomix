@@ -37,7 +37,7 @@ export default async function SeasonsPage({ params }: { params: Promise<{ id: st
                     {season.number}
                   </span>
                   <div className="min-w-0 flex-1">
-                    <Link href={`/admin/titles/${id}/seasons/${season.id}`} className="block truncate text-[0.78rem] font-medium text-ink-100 hover:text-brass-200">
+                    <Link href={`/admin/titles/${id}/seasons/${season.id}`} className="block truncate text-[0.78rem] font-medium text-ink-100 hover:text-ember-200">
                       {season.nameAr ?? `الموسم ${season.number}`}
                     </Link>
                     <p className="mt-0.5 text-[0.62rem] text-ink-500">
@@ -47,7 +47,7 @@ export default async function SeasonsPage({ params }: { params: Promise<{ id: st
                   </div>
                   <Link
                     href={`/admin/titles/${id}/seasons/${season.id}`}
-                    className="inline-flex h-7 items-center gap-1 rounded-md border border-white/12 px-2 text-[0.62rem] text-ink-200 hover:border-brass-400/40 hover:text-brass-200"
+                    className="inline-flex h-7 items-center gap-1 rounded-md border border-white/12 px-2 text-[0.62rem] text-ink-200 hover:border-ember-400/40 hover:text-ember-200"
                   >
                     <Plus className="h-3 w-3" /> إدارة الحلقات
                   </Link>

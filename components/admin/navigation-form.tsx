@@ -51,7 +51,7 @@ export function NavigationForm({ nav, footerLinks }: { nav: NavItem[]; footerLin
                 />
               </div>
               <label className="flex shrink-0 items-center gap-2 text-[0.65rem] text-ink-300">
-                <input type="checkbox" name={`visible:${item.key}`} defaultChecked={item.visible} className="h-3.5 w-3.5 accent-brass-400" />
+                <input type="checkbox" name={`visible:${item.key}`} defaultChecked={item.visible} className="h-3.5 w-3.5 accent-ember-400" />
                 ظاهر
               </label>
             </li>

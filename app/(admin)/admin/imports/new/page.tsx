@@ -37,7 +37,7 @@ export default function NewImportPage() {
             <ul className="space-y-1.5">
               {COLUMNS.map(([key, required, label]) => (
                 <li key={key} className="text-[0.62rem] leading-5">
-                  <code dir="ltr" className="text-brass-200">
+                  <code dir="ltr" className="text-ember-200">
                     {key}
                   </code>
                   <span className="text-ink-500"> — {label}</span>

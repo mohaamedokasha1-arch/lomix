@@ -6,7 +6,7 @@ import { checkTrailerHealthAction, deleteTrailerAction, markTrailerBrokenAction,
 import { RowActionForm, RowSubmit } from "./row-action-form";
 
 export function TrailerPrimaryButton({ id, titleId, isPrimary }: { id: string; titleId: string; isPrimary: boolean }) {
-  if (isPrimary) return <span className="text-[0.6rem] text-brass-300">أساسي</span>;
+  if (isPrimary) return <span className="text-[0.6rem] text-ember-300">أساسي</span>;
   return (
     <RowActionForm action={setPrimaryTrailerAction} fields={{ id, titleId }}>
       <RowSubmit variant="link" label="اجعله أساسيًا" />
@@ -37,7 +37,7 @@ export function TrailerHealthControls({ id, health }: { id: string; health: stri
         <button
           type="submit"
           disabled={pending}
-          className="inline-flex h-7 items-center gap-1 rounded-md border border-white/12 px-2 text-[0.6rem] text-ink-200 hover:border-brass-400/40 hover:text-brass-200 disabled:opacity-50"
+          className="inline-flex h-7 items-center gap-1 rounded-md border border-white/12 px-2 text-[0.6rem] text-ink-200 hover:border-ember-400/40 hover:text-ember-200 disabled:opacity-50"
         >
           {pending ? <Loader2 className="h-3 w-3 animate-spin" /> : null}
           فحص الرابط

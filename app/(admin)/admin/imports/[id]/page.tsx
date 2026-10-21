@@ -102,7 +102,7 @@ export default async function ImportJobPage({ params }: { params: Promise<{ id: 
             </p>
           </AdminCard>
 
-          <Link href="/admin/imports" className="inline-block text-[0.68rem] text-ink-400 underline hover:text-brass-200">
+          <Link href="/admin/imports" className="inline-block text-[0.68rem] text-ink-400 underline hover:text-ember-200">
             رجوع إلى سجل الاستيراد
           </Link>
         </div>

@@ -111,7 +111,7 @@ export function SiteHeader({ user, nav }: { user: SessionUser | null; nav: Heade
       >
         <div className="container-page">
           <div className={cn("flex items-center justify-between gap-4 transition-all", scrolled ? "h-16" : "h-[4.5rem] md:h-20")}>
-            <Link href="/" aria-label="لوميكس — الصفحة الرئيسية" className="shrink-0">
+            <Link href="/" aria-label="لوميكس فيلم — الصفحة الرئيسية" className="shrink-0">
               <Logo size={scrolled ? 28 : 32} uid="header" />
             </Link>
 
@@ -128,7 +128,7 @@ export function SiteHeader({ user, nav }: { user: SessionUser | null; nav: Heade
                 >
                   {item.label}
                   {isActive(item.href) && (
-                    <span className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-brass-400" />
+                    <span className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-ember-400" />
                   )}
                 </Link>
               ))}
@@ -195,7 +195,7 @@ export function SiteHeader({ user, nav }: { user: SessionUser | null; nav: Heade
                       aria-haspopup="true"
                       className="flex h-10 items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] ps-1 pe-2.5 transition hover:border-white/20"
                     >
-                      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brass-400/15 text-xs font-bold text-brass-200">
+                      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-ember-400/15 text-xs font-bold text-ember-200">
                         {user.name.trim().slice(0, 2)}
                       </span>
                       <span className="hidden max-w-24 truncate text-xs font-medium text-ink-100 sm:inline">
@@ -238,7 +238,7 @@ export function SiteHeader({ user, nav }: { user: SessionUser | null; nav: Heade
               ) : (
                 <Link
                   href="/login"
-                  className="hidden h-10 items-center rounded-xl bg-brass-400 px-4 text-sm font-semibold text-[#171006] transition hover:bg-brass-300 sm:flex"
+                  className="hidden h-10 items-center rounded-xl bg-ember-400 px-4 text-sm font-semibold text-[#171006] transition hover:bg-ember-300 sm:flex"
                 >
                   دخول
                 </Link>
@@ -303,7 +303,7 @@ export function SiteHeader({ user, nav }: { user: SessionUser | null; nav: Heade
                   href={item.href}
                   className={cn(
                     "block rounded-lg px-3 py-2.5 text-[0.95rem] font-medium transition",
-                    isActive(item.href) ? "bg-brass-400/12 text-brass-200" : "text-ink-100 hover:bg-white/[0.05]",
+                    isActive(item.href) ? "bg-ember-400/12 text-ember-200" : "text-ink-100 hover:bg-white/[0.05]",
                   )}
                 >
                   {item.label}
@@ -331,7 +331,7 @@ export function SiteHeader({ user, nav }: { user: SessionUser | null; nav: Heade
                   <UserIcon className="h-4 w-4" /> {user.name}
                 </Link>
                 {user.role !== "VIEWER" && (
-                  <Link href="/admin" className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-brass-200 hover:bg-white/[0.05]">
+                  <Link href="/admin" className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-ember-200 hover:bg-white/[0.05]">
                     <LayoutDashboard className="h-4 w-4" /> لوحة التحكم
                   </Link>
                 )}
@@ -346,14 +346,14 @@ export function SiteHeader({ user, nav }: { user: SessionUser | null; nav: Heade
                 <Link href="/login" className="flex h-10 items-center justify-center rounded-xl border border-white/15 text-sm text-ink-100">
                   دخول
                 </Link>
-                <Link href="/register" className="flex h-10 items-center justify-center rounded-xl bg-brass-400 text-sm font-semibold text-[#171006]">
+                <Link href="/register" className="flex h-10 items-center justify-center rounded-xl bg-ember-400 text-sm font-semibold text-[#171006]">
                   حساب جديد
                 </Link>
               </div>
             )}
             <div className="mt-4 flex items-center gap-2 text-[0.65rem] text-ink-500">
               <LogoMark size={16} uid="header-compact" />
-              <span>لوميكس — دليل الاكتشاف السينمائي</span>
+              <span>لوميكس فيلم — دليل الاكتشاف السينمائي</span>
             </div>
           </div>
         </div>

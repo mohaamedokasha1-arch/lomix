@@ -90,7 +90,7 @@ export function TitleForm({
       {values?.id && state?.ok && (
         <p className="text-[0.7rem] text-ink-400">
           لمعاينة النتيجة افتح{" "}
-          <Link href={`/${values.type === "SERIES" ? "series" : values.type === "ANIME" ? "anime" : "movie"}/${values.slug}`} target="_blank" className="text-brass-200 underline">
+          <Link href={`/${values.type === "SERIES" ? "series" : values.type === "ANIME" ? "anime" : "movie"}/${values.slug}`} target="_blank" className="text-ember-200 underline">
             صفحة العمل
           </Link>{" "}
           (المسودات لا تظهر للجمهور).
@@ -178,7 +178,7 @@ export function TitleForm({
                   onClick={() => toggleGenre(genre.slug)}
                   aria-pressed={active}
                   className={`rounded-full border px-2.5 py-1 text-[0.68rem] transition ${
-                    active ? "border-brass-400/60 bg-brass-400/15 text-brass-200" : "border-white/12 text-ink-300 hover:border-white/30"
+                    active ? "border-ember-400/60 bg-ember-400/15 text-ember-200" : "border-white/12 text-ink-300 hover:border-white/30"
                   }`}
                 >
                   {genre.nameAr}
@@ -317,7 +317,7 @@ export function TitleForm({
           >
             <Plus className="h-3.5 w-3.5" /> صف جديد
           </button>
-          <Link href="/admin/people/new" target="_blank" className="text-[0.65rem] text-ink-400 underline hover:text-brass-200">
+          <Link href="/admin/people/new" target="_blank" className="text-[0.65rem] text-ink-400 underline hover:text-ember-200">
             إضافة شخص غير موجود
           </Link>
         </div>
@@ -343,11 +343,11 @@ export function TitleForm({
           </Field>
           <div className="flex flex-col gap-2">
             <label className="flex items-center gap-2 text-[0.72rem] text-ink-200">
-              <input type="checkbox" name="featured" defaultChecked={values?.featured} className="h-3.5 w-3.5 accent-brass-400" />
+              <input type="checkbox" name="featured" defaultChecked={values?.featured} className="h-3.5 w-3.5 accent-ember-400" />
               إبراز في الواجهة
             </label>
             <label className="flex items-center gap-2 text-[0.72rem] text-ink-200">
-              <input type="checkbox" name="isDemo" defaultChecked={values?.isDemo} className="h-3.5 w-3.5 accent-brass-400" />
+              <input type="checkbox" name="isDemo" defaultChecked={values?.isDemo} className="h-3.5 w-3.5 accent-ember-400" />
               محتوى تجريبي (يظهر عليه وسم «تجريبي»)
             </label>
             {values?.isDemo && (

@@ -45,7 +45,7 @@ export function SeasonsPanel({ slug, seasons }: { slug: string; seasons: Season[
           >
             {season.nameAr ?? `الموسم ${season.number}`}
             {season.year && <span className="num ms-1.5 text-[0.65rem] text-ink-500">{season.year}</span>}
-            {index === active && <span className="absolute inset-x-2 bottom-0 h-0.5 rounded-full bg-brass-400" />}
+            {index === active && <span className="absolute inset-x-2 bottom-0 h-0.5 rounded-full bg-ember-400" />}
           </button>
         ))}
       </div>
@@ -69,11 +69,11 @@ export function SeasonsPanel({ slug, seasons }: { slug: string; seasons: Season[
                   href={`/series/${slug}/season/${current.number}/episode/${episode.number}`}
                   className="group flex items-start gap-3 px-4 py-3.5 transition hover:bg-white/[0.035]"
                 >
-                  <span className="num mt-0.5 flex h-7 w-8 shrink-0 items-center justify-center rounded-md border border-white/10 text-[0.7rem] text-ink-300 group-hover:border-brass-400/35 group-hover:text-brass-200">
+                  <span className="num mt-0.5 flex h-7 w-8 shrink-0 items-center justify-center rounded-md border border-white/10 text-[0.7rem] text-ink-300 group-hover:border-ember-400/35 group-hover:text-ember-200">
                     {episode.number}
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-sm font-medium text-ink-100 group-hover:text-brass-200">
+                    <span className="block truncate text-sm font-medium text-ink-100 group-hover:text-ember-200">
                       {episode.nameAr}
                     </span>
                     {episode.overviewAr && (
@@ -92,7 +92,7 @@ export function SeasonsPanel({ slug, seasons }: { slug: string; seasons: Season[
                       )}
                     </span>
                   </span>
-                  <ChevronLeft className="mt-1.5 h-3.5 w-3.5 shrink-0 text-ink-500 transition group-hover:text-brass-200" aria-hidden="true" />
+                  <ChevronLeft className="mt-1.5 h-3.5 w-3.5 shrink-0 text-ink-500 transition group-hover:text-ember-200" aria-hidden="true" />
                 </Link>
               </li>
             ))}
@@ -122,7 +122,7 @@ export function SeasonsPanel({ slug, seasons }: { slug: string; seasons: Season[
             </dl>
             <Link
               href={`/series/${slug}/season/${current.number}`}
-              className="mt-4 flex h-9 items-center justify-center rounded-lg border border-white/12 text-xs text-ink-200 transition hover:border-brass-400/40 hover:text-brass-200"
+              className="mt-4 flex h-9 items-center justify-center rounded-lg border border-white/12 text-xs text-ink-200 transition hover:border-ember-400/40 hover:text-ember-200"
             >
               صفحة الموسم الكاملة
             </Link>

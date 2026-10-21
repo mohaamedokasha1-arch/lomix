@@ -349,7 +349,7 @@ export async function renderTitleOg(input: OgTitleInput): Promise<ImageResponse>
               LOOMIX
             </span>
             <span style={{ width: 6, height: 6, borderRadius: 3, backgroundColor: "#d9a441", display: "flex" }} />
-            <span style={{ fontSize: 34, fontWeight: 700, color: "#d9a441" }}>لوميكس</span>
+            <span style={{ fontSize: 34, fontWeight: 700, color: "#d9a441" }}>لوميكس فيلم</span>
           </div>
 
           <div style={{ display: "flex", marginTop: 40 }}>
@@ -444,7 +444,7 @@ export async function renderCollectionOg(
             LOOMIX
           </span>
           <span style={{ width: 6, height: 6, borderRadius: 3, backgroundColor: "#d9a441", display: "flex" }} />
-          <span style={{ fontSize: 34, fontWeight: 700, color: "#d9a441" }}>لوميكس</span>
+          <span style={{ fontSize: 34, fontWeight: 700, color: "#d9a441" }}>لوميكس فيلم</span>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
@@ -487,7 +487,7 @@ export async function renderBrandOg(subtitle?: string): Promise<ImageResponse> {
           fontFamily: "PlexArabic",
         }}
       >
-        <div style={{ fontSize: 92, fontWeight: 700, color: "#f7f7fa" }}>لوميكس</div>
+        <div style={{ fontSize: 92, fontWeight: 700, color: "#f7f7fa" }}>لوميكس فيلم</div>
         <div style={{ marginTop: 14, fontFamily: "PlexLatin", fontSize: 26, letterSpacing: 12, color: "#d9a441", fontWeight: 600 }}>
           LOOMIX
         </div>

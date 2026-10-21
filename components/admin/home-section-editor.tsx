@@ -24,7 +24,7 @@ export function HomeSectionEditor({
       <TextInput name="titleAr" defaultValue={titleAr} required aria-label="عنوان القسم" className="h-8 text-[0.72rem]" />
       <TextInput name="subtitleAr" defaultValue={subtitleAr ?? ""} aria-label="وصف القسم" className="h-8 text-[0.72rem]" placeholder="وصف مختصر (اختياري)" />
       <label className="flex items-center gap-2 text-[0.65rem] text-ink-300">
-        <input type="checkbox" name="visible" defaultChecked={visible} className="h-3.5 w-3.5 accent-brass-400" />
+        <input type="checkbox" name="visible" defaultChecked={visible} className="h-3.5 w-3.5 accent-ember-400" />
         ظاهر على الصفحة
       </label>
       <SubmitButton className="h-8 px-3 text-[0.68rem]">حفظ القسم</SubmitButton>

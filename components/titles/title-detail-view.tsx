@@ -33,7 +33,7 @@ export function TitleDetailView({
       icon: <CalendarDays className="h-3.5 w-3.5" />,
       label: "السنة",
       value: (
-        <Link href={`/year/${title.releaseYear}`} className="num underline-offset-4 transition hover:text-brass-200 hover:underline">
+        <Link href={`/year/${title.releaseYear}`} className="num underline-offset-4 transition hover:text-ember-200 hover:underline">
           {title.releaseYear}
         </Link>
       ),
@@ -47,7 +47,7 @@ export function TitleDetailView({
       icon: <Globe2 className="h-3.5 w-3.5" />,
       label: "الدولة",
       value: (
-        <Link href={`/country/${title.countryCode}`} className="underline-offset-4 transition hover:text-brass-200 hover:underline">
+        <Link href={`/country/${title.countryCode}`} className="underline-offset-4 transition hover:text-ember-200 hover:underline">
           {title.countryNameAr}
         </Link>
       ),
@@ -110,7 +110,7 @@ export function TitleDetailView({
                         <p className="truncate text-sm text-ink-100">{trailer.nameAr}</p>
                         <p className="mt-0.5 flex items-center gap-2 text-[0.65rem] text-ink-500">
                           <span>{TRAILER_KIND_LABEL[trailer.kind] ?? trailer.kind}</span>
-                          {trailer.isPrimary && <span className="text-brass-300/80">· رئيسي</span>}
+                          {trailer.isPrimary && <span className="text-ember-300/80">· رئيسي</span>}
                           {trailer.health === "BROKEN" && <span className="text-signal-amber">· غير متاح حاليًا</span>}
                         </p>
                       </div>
@@ -118,7 +118,7 @@ export function TitleDetailView({
                     </li>
                   ))}
                 </ul>
-                <p className="mt-2 text-[0.65rem] text-ink-500">تُعرض التريلرات عبر تضمين رسمي داخل مشغّل الموقع، ولا تُستضاف على خوادم لوميكس.</p>
+                <p className="mt-2 text-[0.65rem] text-ink-500">تُعرض التريلرات عبر تضمين رسمي داخل مشغّل الموقع، ولا تُستضاف على خوادم لوميكس فيلم.</p>
               </section>
             )}
           </div>
@@ -146,14 +146,14 @@ export function TitleDetailView({
               )}
 
               {title.editorNoteAr && (
-                <div className="mt-5 rounded-xl border border-brass-400/20 bg-brass-400/[0.06] p-3.5">
-                  <p className="mb-1.5 text-[0.65rem] font-semibold tracking-wide text-brass-300/90">ملاحظة المحرر</p>
+                <div className="mt-5 rounded-xl border border-ember-400/20 bg-ember-400/[0.06] p-3.5">
+                  <p className="mb-1.5 text-[0.65rem] font-semibold tracking-wide text-ember-300/90">ملاحظة المحرر</p>
                   <p className="text-[0.75rem] leading-6 text-ink-200">{title.editorNoteAr}</p>
                 </div>
               )}
 
               <p className="mt-5 border-t border-white/6 pt-3.5 text-[0.62rem] leading-5 text-ink-500">
-                لوميكس دليل اكتشاف: يعرض بيانات العمل وتريلره الرسمي فقط، ولا يوفّر مشاهدة العمل كاملًا.
+                لوميكس فيلم دليل اكتشاف: يعرض بيانات العمل وتريلره الرسمي فقط، ولا يوفّر مشاهدة العمل كاملًا.
               </p>
             </div>
           </aside>

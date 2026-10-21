@@ -43,13 +43,13 @@ export default async function AdminUsersPage({
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-[0.78rem] text-ink-100">
                     {user.name}
-                    {user.id === currentUser?.id && <span className="ms-1 text-[0.58rem] text-brass-300">(أنت)</span>}
+                    {user.id === currentUser?.id && <span className="ms-1 text-[0.58rem] text-ember-300">(أنت)</span>}
                   </p>
                   <p className="truncate text-[0.6rem] text-ink-500" dir="ltr">
                     {user.email}
                   </p>
                 </div>
-                <span className={`rounded-full px-2 py-0.5 text-[0.58rem] ${user.role === "ADMIN" ? "bg-brass-400/15 text-brass-200" : "bg-white/8 text-ink-400"}`}>
+                <span className={`rounded-full px-2 py-0.5 text-[0.58rem] ${user.role === "ADMIN" ? "bg-ember-400/15 text-ember-200" : "bg-white/8 text-ink-400"}`}>
                   {ROLE_LABEL[user.role] ?? user.role}
                 </span>
                 <span className={`text-[0.58rem] ${user.isActive ? "text-signal-teal" : "text-signal-red"}`}>{user.isActive ? "نشط" : "موقوف"}</span>
@@ -57,7 +57,7 @@ export default async function AdminUsersPage({
                 <span className="hidden text-[0.58rem] text-ink-500 md:inline">{user.lastLoginAt ? relativeTime(user.lastLoginAt) : "لم يدخل"}</span>
                 <Link
                   href={`/admin/users/${user.id}/password`}
-                  className="text-[0.6rem] text-brass-200 hover:underline"
+                  className="text-[0.6rem] text-ember-200 hover:underline"
                   title={`إعادة تعيين كلمة مرور ${user.name}`}
                 >
                   كلمة المرور

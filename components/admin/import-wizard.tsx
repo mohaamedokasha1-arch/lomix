@@ -94,7 +94,7 @@ export function ImportWizard() {
               type="button"
               onClick={runImport}
               disabled={running || preview.validCount === 0}
-              className="inline-flex h-8 items-center gap-1.5 rounded-lg bg-brass-400 px-3 text-[0.68rem] font-bold text-[#171006] hover:bg-brass-300 disabled:opacity-40"
+              className="inline-flex h-8 items-center gap-1.5 rounded-lg bg-ember-400 px-3 text-[0.68rem] font-bold text-[#171006] hover:bg-ember-300 disabled:opacity-40"
             >
               {running ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Play className="h-3.5 w-3.5" />}
               بدء الاستيراد
@@ -112,7 +112,7 @@ export function ImportWizard() {
                 </span>
               </div>
               <div className="h-1.5 overflow-hidden rounded-full bg-white/8">
-                <div className="h-full bg-brass-400 transition-all" style={{ width: `${(progress.processed / Math.max(1, progress.total)) * 100}%` }} />
+                <div className="h-full bg-ember-400 transition-all" style={{ width: `${(progress.processed / Math.max(1, progress.total)) * 100}%` }} />
               </div>
               {progress.done && (
                 <p className="mt-2 flex items-center gap-1 text-[0.65rem] text-signal-green">

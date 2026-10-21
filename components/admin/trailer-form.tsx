@@ -79,13 +79,13 @@ export function TrailerForm({ values, titles }: { values?: TrailerValues; titles
         </Field>
       </div>
       <label className="flex items-center gap-2 text-[0.72rem] text-ink-200">
-        <input type="checkbox" name="isPrimary" defaultChecked={values?.isPrimary} className="h-3.5 w-3.5 accent-brass-400" />
+        <input type="checkbox" name="isPrimary" defaultChecked={values?.isPrimary} className="h-3.5 w-3.5 accent-ember-400" />
         اجعله التريلر الأساسي لهذا العمل
       </label>
       <SubmitButton>{values?.id ? "حفظ التريلر" : "إضافة التريلر"}</SubmitButton>
       <p className="text-[0.6rem] text-ink-500">
         التريلرات لا تُستضاف عندنا — تُضمَّن من يوتيوب الرسمي فقط.{" "}
-        <Link href="/dmca" className="underline hover:text-brass-200" target="_blank">
+        <Link href="/dmca" className="underline hover:text-ember-200" target="_blank">
           سياسة الحقوق
         </Link>
       </p>

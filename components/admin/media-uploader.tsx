@@ -35,8 +35,8 @@ export function MediaUploader() {
 
   return (
     <div className="space-y-3">
-      <label className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-white/20 bg-ink-950/40 px-4 py-8 text-center transition hover:border-brass-400/40">
-        {busy ? <Loader2 className="h-5 w-5 animate-spin text-brass-300" /> : <Upload className="h-5 w-5 text-ink-400" />}
+      <label className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-white/20 bg-ink-950/40 px-4 py-8 text-center transition hover:border-ember-400/40">
+        {busy ? <Loader2 className="h-5 w-5 animate-spin text-ember-300" /> : <Upload className="h-5 w-5 text-ink-400" />}
         <span className="text-[0.72rem] text-ink-200">{busy ? "جارٍ المعالجة…" : "اختر صورة أو أفلتها هنا"}</span>
         <span className="text-[0.6rem] text-ink-500">تُنشأ نسخ 400 / 900 / 1600 بكسل تلقائيًا</span>
         <input

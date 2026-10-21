@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const country = facets.countries.find((c) => c.code.toLowerCase() === code.toLowerCase());
   return {
     title: country ? `أعمال ${country.name}` : "أعمال حسب الدولة",
-    description: `أعمال ${country?.name ?? "هذه الدولة"} على لوميكس مع بياناتها وتريلراتها.`,
+    description: `أعمال ${country?.name ?? "هذه الدولة"} على لوميكس فيلم مع بياناتها وتريلراتها.`,
     alternates: { canonical: `/country/${code.toUpperCase()}` },
   };
 }
@@ -58,7 +58,7 @@ export default async function CountryPage({ params, searchParams }: Props) {
       <PageHeader
         kicker="حسب الدولة"
         title={`أعمال ${country?.name ?? upper}`}
-        description={`${result.total} عملًا من هذه الدولة داخل مكتبة لوميكس.`}
+        description={`${result.total} عملًا من هذه الدولة داخل مكتبة لوميكس فيلم.`}
       />
       <CatalogView
         items={result.items}

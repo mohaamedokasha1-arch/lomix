@@ -66,7 +66,7 @@ export function TitleHero({
 
           <div>
             <div className="mb-4 flex flex-wrap items-center gap-2 text-[0.7rem]">
-              <span className="rounded-md border border-brass-400/35 bg-brass-400/12 px-2 py-1 font-semibold text-brass-200">
+              <span className="rounded-md border border-ember-400/35 bg-ember-400/12 px-2 py-1 font-semibold text-ember-200">
                 {typeLabel}
               </span>
               {title.status !== "RELEASED" && (
@@ -78,7 +78,7 @@ export function TitleHero({
                 // السنة رابط فعلي: صفحة /year/[year] موجودة، ورابطها يجعلها قابلة للوصول
                 <Link
                   href={`/year/${title.releaseYear}`}
-                  className="num text-ink-300 underline-offset-4 transition hover:text-brass-200 hover:underline"
+                  className="num text-ink-300 underline-offset-4 transition hover:text-ember-200 hover:underline"
                 >
                   {title.releaseYear}
                 </Link>
@@ -90,7 +90,7 @@ export function TitleHero({
                 </span>
               )}
               {title.countryNameAr && (
-                <Link href={`/country/${title.countryCode}`} className="text-ink-300 underline-offset-4 transition hover:text-brass-200 hover:underline">
+                <Link href={`/country/${title.countryCode}`} className="text-ink-300 underline-offset-4 transition hover:text-ember-200 hover:underline">
                   {title.countryNameAr}
                 </Link>
               )}
@@ -106,7 +106,7 @@ export function TitleHero({
             )}
 
             {title.taglineAr && (
-              <p className="mt-4 border-s-2 border-brass-400/60 ps-3 text-sm italic leading-7 text-ink-200">
+              <p className="mt-4 border-s-2 border-ember-400/60 ps-3 text-sm italic leading-7 text-ink-200">
                 {title.taglineAr}
               </p>
             )}
@@ -118,7 +118,7 @@ export function TitleHero({
                 <Link
                   key={genre.slug}
                   href={`/genre/${genre.slug}`}
-                  className="rounded-full border border-white/12 bg-white/[0.03] px-2.5 py-1 text-[0.7rem] text-ink-200 transition hover:border-brass-400/40 hover:text-brass-200"
+                  className="rounded-full border border-white/12 bg-white/[0.03] px-2.5 py-1 text-[0.7rem] text-ink-200 transition hover:border-ember-400/40 hover:text-ember-200"
                 >
                   {genre.nameAr}
                 </Link>
@@ -143,7 +143,7 @@ export function TitleHero({
               {director && (
                 <span>
                   إخراج{" "}
-                  <Link href={`/person/${director.slug}`} className="font-medium text-ink-100 transition hover:text-brass-200">
+                  <Link href={`/person/${director.slug}`} className="font-medium text-ink-100 transition hover:text-ember-200">
                     {director.nameAr}
                   </Link>
                 </span>

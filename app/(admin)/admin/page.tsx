@@ -67,7 +67,7 @@ export default async function AdminDashboard() {
         description="أرقام حقيقية من قاعدة البيانات، وآخر العمليات، والتنبيهات التي تحتاج مراجعة."
         actions={
           <>
-            <Link href="/admin/titles/new" className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-brass-400 px-3.5 text-xs font-bold text-[#171006] transition hover:bg-brass-300">
+            <Link href="/admin/titles/new" className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-ember-400 px-3.5 text-xs font-bold text-[#171006] transition hover:bg-ember-300">
               <Plus className="h-3.5 w-3.5" /> عمل جديد
             </Link>
             <Link href="/admin/imports/new" className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-white/15 px-3.5 text-xs text-ink-100 transition hover:border-white/30">
@@ -134,7 +134,7 @@ export default async function AdminDashboard() {
           title="آخر العمليات"
           description="سجل غير قابل للحذف من واجهة المحرر"
           actions={
-            <Link href="/admin/audit" className="flex items-center gap-1 text-[0.68rem] text-ink-400 transition hover:text-brass-200">
+            <Link href="/admin/audit" className="flex items-center gap-1 text-[0.68rem] text-ink-400 transition hover:text-ember-200">
               السجل الكامل <ArrowLeft className="h-3 w-3" />
             </Link>
           }
@@ -163,7 +163,7 @@ export default async function AdminDashboard() {
               {trending.map((item, index) => (
                 <li key={item.slug} className="flex items-center gap-2.5">
                   <span className="num w-4 text-[0.65rem] text-ink-500">{index + 1}</span>
-                  <Link href={`/${item.type === "MOVIE" ? "movie" : item.type === "ANIME" ? "anime" : "series"}/${item.slug}`} className="min-w-0 flex-1 truncate text-[0.76rem] text-ink-200 hover:text-brass-200" target="_blank">
+                  <Link href={`/${item.type === "MOVIE" ? "movie" : item.type === "ANIME" ? "anime" : "series"}/${item.slug}`} className="min-w-0 flex-1 truncate text-[0.76rem] text-ink-200 hover:text-ember-200" target="_blank">
                     {item.titleAr}
                   </Link>
                   <span className="num text-[0.65rem] text-ink-400">{item.views}</span>
@@ -172,7 +172,7 @@ export default async function AdminDashboard() {
             </ol>
           </AdminCard>
 
-          <AdminCard title="آخر التريلرات" actions={<Link href="/admin/trailers" className="text-[0.68rem] text-ink-400 hover:text-brass-200">إدارة</Link>}>
+          <AdminCard title="آخر التريلرات" actions={<Link href="/admin/trailers" className="text-[0.68rem] text-ink-400 hover:text-ember-200">إدارة</Link>}>
             <ul className="space-y-2">
               {trailers.map((trailer) => (
                 <li key={trailer.id} className="flex items-center justify-between gap-2 text-[0.72rem]">
@@ -195,7 +195,7 @@ export default async function AdminDashboard() {
           { href: "/admin/trailers", label: "التريلرات", value: stats.trailers, Icon: Clapperboard },
           { href: "/admin/titles?type=SERIES", label: "المسلسلات", value: stats.series, Icon: Tv },
         ].map((item) => (
-          <Link key={item.href} href={item.href} className="flex items-center gap-2.5 rounded-xl border border-white/8 bg-ink-900/40 p-3.5 text-[0.75rem] text-ink-200 transition hover:border-brass-400/30 hover:text-brass-200">
+          <Link key={item.href} href={item.href} className="flex items-center gap-2.5 rounded-xl border border-white/8 bg-ink-900/40 p-3.5 text-[0.75rem] text-ink-200 transition hover:border-ember-400/30 hover:text-ember-200">
             <item.Icon className="h-4 w-4 text-ink-500" />
             <span className="flex-1">{item.label}</span>
             <span className="num text-[0.68rem] text-ink-500">{item.value}</span>

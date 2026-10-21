@@ -83,7 +83,7 @@ export default async function AdminMessagesPage({ searchParams }: { searchParams
 
                 <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
                   <MessageActions id={message.id} status={message.status} />
-                  <a href={`mailto:${message.email}?subject=${encodeURIComponent(`رد Loomix: ${message.subject ?? ""}`)}`} className="text-[0.62rem] text-brass-200 underline">
+                  <a href={`mailto:${message.email}?subject=${encodeURIComponent(`رد Loomix Film: ${message.subject ?? ""}`)}`} className="text-[0.62rem] text-ember-200 underline">
                     رد عبر البريد
                   </a>
                 </div>

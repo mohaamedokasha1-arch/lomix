@@ -16,7 +16,7 @@ export async function generateMetadata({ searchParams }: { searchParams: SP }): 
   const settings = await getSettings(["seo_index_search"]);
   return {
     title: q ? `نتائج البحث عن «${q}»` : "البحث",
-    description: "ابحث في مكتبة لوميكس عن الأفلام والمسلسلات والأنمي بالاسم العربي أو الأصلي.",
+    description: "ابحث في مكتبة لوميكس فيلم عن الأفلام والمسلسلات والأنمي بالاسم العربي أو الأصلي.",
     robots: settings.seo_index_search === "true" ? undefined : { index: false, follow: true },
   };
 }
@@ -49,7 +49,7 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
     <div className="container-page pb-10 pt-28 md:pt-32">
       <PageHeader
         kicker="بحث"
-        title={query.trim() ? `نتائج «${query.trim()}»` : "ابحث في لوميكس"}
+        title={query.trim() ? `نتائج «${query.trim()}»` : "ابحث في لوميكس فيلم"}
         description={
           query.trim()
             ? "البحث يشمل الاسم العربي والاسم الأصلي والتصنيفات، ويتعامل مع اختلافات الألف والتاء المربوطة."
@@ -69,7 +69,7 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
         />
         <button
           type="submit"
-          className="absolute end-1.5 top-1/2 h-9 -translate-y-1/2 rounded-lg bg-brass-400 px-4 text-xs font-bold text-[#171006]"
+          className="absolute end-1.5 top-1/2 h-9 -translate-y-1/2 rounded-lg bg-ember-400 px-4 text-xs font-bold text-[#171006]"
         >
           ابحث
         </button>
@@ -107,7 +107,7 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
                     <Link
                       key={item.id}
                       href={`${item.type === "MOVIE" ? "/movie" : item.type === "ANIME" ? "/anime" : "/series"}/${item.slug}`}
-                      className="rounded-xl border border-white/8 bg-ink-900/60 p-3 text-sm text-ink-100 transition hover:border-brass-400/35 hover:text-brass-200"
+                      className="rounded-xl border border-white/8 bg-ink-900/60 p-3 text-sm text-ink-100 transition hover:border-ember-400/35 hover:text-ember-200"
                     >
                       {item.titleAr}
                       {item.releaseYear && <span className="num ms-2 text-[0.7rem] text-ink-400">{item.releaseYear}</span>}
@@ -124,13 +124,13 @@ export default async function SearchPage({ searchParams }: { searchParams: SP })
             <Link
               key={item.id}
               href={`${item.type === "MOVIE" ? "/movie" : item.type === "ANIME" ? "/anime" : "/series"}/${item.slug}`}
-              className="group flex items-center gap-3 rounded-xl border border-white/8 bg-ink-900/50 p-3 transition hover:border-brass-400/35"
+              className="group flex items-center gap-3 rounded-xl border border-white/8 bg-ink-900/50 p-3 transition hover:border-ember-400/35"
             >
-              <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/[0.04] text-ink-300 group-hover:text-brass-200">
+              <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/[0.04] text-ink-300 group-hover:text-ember-200">
                 <SearchIcon className="h-4 w-4" />
               </span>
               <span>
-                <span className="block text-sm font-medium text-ink-100 group-hover:text-brass-200">{item.titleAr}</span>
+                <span className="block text-sm font-medium text-ink-100 group-hover:text-ember-200">{item.titleAr}</span>
                 <span className="mt-0.5 block text-[0.7rem] text-ink-400">{item.genres.map((g) => g.nameAr).join(" · ")}</span>
               </span>
             </Link>

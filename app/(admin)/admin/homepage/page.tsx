@@ -120,7 +120,7 @@ export default async function AdminHomepagePage() {
           <AdminCard title="محتويات الأقسام">
             <p className="text-[0.68rem] leading-6 text-ink-400">
               اختيار الأعمال داخل قوائم «مختارة المحرر» و«ترند» يتم من صفحة{" "}
-              <Link href="/admin/curated" className="text-brass-200 underline">
+              <Link href="/admin/curated" className="text-ember-200 underline">
                 القوائم المنسّقة
               </Link>
               . أقسام مثل «أحدث الإضافات» و«الأعلى تقييمًا» تُحسب من بيانات المنشور فقط.

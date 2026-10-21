@@ -31,7 +31,7 @@ export default function AdminError({ error, reset }: { error: Error & { digest?:
         <button
           type="button"
           onClick={reset}
-          className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-brass-400 px-3.5 text-[0.72rem] font-bold text-[#171006] transition hover:bg-brass-300"
+          className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-ember-400 px-3.5 text-[0.72rem] font-bold text-[#171006] transition hover:bg-ember-300"
         >
           <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" /> إعادة المحاولة
         </button>

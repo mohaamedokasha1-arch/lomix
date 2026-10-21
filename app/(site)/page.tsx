@@ -70,16 +70,16 @@ export default async function HomePage() {
                     <Link
                       key={genre.slug}
                       href={`/genre/${genre.slug}`}
-                      className="group relative overflow-hidden rounded-xl border border-white/8 bg-ink-900/70 px-4 py-4 transition hover:border-brass-400/35 hover:bg-ink-850"
+                      className="group relative overflow-hidden rounded-xl border border-white/8 bg-ink-900/70 px-4 py-4 transition hover:border-ember-400/35 hover:bg-ink-850"
                     >
                       <span className="flex items-center justify-between">
-                        <span className="display text-[0.95rem] font-semibold text-ink-100 group-hover:text-brass-200">
+                        <span className="display text-[0.95rem] font-semibold text-ink-100 group-hover:text-ember-200">
                           {genre.nameAr}
                         </span>
                         <span className="num text-[0.65rem] text-ink-500">{genre.count}</span>
                       </span>
                       <span className="mt-3 block h-px w-full bg-gradient-to-l from-white/12 to-transparent" />
-                      <span className="mt-2 flex items-center gap-1 text-[0.65rem] text-ink-400 transition group-hover:text-brass-300/80">
+                      <span className="mt-2 flex items-center gap-1 text-[0.65rem] text-ink-400 transition group-hover:text-ember-300/80">
                         استكشف <ArrowLeft className="h-3 w-3" />
                       </span>
                     </Link>
@@ -128,8 +128,8 @@ export default async function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-l from-ink-950 via-ink-950/85 to-ink-950/40" />
           <div className="relative grid gap-8 p-7 md:grid-cols-[1.4fr_1fr] md:p-12">
             <div>
-              <p className="flex items-center gap-2 text-[0.65rem] font-semibold tracking-[0.3em] text-brass-300/80">
-                <Sparkles className="h-3.5 w-3.5" /> فلسفة لوميكس
+              <p className="flex items-center gap-2 text-[0.65rem] font-semibold tracking-[0.3em] text-ember-300/80">
+                <Sparkles className="h-3.5 w-3.5" /> فلسفة لوميكس فيلم
               </p>
               <h2 id="editorial-band" className="display mt-4 max-w-xl text-balance text-2xl font-bold leading-snug text-ink-50 md:text-3xl">
                 دليل اكتشاف سينمائي، لا مكتبة بث.
@@ -141,7 +141,7 @@ export default async function HomePage() {
               <div className="mt-6 flex flex-wrap gap-3">
                 <Link
                   href="/trailers"
-                  className="inline-flex h-10 items-center gap-2 rounded-xl bg-brass-400 px-4 text-xs font-bold text-[#171006] transition hover:bg-brass-300"
+                  className="inline-flex h-10 items-center gap-2 rounded-xl bg-ember-400 px-4 text-xs font-bold text-[#171006] transition hover:bg-ember-300"
                 >
                   <Clapperboard className="h-3.5 w-3.5" /> أرشيف التريلرات
                 </Link>
@@ -174,7 +174,7 @@ export default async function HomePage() {
             <h2 className="display text-xl font-semibold text-ink-100">لا يوجد محتوى منشور بعد</h2>
             <p className="mt-2 text-sm text-ink-300">ابدأ بإضافة أول عمل من لوحة التحكم، أو نفّذ أمر التعبئة الأولية (seed).</p>
             <div className="mt-5 flex justify-center gap-3">
-              <Link href="/admin/titles/new" className="rounded-xl bg-brass-400 px-4 py-2 text-sm font-semibold text-[#171006]">
+              <Link href="/admin/titles/new" className="rounded-xl bg-ember-400 px-4 py-2 text-sm font-semibold text-[#171006]">
                 إضافة عمل
               </Link>
               <Link href="/admin" className="rounded-xl border border-white/15 px-4 py-2 text-sm text-ink-100">

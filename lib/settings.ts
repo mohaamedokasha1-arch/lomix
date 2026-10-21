@@ -2,19 +2,19 @@ import { getDb, schema } from "@/db";
 import { inArray } from "drizzle-orm";
 
 export const SETTING_DEFAULTS = {
-  site_name: "Loomix",
-  site_name_ar: "لوميكس",
+  site_name: "Loomix Film",
+  site_name_ar: "لوميكس فيلم",
   tagline_ar: "دليل الاكتشاف السينمائي",
   meta_description:
-    "لوميكس منصة عربية لاكتشاف الأفلام والمسلسلات والأنمي: بيانات دقيقة، تريلرات رسمية، وتجربة تصفح سينمائية هادئة.",
+    "لوميكس فيلم منصة عربية لاكتشاف الأفلام والمسلسلات والأنمي: بيانات دقيقة، تريلرات رسمية، وتجربة تصفح سينمائية هادئة.",
   contact_email: "hello@loomix.tv",
   twitter_url: "",
   instagram_url: "",
   youtube_url: "",
   telegram_url: "",
-  footer_note: "لوميكس دليل اكتشاف سينمائي. لا يستضيف الموقع أي محتوى مصوّر كامل، والتريلرات تُعرض عبر روابط تضمين رسمية فقط.",
-  seo_default_title: "{title} — لوميكس",
-  seo_default_description: "{title} (سنة {year}) على لوميكس: القصة، الطاقم، التريلر الرسمي، وأعمال مشابهة.",
+  footer_note: "لوميكس فيلم دليل اكتشاف سينمائي. لا يستضيف الموقع أي محتوى مصوّر كامل، والتريلرات تُعرض عبر روابط تضمين رسمية فقط.",
+  seo_default_title: "{title} — لوميكس فيلم",
+  seo_default_description: "{title} (سنة {year}) على لوميكس فيلم: القصة، الطاقم، التريلر الرسمي، وأعمال مشابهة.",
   seo_index_titles: "true",
   seo_index_genres: "true",
   seo_index_people: "true",

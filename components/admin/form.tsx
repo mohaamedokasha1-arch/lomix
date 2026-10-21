@@ -69,7 +69,7 @@ export function SubmitButton({
       disabled={pending}
       className={cn(
         "inline-flex h-9 items-center gap-2 rounded-lg px-4 text-xs font-bold transition disabled:opacity-60",
-        variant === "primary" && "bg-brass-400 text-[#171006] hover:bg-brass-300",
+        variant === "primary" && "bg-ember-400 text-[#171006] hover:bg-ember-300",
         variant === "secondary" && "border border-white/15 text-ink-100 hover:border-white/30",
         variant === "danger" && "border border-signal-red/30 bg-signal-red/10 text-signal-red hover:bg-signal-red/20",
         className,

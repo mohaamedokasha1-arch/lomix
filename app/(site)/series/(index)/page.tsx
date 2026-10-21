@@ -6,7 +6,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 
 export const metadata: Metadata = {
   title: "المسلسلات",
-  description: "كل المسلسلات على لوميكس مع المواسم والحلقات وتريلراتها الرسمية، وفلاتر دقيقة حسب النوع والسنة.",
+  description: "كل المسلسلات على لوميكس فيلم مع المواسم والحلقات وتريلراتها الرسمية، وفلاتر دقيقة حسب النوع والسنة.",
   alternates: { canonical: "/series" },
 };
 

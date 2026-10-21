@@ -18,7 +18,7 @@ export default function AdminNotFound() {
       <div className="mt-6 flex flex-wrap justify-center gap-2">
         <Link
           href="/admin/titles"
-          className="inline-flex h-9 items-center rounded-lg bg-brass-400 px-3.5 text-[0.72rem] font-bold text-[#171006] transition hover:bg-brass-300"
+          className="inline-flex h-9 items-center rounded-lg bg-ember-400 px-3.5 text-[0.72rem] font-bold text-[#171006] transition hover:bg-ember-300"
         >
           كل الأعمال
         </Link>

@@ -43,7 +43,7 @@ export default async function EpisodePage({ params }: Props) {
       </nav>
 
       <article className="mx-auto max-w-3xl">
-        <p className="mb-2 text-[0.65rem] font-semibold tracking-[0.28em] text-brass-300/80">
+        <p className="mb-2 text-[0.65rem] font-semibold tracking-[0.28em] text-ember-300/80">
           الموسم {seasonNumber} · الحلقة {episodeNumber}
         </p>
         <h1 className="display text-3xl font-bold leading-snug text-ink-50 md:text-4xl">{data.episode.nameAr}</h1>
@@ -76,12 +76,12 @@ export default async function EpisodePage({ params }: Props) {
           {data.previous ? (
             <Link
               href={`/series/${slug}/season/${seasonNumber}/episode/${data.previous.number}`}
-              className="group rounded-xl border border-white/8 bg-ink-900/50 p-4 transition hover:border-brass-400/30"
+              className="group rounded-xl border border-white/8 bg-ink-900/50 p-4 transition hover:border-ember-400/30"
             >
               <span className="flex items-center gap-1.5 text-[0.65rem] text-ink-500">
                 <ChevronRight className="h-3 w-3" /> الحلقة السابقة
               </span>
-              <span className="mt-1.5 block truncate text-sm text-ink-100 group-hover:text-brass-200">
+              <span className="mt-1.5 block truncate text-sm text-ink-100 group-hover:text-ember-200">
                 <span className="num me-1.5">{data.previous.number}.</span>
                 {data.previous.nameAr}
               </span>
@@ -92,12 +92,12 @@ export default async function EpisodePage({ params }: Props) {
           {data.next ? (
             <Link
               href={`/series/${slug}/season/${seasonNumber}/episode/${data.next.number}`}
-              className="group rounded-xl border border-white/8 bg-ink-900/50 p-4 text-end transition hover:border-brass-400/30"
+              className="group rounded-xl border border-white/8 bg-ink-900/50 p-4 text-end transition hover:border-ember-400/30"
             >
               <span className="flex items-center justify-end gap-1.5 text-[0.65rem] text-ink-500">
                 الحلقة التالية <ChevronLeft className="h-3 w-3" />
               </span>
-              <span className="mt-1.5 block truncate text-sm text-ink-100 group-hover:text-brass-200">
+              <span className="mt-1.5 block truncate text-sm text-ink-100 group-hover:text-ember-200">
                 <span className="num me-1.5">{data.next.number}.</span>
                 {data.next.nameAr}
               </span>

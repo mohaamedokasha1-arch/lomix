@@ -24,7 +24,7 @@ export function ToggleField({
         name={name}
         value="true"
         defaultChecked={defaultChecked}
-        className="mt-0.5 h-4 w-4 shrink-0 accent-brass-400"
+        className="mt-0.5 h-4 w-4 shrink-0 accent-ember-400"
       />
     </div>
   );

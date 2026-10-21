@@ -9,7 +9,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 
 export const metadata: Metadata = {
   title: "التريلرات",
-  description: "أرشيف التريلرات الرسمية على لوميكس، مرتبة بالأحدث. تُعرض عبر تضمين رسمي من المصدر ولا تُعاد استضافتها.",
+  description: "أرشيف التريلرات الرسمية على لوميكس فيلم، مرتبة بالأحدث. تُعرض عبر تضمين رسمي من المصدر ولا تُعاد استضافتها.",
   alternates: { canonical: "/trailers" },
 };
 
@@ -26,7 +26,7 @@ export default async function TrailersPage() {
       <JsonLd
         data={collectionJsonLd({
           name: "التريلرات",
-          description: "أرشيف التريلرات الرسمية على لوميكس، مرتبة بالأحدث.",
+          description: "أرشيف التريلرات الرسمية على لوميكس فيلم، مرتبة بالأحدث.",
           path: "/trailers",
           items: collectionItems(
             trailers.map((trailer) => ({ titleAr: trailer.titleAr, slug: trailer.titleSlug, type: trailer.titleType })),
@@ -37,7 +37,7 @@ export default async function TrailersPage() {
       <PageHeader
         kicker="أرشيف"
         title="التريلرات"
-        description="كل تريلر في لوميكس مرتبط بعمله، وموسوم بنوعه (رسمي / تشويقي / ترويجي), ومُفحص الحالة. لا تشغيل تلقائي مع صوت في أي صفحة."
+        description="كل تريلر في لوميكس فيلم مرتبط بعمله، وموسوم بنوعه (رسمي / تشويقي / ترويجي), ومُفحص الحالة. لا تشغيل تلقائي مع صوت في أي صفحة."
       />
 
       {trailers.length === 0 ? (
@@ -51,7 +51,7 @@ export default async function TrailersPage() {
           {official.length > 0 && (
             <section>
               <h2 className="display mb-5 flex items-center gap-2.5 text-lg font-bold text-ink-50">
-                <span className="h-3.5 w-[3px] rounded-full bg-brass-400" aria-hidden="true" />
+                <span className="h-3.5 w-[3px] rounded-full bg-ember-400" aria-hidden="true" />
                 تريلرات رسمية
               </h2>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

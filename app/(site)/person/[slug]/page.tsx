@@ -59,7 +59,7 @@ export default async function PersonPage({ params }: Props) {
             )}
           </div>
           <div>
-            <p className="mb-1.5 text-[0.65rem] font-semibold tracking-[0.28em] text-brass-300/80">صفحة شخص</p>
+            <p className="mb-1.5 text-[0.65rem] font-semibold tracking-[0.28em] text-ember-300/80">صفحة شخص</p>
             <h1 className="display text-3xl font-bold text-ink-50 md:text-4xl">{person.nameAr}</h1>
             {person.nameEn && (
               <p className="mt-1 font-[family-name:var(--font-latin)] text-sm text-ink-300" dir="ltr">{person.nameEn}</p>
@@ -70,7 +70,7 @@ export default async function PersonPage({ params }: Props) {
                   <CalendarDays className="h-3.5 w-3.5" /> <span className="num">{person.birthYear}</span>
                 </span>
               )}
-              <span className="num">{works.length} عمل في لوميكس</span>
+              <span className="num">{works.length} عمل في لوميكس فيلم</span>
             </div>
           </div>
         </div>

@@ -18,7 +18,7 @@ export function ProfileNameForm({ defaultName }: { defaultName: string }) {
         <button
           type="submit"
           disabled={pending}
-          className="inline-flex h-9 items-center gap-2 rounded-lg bg-brass-400 px-4 text-xs font-bold text-[#171006] transition hover:bg-brass-300 disabled:opacity-60"
+          className="inline-flex h-9 items-center gap-2 rounded-lg bg-ember-400 px-4 text-xs font-bold text-[#171006] transition hover:bg-ember-300 disabled:opacity-60"
         >
           {pending && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
           حفظ الاسم

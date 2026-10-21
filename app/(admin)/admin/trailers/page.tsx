@@ -81,7 +81,7 @@ export default async function AdminTrailersPage({
                       </p>
                     </div>
                     <TrailerPrimaryButton id={trailer.id} titleId={trailer.titleId} isPrimary={trailer.isPrimary} />
-                    <Link href={`/admin/trailers?edit=${trailer.id}`} className="text-[0.6rem] text-ink-300 underline hover:text-brass-200">
+                    <Link href={`/admin/trailers?edit=${trailer.id}`} className="text-[0.6rem] text-ink-300 underline hover:text-ember-200">
                       تعديل
                     </Link>
                     <TrailerDeleteButton id={trailer.id} nameAr={trailer.nameAr} />

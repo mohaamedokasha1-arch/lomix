@@ -63,7 +63,7 @@ export function LoginForm({ next }: { next: string }) {
       <button
         type="submit"
         disabled={pending}
-        className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-brass-400 text-sm font-bold text-[#171006] transition hover:bg-brass-300 disabled:opacity-60"
+        className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-ember-400 text-sm font-bold text-[#171006] transition hover:bg-ember-300 disabled:opacity-60"
       >
         {pending && <Loader2 className="h-4 w-4 animate-spin" />}
         تسجيل الدخول
@@ -71,7 +71,7 @@ export function LoginForm({ next }: { next: string }) {
 
       <p className="text-center text-[0.72rem] text-ink-400">
         لا تملك حسابًا؟{" "}
-        <Link href="/register" className="text-brass-300 underline-offset-4 hover:underline">إنشاء حساب</Link>
+        <Link href="/register" className="text-ember-300 underline-offset-4 hover:underline">إنشاء حساب</Link>
       </p>
     </form>
   );

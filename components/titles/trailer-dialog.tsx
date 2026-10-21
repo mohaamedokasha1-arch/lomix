@@ -87,7 +87,7 @@ export function TrailerDialog({
               <span className="rounded border border-white/12 px-1.5 py-0.5 text-ink-300">
                 {TRAILER_KIND_LABEL[trailer.kind] ?? trailer.kind}
               </span>
-              {isDemo && <span className="text-brass-300/80">معاينة بصرية مولّدة</span>}
+              {isDemo && <span className="text-ember-300/80">معاينة بصرية مولّدة</span>}
             </p>
           </div>
           <button
@@ -125,16 +125,16 @@ export function TrailerDialog({
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/40 to-ink-950/20" />
               <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-                <p className="mb-3 text-[0.62rem] font-semibold tracking-[0.35em] text-brass-300/80">LOOMIX PREVIEW</p>
+                <p className="mb-3 text-[0.62rem] font-semibold tracking-[0.35em] text-ember-300/80">LOOMIX PREVIEW</p>
                 <h3 className="display max-w-2xl text-balance text-3xl font-bold text-ink-50 md:text-5xl">{titleAr}</h3>
                 <p className="mt-4 max-w-md text-xs leading-6 text-ink-300">
-                  هذه معاينة بصرية أصلية من لوميكس، وليست مقطع فيديو حقيقيًا. يُضاف التريلر الرسمي عبر رابط يوتيوب من لوحة التحكم.
+                  هذه معاينة بصرية أصلية من لوميكس فيلم، وليست مقطع فيديو حقيقيًا. يُضاف التريلر الرسمي عبر رابط يوتيوب من لوحة التحكم.
                 </p>
               </div>
               <div className="absolute inset-x-0 bottom-0 p-4">
                 <div className="relative h-1 w-full overflow-hidden rounded-full bg-white/15">
                   <span
-                    className="absolute inset-y-0 start-0 rounded-full bg-brass-400"
+                    className="absolute inset-y-0 start-0 rounded-full bg-ember-400"
                     style={{
                       width: playing ? "100%" : "42%",
                       transition: playing ? "width 14s linear" : "none",
@@ -174,14 +174,14 @@ export function TrailerDialog({
             <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
             <span>
               {isDemo
-                ? "المعاينة مولّدة داخل المشروع. لا يستضيف لوميكس أي فيديو محمي، والتضمين الرسمي هو الطريق الوحيد لعرض التريلرات."
-                : "يُعرض التريلر عبر تضمين رسمي من المنصة المصدر، ولا يُعاد استضافته على خوادم لوميكس."}
+                ? "المعاينة مولّدة داخل المشروع. لا يستضيف لوميكس فيلم أي فيديو محمي، والتضمين الرسمي هو الطريق الوحيد لعرض التريلرات."
+                : "يُعرض التريلر عبر تضمين رسمي من المنصة المصدر، ولا يُعاد استضافته على خوادم لوميكس فيلم."}
             </span>
           </p>
           {detailsHref && (
             <Link
               href={detailsHref}
-              className="shrink-0 rounded-lg border border-white/12 px-3 py-1.5 text-center text-xs text-ink-200 transition hover:border-brass-400/40 hover:text-brass-200"
+              className="shrink-0 rounded-lg border border-white/12 px-3 py-1.5 text-center text-xs text-ink-200 transition hover:border-ember-400/40 hover:text-ember-200"
             >
               صفحة العمل
             </Link>

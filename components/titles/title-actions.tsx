@@ -51,7 +51,7 @@ export function TitleActions({
           <button
             type="button"
             onClick={() => setOpen(true)}
-            className="inline-flex h-12 items-center gap-2.5 rounded-xl bg-brass-400 px-6 text-sm font-bold text-[#171006] shadow-[0_16px_40px_-18px_rgba(227,178,105,0.8)] transition hover:bg-brass-300"
+            className="inline-flex h-12 items-center gap-2.5 rounded-xl bg-ember-400 px-6 text-sm font-bold text-[#171006] shadow-[0_16px_40px_-18px_rgba(227,178,105,0.8)] transition hover:bg-ember-300"
           >
             <Play className="h-4 w-4 fill-current" aria-hidden="true" />
             مشاهدة التريلر
@@ -78,9 +78,9 @@ export function TitleActions({
         </button>
 
         {ratingValue != null && (
-          <span className="inline-flex h-11 items-center gap-2 rounded-xl border border-brass-400/25 bg-brass-400/8 px-3.5 text-sm">
-            <Star className="h-4 w-4 fill-brass-300 text-brass-300" aria-hidden="true" />
-            <span className="num font-bold text-brass-200">{ratingValue.toFixed(1)}</span>
+          <span className="inline-flex h-11 items-center gap-2 rounded-xl border border-ember-400/25 bg-ember-400/8 px-3.5 text-sm">
+            <Star className="h-4 w-4 fill-ember-300 text-ember-300" aria-hidden="true" />
+            <span className="num font-bold text-ember-200">{ratingValue.toFixed(1)}</span>
             <span className="text-[0.65rem] text-ink-400">/ 10</span>
             {ratingSource && (
               <span className="hidden text-[0.65rem] text-ink-400 sm:inline">— {ratingSource}</span>

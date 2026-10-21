@@ -6,7 +6,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 
 export const metadata: Metadata = {
   title: "الأفلام",
-  description: "تصفح كل الأفلام على لوميكس مع فلاتر حسب النوع والسنة والدولة والتقييم، وتريلرات رسمية لكل عمل.",
+  description: "تصفح كل الأفلام على لوميكس فيلم مع فلاتر حسب النوع والسنة والدولة والتقييم، وتريلرات رسمية لكل عمل.",
   alternates: { canonical: "/movies" },
 };
 
@@ -47,7 +47,7 @@ export default async function MoviesPage({ searchParams }: { searchParams: SP })
       <PageHeader
         kicker="المكتبة"
         title="الأفلام"
-        description="كل فيلم في لوميكس ببطاقته وبياناته وتريلره الرسمي. استخدم الفلاتر للوصول إلى ما يناسب ليلتك."
+        description="كل فيلم في لوميكس فيلم ببطاقته وبياناته وتريلره الرسمي. استخدم الفلاتر للوصول إلى ما يناسب ليلتك."
       />
       <CatalogView
         items={result.items}

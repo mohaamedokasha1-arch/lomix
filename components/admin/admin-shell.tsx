@@ -125,7 +125,7 @@ export function AdminShell({
             </button>
             <Link href="/admin" className="flex items-center gap-2">
               <LogoMark size={26} uid="admin" />
-              <span className="text-sm font-semibold text-ink-100">لوميكس · الإدارة</span>
+              <span className="text-sm font-semibold text-ink-100">لوميكس فيلم · الإدارة</span>
             </Link>
             <span className="hidden rounded border border-white/10 px-1.5 py-0.5 text-[0.6rem] text-ink-400 sm:inline">
               {ROLE_LABEL[user.role]}
@@ -139,7 +139,7 @@ export function AdminShell({
               عرض الموقع <ChevronLeft className="h-3 w-3" />
             </Link>
             <Link href="/profile" className="flex h-8 items-center gap-2 rounded-lg px-2 text-xs text-ink-200 hover:bg-white/5">
-              <span className="flex h-6 w-6 items-center justify-center rounded-md bg-brass-400/15 text-[0.6rem] font-bold text-brass-200">
+              <span className="flex h-6 w-6 items-center justify-center rounded-md bg-ember-400/15 text-[0.6rem] font-bold text-ember-200">
                 {user.name.slice(0, 2)}
               </span>
               <span className="hidden max-w-28 truncate sm:inline">{user.name}</span>
@@ -213,11 +213,11 @@ function SidebarContent({
                       className={cn(
                         "flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[0.82rem] transition",
                         active
-                          ? "bg-brass-400/12 font-medium text-brass-200"
+                          ? "bg-ember-400/12 font-medium text-ember-200"
                           : "text-ink-300 hover:bg-white/[0.04] hover:text-ink-100",
                       )}
                     >
-                      <item.Icon className={cn("h-4 w-4 shrink-0", active ? "text-brass-300" : "text-ink-500")} />
+                      <item.Icon className={cn("h-4 w-4 shrink-0", active ? "text-ember-300" : "text-ink-500")} />
                       <span className="flex-1 truncate">{item.label}</span>
                       {badge ? (
                         <span className="num rounded-full bg-signal-red/20 px-1.5 py-0.5 text-[0.6rem] font-bold text-signal-red">

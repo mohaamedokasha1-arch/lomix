@@ -52,7 +52,7 @@ export default async function AdminAnalyticsPage({ searchParams }: { searchParam
                     {day.day.slice(5)}
                   </span>
                   <div className="h-3.5 flex-1 overflow-hidden rounded-sm bg-white/5">
-                    <div className="h-full rounded-sm bg-brass-400/70" style={{ width: `${Math.max(2, (day.count / maxDaily) * 100)}%` }} />
+                    <div className="h-full rounded-sm bg-ember-400/70" style={{ width: `${Math.max(2, (day.count / maxDaily) * 100)}%` }} />
                   </div>
                   <span className="num w-8 text-end text-[0.58rem] text-ink-400">{day.count}</span>
                 </div>

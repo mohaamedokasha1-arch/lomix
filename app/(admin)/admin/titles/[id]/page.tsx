@@ -39,7 +39,7 @@ export default async function EditTitlePage({
               <ExternalLink className="h-3.5 w-3.5" /> معاينة
             </Link>
             {title.type !== "MOVIE" && (
-              <Link href={`/admin/titles/${id}/seasons`} className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-brass-400 px-3.5 text-xs font-bold text-[#171006] hover:bg-brass-300">
+              <Link href={`/admin/titles/${id}/seasons`} className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-ember-400 px-3.5 text-xs font-bold text-[#171006] hover:bg-ember-300">
                 <Film className="h-3.5 w-3.5" /> المواسم والحلقات
               </Link>
             )}
@@ -106,14 +106,14 @@ export default async function EditTitlePage({
                     <p className="truncate text-[0.72rem] text-ink-100">{trailer.nameAr}</p>
                     <p className="mt-1 flex items-center gap-2 text-[0.6rem] text-ink-500">
                       <span className={trailer.health === "BROKEN" ? "text-signal-amber" : ""}>{TRAILER_HEALTH_LABEL[trailer.health]}</span>
-                      {trailer.isPrimary && <span className="text-brass-300">· أساسي</span>}
+                      {trailer.isPrimary && <span className="text-ember-300">· أساسي</span>}
                       {trailer.youtubeId.startsWith("demo-") && <span>· تجريبي</span>}
                     </p>
                   </li>
                 ))}
               </ul>
             )}
-            <Link href={`/admin/trailers?titleId=${id}`} className="mt-3 inline-flex text-[0.68rem] text-brass-200 hover:underline">
+            <Link href={`/admin/trailers?titleId=${id}`} className="mt-3 inline-flex text-[0.68rem] text-ember-200 hover:underline">
               إدارة تريلرات هذا العمل
             </Link>
           </AdminCard>
@@ -128,7 +128,7 @@ export default async function EditTitlePage({
                     <li key={season.id}>
                       <Link
                         href={`/admin/titles/${id}/seasons/${season.id}`}
-                        className="flex items-center justify-between rounded-md border border-white/8 px-2 py-1.5 text-[0.7rem] text-ink-200 hover:border-brass-400/30 hover:text-brass-200"
+                        className="flex items-center justify-between rounded-md border border-white/8 px-2 py-1.5 text-[0.7rem] text-ink-200 hover:border-ember-400/30 hover:text-ember-200"
                       >
                         <span>
                           {season.nameAr ?? `الموسم ${season.number}`}
@@ -140,7 +140,7 @@ export default async function EditTitlePage({
                   ))}
                 </ul>
               )}
-              <Link href={`/admin/titles/${id}/seasons`} className="mt-3 inline-flex text-[0.68rem] text-brass-200 hover:underline">
+              <Link href={`/admin/titles/${id}/seasons`} className="mt-3 inline-flex text-[0.68rem] text-ember-200 hover:underline">
                 إدارة المواسم والحلقات
               </Link>
             </AdminCard>

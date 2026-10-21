@@ -63,7 +63,7 @@ export default async function SeasonDetailPage({
                   </div>
                   <Link
                     href={`?edit=${episode.id}`}
-                    className="flex h-7 w-7 items-center justify-center rounded text-ink-400 hover:bg-white/8 hover:text-brass-200"
+                    className="flex h-7 w-7 items-center justify-center rounded text-ink-400 hover:bg-white/8 hover:text-ember-200"
                     aria-label={`تعديل الحلقة ${episode.number}`}
                   >
                     <Pencil className="h-3.5 w-3.5" />
@@ -92,7 +92,7 @@ export default async function SeasonDetailPage({
               }}
             />
             {editing && (
-              <Link href={`/admin/titles/${id}/seasons/${seasonId}`} className="mt-2 inline-block text-[0.65rem] text-ink-400 hover:text-brass-200">
+              <Link href={`/admin/titles/${id}/seasons/${seasonId}`} className="mt-2 inline-block text-[0.65rem] text-ink-400 hover:text-ember-200">
                 إلغاء التعديل — فتح نموذج إضافة جديد
               </Link>
             )}

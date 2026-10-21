@@ -7,26 +7,26 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(absoluteUrl("/")),
   title: {
-    default: "لوميكس — دليل الاكتشاف السينمائي",
-    template: "%s — لوميكس",
+    default: "لوميكس فيلم — دليل الاكتشاف السينمائي",
+    template: "%s — لوميكس فيلم",
   },
   description:
-    "لوميكس منصة عربية لاكتشاف الأفلام والمسلسلات والأنمي: بيانات دقيقة، تريلرات رسمية، وتجربة تصفح سينمائية هادئة.",
-  applicationName: "Loomix",
-  keywords: ["أفلام", "مسلسلات", "أنمي", "تريلرات", "لوميكس", "Loomix", "دليل سينمائي"],
-  authors: [{ name: "Loomix" }],
+    "لوميكس فيلم منصة عربية لاكتشاف الأفلام والمسلسلات والأنمي: بيانات دقيقة، تريلرات رسمية، وتجربة تصفح سينمائية هادئة.",
+  applicationName: "Loomix Film",
+  keywords: ["أفلام", "مسلسلات", "أنمي", "تريلرات", "لوميكس فيلم", "Loomix Film", "دليل سينمائي"],
+  authors: [{ name: "Loomix Film" }],
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "ar_EG",
-    siteName: "لوميكس",
-    title: "لوميكس — دليل الاكتشاف السينمائي",
+    siteName: "لوميكس فيلم",
+    title: "لوميكس فيلم — دليل الاكتشاف السينمائي",
     description: "اكتشف الأفلام والمسلسلات والأنمي بتجربة سينمائية عربية هادئة.",
-    images: [{ url: "/art/og-default.webp", width: 1200, height: 630, alt: "لوميكس" }],
+    images: [{ url: "/art/og-default.webp", width: 1200, height: 630, alt: "لوميكس فيلم" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "لوميكس — دليل الاكتشاف السينمائي",
+    title: "لوميكس فيلم — دليل الاكتشاف السينمائي",
     description: "اكتشف الأفلام والمسلسلات والأنمي بتجربة سينمائية عربية هادئة.",
     images: ["/art/og-default.webp"],
   },
@@ -54,7 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="antialiased">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:start-4 focus:z-[200] focus:rounded-lg focus:bg-brass-400 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[#171006]"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:start-4 focus:z-[200] focus:rounded-lg focus:bg-ember-400 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[#171006]"
         >
           تخطَّ إلى المحتوى
         </a>

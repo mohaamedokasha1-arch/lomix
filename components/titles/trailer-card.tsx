@@ -33,7 +33,7 @@ export function TrailerCard({ trailer }: { trailer: TrailerCardData }) {
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-ink-950/90 via-ink-950/25 to-ink-950/10" />
           <span className="absolute inset-0 flex items-center justify-center">
-            <span className="flex h-12 w-12 items-center justify-center rounded-full border border-white/25 bg-black/35 text-ink-50 backdrop-blur-md transition group-hover:scale-110 group-hover:border-brass-300/60 group-hover:text-brass-200">
+            <span className="flex h-12 w-12 items-center justify-center rounded-full border border-white/25 bg-black/35 text-ink-50 backdrop-blur-md transition group-hover:scale-110 group-hover:border-ember-300/60 group-hover:text-ember-200">
               <Play className="ms-0.5 h-5 w-5 fill-current" />
             </span>
           </span>

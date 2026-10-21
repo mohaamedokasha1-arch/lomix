@@ -23,7 +23,7 @@ export default function GlobalError({ error, reset }: { error: Error & { digest?
         <button
           type="button"
           onClick={reset}
-          className="inline-flex h-11 items-center gap-2 rounded-xl bg-brass-400 px-5 text-sm font-bold text-[#171006] transition hover:bg-brass-300"
+          className="inline-flex h-11 items-center gap-2 rounded-xl bg-ember-400 px-5 text-sm font-bold text-[#171006] transition hover:bg-ember-300"
         >
           <RotateCcw className="h-4 w-4" /> إعادة المحاولة
         </button>

@@ -60,7 +60,7 @@ export default async function AdminCuratedPage() {
                         <button
                           type="submit"
                           aria-label={item.pinned ? `إلغاء تثبيت ${item.titleAr}` : `تثبيت ${item.titleAr}`}
-                          className={`flex h-6 w-6 items-center justify-center rounded ${item.pinned ? "text-brass-300" : "text-ink-500 hover:text-ink-200"}`}
+                          className={`flex h-6 w-6 items-center justify-center rounded ${item.pinned ? "text-ember-300" : "text-ink-500 hover:text-ink-200"}`}
                         >
                           <Pin className="h-3 w-3" />
                         </button>
@@ -101,7 +101,7 @@ export default async function AdminCuratedPage() {
 
       <AdminCard title="ملاحظة شفافية" description="لماذا ترتيب يدوي؟">
         <p className="text-[0.68rem] leading-6 text-ink-400">
-          عدّاد المشاهدات عندنا يبدأ من الصفر ولا يمثل جمهورًا حقيقيًا بعد. لذلك «ترند» في Loomix هو ترتيب تحريري صريح،
+          عدّاد المشاهدات عندنا يبدأ من الصفر ولا يمثل جمهورًا حقيقيًا بعد. لذلك «ترند» في لوميكس فيلم هو ترتيب تحريري صريح،
           وصفحة /trending تُعلن مصدر الترتيب للمستخدم. عند توفر بيانات مشاهدات كافية يمكن الاعتماد على العدّاد في
           /most-viewed بشرط بقاء التوضيح.
         </p>

@@ -44,7 +44,7 @@ export function BackupPanel() {
           type="button"
           onClick={create}
           disabled={creating}
-          className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-brass-400 px-3.5 text-xs font-bold text-[#171006] hover:bg-brass-300 disabled:opacity-60"
+          className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-ember-400 px-3.5 text-xs font-bold text-[#171006] hover:bg-ember-300 disabled:opacity-60"
         >
           {creating ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <DatabaseBackup className="h-3.5 w-3.5" />}
           إنشاء نسخة على الخادم

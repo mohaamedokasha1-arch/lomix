@@ -23,7 +23,7 @@ export default async function AdminPeoplePage({
         title="الأشخاص"
         description={`${people.length} شخصًا${params.q ? ` مطابقًا لـ«${params.q}»` : ""}. الأشخاص يظهرون في صفحات الطاقم وأعمالهم.`}
         actions={
-          <Link href="/admin/people/new" className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-brass-400 px-3.5 text-xs font-bold text-[#171006] hover:bg-brass-300">
+          <Link href="/admin/people/new" className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-ember-400 px-3.5 text-xs font-bold text-[#171006] hover:bg-ember-300">
             <Plus className="h-3.5 w-3.5" /> شخص جديد
           </Link>
         }
@@ -91,7 +91,7 @@ export default async function AdminPeoplePage({
             }
           />
           {editing && (
-            <Link href="/admin/people" className="mt-2 inline-block text-[0.65rem] text-ink-400 hover:text-brass-200">
+            <Link href="/admin/people" className="mt-2 inline-block text-[0.65rem] text-ink-400 hover:text-ember-200">
               إلغاء التعديل
             </Link>
           )}

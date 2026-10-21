@@ -54,7 +54,7 @@ export default async function SeasonPage({ params }: Props) {
         </nav>
 
         <header className="mb-8">
-          <p className="mb-2 text-[0.65rem] font-semibold tracking-[0.28em] text-brass-300/80">
+          <p className="mb-2 text-[0.65rem] font-semibold tracking-[0.28em] text-ember-300/80">
             {data.titleType === "ANIME" ? "أنمي" : "مسلسل"}
           </p>
           <h1 className="display text-3xl font-bold text-ink-50 md:text-4xl">
@@ -63,7 +63,7 @@ export default async function SeasonPage({ params }: Props) {
           <p className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[0.75rem] text-ink-400">
             <span className="num">{data.episodes.length} حلقة</span>
             {data.season.year && <span className="num">سنة العرض {data.season.year}</span>}
-            {data.ratingValue != null && <span className="num text-brass-300">★ {data.ratingValue.toFixed(1)}</span>}
+            {data.ratingValue != null && <span className="num text-ember-300">★ {data.ratingValue.toFixed(1)}</span>}
           </p>
           {data.season.overviewAr && <p className="mt-4 max-w-3xl text-sm leading-8 text-ink-300">{data.season.overviewAr}</p>}
         </header>
@@ -75,7 +75,7 @@ export default async function SeasonPage({ params }: Props) {
               href={`/series/${slug}/season/${sibling.number}`}
               className={
                 sibling.number === data.season.number
-                  ? "rounded-lg border border-brass-400/50 bg-brass-400/15 px-3 py-1.5 text-xs font-semibold text-brass-200"
+                  ? "rounded-lg border border-ember-400/50 bg-ember-400/15 px-3 py-1.5 text-xs font-semibold text-ember-200"
                   : "rounded-lg border border-white/10 px-3 py-1.5 text-xs text-ink-300 transition hover:border-white/25 hover:text-ink-100"
               }
             >
@@ -99,11 +99,11 @@ export default async function SeasonPage({ params }: Props) {
                   href={`/series/${slug}/season/${seasonNumber}/episode/${episode.number}`}
                   className="group flex items-start gap-3.5 px-4 py-4 transition hover:bg-white/[0.035]"
                 >
-                  <span className="num mt-0.5 flex h-8 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 text-[0.72rem] text-ink-300 group-hover:border-brass-400/40 group-hover:text-brass-200">
+                  <span className="num mt-0.5 flex h-8 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 text-[0.72rem] text-ink-300 group-hover:border-ember-400/40 group-hover:text-ember-200">
                     {episode.number}
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-sm font-medium text-ink-100 group-hover:text-brass-200">{episode.nameAr}</span>
+                    <span className="block truncate text-sm font-medium text-ink-100 group-hover:text-ember-200">{episode.nameAr}</span>
                     {episode.overviewAr && <span className="mt-1 line-clamp-2 block text-[0.72rem] leading-6 text-ink-400">{episode.overviewAr}</span>}
                     <span className="mt-1.5 flex items-center gap-3 text-[0.65rem] text-ink-500">
                       {episode.airDate && (
@@ -115,7 +115,7 @@ export default async function SeasonPage({ params }: Props) {
                       {episode.state === "DRAFT" && <span className="text-signal-amber">مسودة</span>}
                     </span>
                   </span>
-                  <ChevronLeft className="mt-2 h-3.5 w-3.5 shrink-0 text-ink-500 group-hover:text-brass-200" aria-hidden="true" />
+                  <ChevronLeft className="mt-2 h-3.5 w-3.5 shrink-0 text-ink-500 group-hover:text-ember-200" aria-hidden="true" />
                 </Link>
               </li>
             ))}
@@ -124,7 +124,7 @@ export default async function SeasonPage({ params }: Props) {
           <aside className="space-y-3">
             <Link
               href={route}
-              className="block rounded-xl border border-white/8 bg-ink-900/50 p-4 text-sm text-ink-100 transition hover:border-brass-400/30 hover:text-brass-200"
+              className="block rounded-xl border border-white/8 bg-ink-900/50 p-4 text-sm text-ink-100 transition hover:border-ember-400/30 hover:text-ember-200"
             >
               صفحة {data.titleType === "ANIME" ? "الأنمي" : "المسلسل"} الكاملة
             </Link>

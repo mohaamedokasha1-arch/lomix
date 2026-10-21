@@ -129,11 +129,11 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
       <div
         role="dialog"
         aria-modal="true"
-        aria-label="البحث في لوميكس"
+        aria-label="البحث في لوميكس فيلم"
         className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-white/12 bg-ink-850/95 shadow-[0_40px_120px_-30px_rgba(0,0,0,0.9)] rise"
       >
         <div className="flex items-center gap-3 border-b border-white/8 px-5 py-4">
-          <Search className="h-5 w-5 shrink-0 text-brass-400" aria-hidden="true" />
+          <Search className="h-5 w-5 shrink-0 text-ember-400" aria-hidden="true" />
           <input
             ref={inputRef}
             value={query}
@@ -166,7 +166,7 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
                     key={tag}
                     type="button"
                     onClick={() => setQuery(tag)}
-                    className="rounded-full border border-white/10 px-3 py-1 text-xs text-ink-200 transition hover:border-brass-400/40 hover:text-brass-200"
+                    className="rounded-full border border-white/10 px-3 py-1 text-xs text-ink-200 transition hover:border-ember-400/40 hover:text-ember-200"
                   >
                     {tag}
                   </button>
@@ -212,7 +212,7 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
                       <span>{TITLE_TYPE_LABEL[item.type]}</span>
                       {item.releaseYear && <span className="num">{item.releaseYear}</span>}
                       {item.ratingValue != null && item.ratingSource && (
-                        <span className="num text-brass-300">★ {item.ratingValue.toFixed(1)}</span>
+                        <span className="num text-ember-300">★ {item.ratingValue.toFixed(1)}</span>
                       )}
                     </span>
                   </span>

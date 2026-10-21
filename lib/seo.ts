@@ -214,7 +214,7 @@ export function buildPersonDescription(
   if (bio && bio.length >= 70) return truncate(bio, 158);
 
   if (!works.length) {
-    return `صفحة ${person.nameAr} على لوميكس: لم تُسجَّل لها أعمال منشورة بعد، وستُضاف السيرة والأعمال والتريلرات الرسمية عند توفّرها.`;
+    return `صفحة ${person.nameAr} على لوميكس فيلم: لم تُسجَّل لها أعمال منشورة بعد، وستُضاف السيرة والأعمال والتريلرات الرسمية عند توفّرها.`;
   }
 
   const order = Object.keys(PERSON_ROLE_LABEL);
@@ -237,7 +237,7 @@ export function buildPersonDescription(
   const rolePart = roles.length ? ` في ${roles.join(" و")}` : "";
 
   return truncate(
-    `أعمال ${person.nameAr} على لوميكس: ${count}${rolePart}${span}، مع بيانات كل عمل وطاقمه والتريلرات الرسمية المتاحة.`,
+    `أعمال ${person.nameAr} على لوميكس فيلم: ${count}${rolePart}${span}، مع بيانات كل عمل وطاقمه والتريلرات الرسمية المتاحة.`,
     158,
   );
 }
@@ -326,7 +326,7 @@ export function buildEpisodeDescription(data: {
 }
 
 export function buildGenreDescription(nameAr: string) {
-  return `تصفّح أعمال ${nameAr} على لوميكس — أفلام ومسلسلات وأنمي — مع الفلاتر حسب النوع والسنة والبلد، وبيانات كل عمل وطاقمه وتريلراته الرسمية.`;
+  return `تصفّح أعمال ${nameAr} على لوميكس فيلم — أفلام ومسلسلات وأنمي — مع الفلاتر حسب النوع والسنة والبلد، وبيانات كل عمل وطاقمه وتريلراته الرسمية.`;
 }
 
 export function personJsonLd(person: { nameAr: string; nameEn: string | null; slug: string; bioAr: string | null; imagePath: string | null }) {
@@ -360,16 +360,16 @@ export function siteJsonLd() {
       {
         "@type": "Organization",
         "@id": `${url}#organization`,
-        name: "Loomix",
-        alternateName: "لوميكس",
+        name: "Loomix Film",
+        alternateName: "لوميكس فيلم",
         url,
         logo: absoluteUrl("/icon.svg"),
       },
       {
         "@type": "WebSite",
         "@id": `${url}#website`,
-        name: "لوميكس",
-        alternateName: "Loomix",
+        name: "لوميكس فيلم",
+        alternateName: "Loomix Film",
         url,
         inLanguage: "ar",
         publisher: { "@id": `${url}#organization` },

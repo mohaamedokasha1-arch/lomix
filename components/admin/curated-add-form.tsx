@@ -40,7 +40,7 @@ export function CuratedAddForm({ listKey, titles }: { listKey: string; titles: {
         <button
           type="submit"
           disabled={!selected}
-          className="inline-flex h-8 shrink-0 items-center gap-1 rounded-lg bg-brass-400 px-2.5 text-[0.68rem] font-bold text-[#171006] hover:bg-brass-300 disabled:opacity-40"
+          className="inline-flex h-8 shrink-0 items-center gap-1 rounded-lg bg-ember-400 px-2.5 text-[0.68rem] font-bold text-[#171006] hover:bg-ember-300 disabled:opacity-40"
         >
           <Plus className="h-3 w-3" /> إضافة
         </button>

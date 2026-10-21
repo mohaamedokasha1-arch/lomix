@@ -11,7 +11,7 @@ import { TitleCard } from "@/components/titles/title-card";
 
 export const metadata: Metadata = {
   title: "قائمة المشاهدة",
-  description: "الأعمال التي حفظتها في قائمتك على لوميكس.",
+  description: "الأعمال التي حفظتها في قائمتك على لوميكس فيلم.",
   robots: { index: false, follow: false },
 };
 

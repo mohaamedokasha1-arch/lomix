@@ -9,7 +9,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 
 export const metadata: Metadata = {
   title: "الرائج الآن",
-  description: "الأعمال الرائجة على لوميكس: قائمة يُنسّقها المحررون، مدعومة بعدّاد مشاهدات حقيقي ومسجّل.",
+  description: "الأعمال الرائجة على لوميكس فيلم: قائمة يُنسّقها المحررون، مدعومة بعدّاد مشاهدات حقيقي ومسجّل.",
   alternates: { canonical: "/trending" },
 };
 
@@ -36,7 +36,7 @@ export default async function TrendingPage() {
       />
 
       <div className="mb-7 flex items-start gap-2.5 rounded-xl border border-white/8 bg-ink-900/50 px-4 py-3 text-[0.75rem] leading-6 text-ink-300">
-        <Info className="mt-0.5 h-4 w-4 shrink-0 text-brass-300" aria-hidden="true" />
+        <Info className="mt-0.5 h-4 w-4 shrink-0 text-ember-300" aria-hidden="true" />
         <p>
           الترتيب الحالي: <strong className="font-semibold text-ink-100">ترند الأسبوع</strong> — يمكن للإدارة تثبيت عمل أو
           إزالته من القائمة أو إعادة ترتيبه بالكامل من لوحة التحكم.
@@ -49,7 +49,7 @@ export default async function TrendingPage() {
           {editors.length > 0 && (
             <section className="mt-16">
               <div className="mb-5 flex items-center gap-2.5">
-                <span className="h-3.5 w-[3px] rounded-full bg-brass-400" aria-hidden="true" />
+                <span className="h-3.5 w-[3px] rounded-full bg-ember-400" aria-hidden="true" />
                 <h2 className="display text-xl font-bold text-ink-50 md:text-2xl">اختيارات المحرر</h2>
               </div>
               <PosterGrid items={editors} />

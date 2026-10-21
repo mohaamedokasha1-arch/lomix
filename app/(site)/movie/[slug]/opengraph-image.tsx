@@ -1,7 +1,7 @@
 import { getTitleBySlug } from "@/lib/queries";
 import { OG_SIZE, renderBrandOg, renderTitleOg, titleOgInput } from "@/lib/og-image";
 
-export const alt = "بطاقة عمل على لوميكس";
+export const alt = "بطاقة عمل على لوميكس فيلم";
 export const size = OG_SIZE;
 export const contentType = "image/png";
 

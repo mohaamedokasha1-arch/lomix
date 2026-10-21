@@ -63,18 +63,18 @@ export default async function ProfilePage() {
 
           <section className="rounded-2xl border border-white/8 bg-ink-900/50 p-5">
             <h2 className="display mb-4 flex items-center gap-2 text-sm font-bold text-ink-100">
-              <ShieldCheck className="h-4 w-4 text-brass-300" /> كلمة المرور
+              <ShieldCheck className="h-4 w-4 text-ember-300" /> كلمة المرور
             </h2>
             <PasswordForm />
           </section>
         </div>
 
         <aside className="space-y-3">
-          <Link href="/watchlist" className="flex items-center gap-2.5 rounded-xl border border-white/8 bg-ink-900/50 p-4 text-sm text-ink-100 transition hover:border-brass-400/30 hover:text-brass-200">
+          <Link href="/watchlist" className="flex items-center gap-2.5 rounded-xl border border-white/8 bg-ink-900/50 p-4 text-sm text-ink-100 transition hover:border-ember-400/30 hover:text-ember-200">
             <Bookmark className="h-4 w-4" /> قائمة المشاهدة
           </Link>
           {user.role !== "VIEWER" && (
-            <Link href="/admin" className="flex items-center gap-2.5 rounded-xl border border-white/8 bg-ink-900/50 p-4 text-sm text-ink-100 transition hover:border-brass-400/30 hover:text-brass-200">
+            <Link href="/admin" className="flex items-center gap-2.5 rounded-xl border border-white/8 bg-ink-900/50 p-4 text-sm text-ink-100 transition hover:border-ember-400/30 hover:text-ember-200">
               <LayoutDashboard className="h-4 w-4" /> لوحة التحكم
             </Link>
           )}

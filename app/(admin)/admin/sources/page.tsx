@@ -79,7 +79,7 @@ export default async function AdminSourcesPage() {
         title="مصادر البيانات"
         description="حالة كل طرق الإدخال. ما هو معطّل مذكور بسببه — لا نُشغّل مزامنة لا يمكن ضمان شروطها."
         actions={
-          <Link href="/admin/imports/new" className="inline-flex h-9 items-center rounded-lg bg-brass-400 px-3.5 text-xs font-bold text-[#171006] hover:bg-brass-300">
+          <Link href="/admin/imports/new" className="inline-flex h-9 items-center rounded-lg bg-ember-400 px-3.5 text-xs font-bold text-[#171006] hover:bg-ember-300">
             استيراد جديد
           </Link>
         }
@@ -103,7 +103,7 @@ export default async function AdminSourcesPage() {
                     <p className="text-[0.78rem] font-medium text-ink-100">{method.name}</p>
                     <p className="mt-0.5 text-[0.66rem] leading-5 text-ink-400">{method.detail}</p>
                     {method.where !== "—" && (
-                      <Link href={method.where} className="mt-1 inline-block text-[0.62rem] text-brass-200 underline">
+                      <Link href={method.where} className="mt-1 inline-block text-[0.62rem] text-ember-200 underline">
                         {method.where}
                       </Link>
                     )}
@@ -152,7 +152,7 @@ export default async function AdminSourcesPage() {
         <AdminCard
           title="آخر مهام الاستيراد"
           actions={
-            <Link href="/admin/imports" className="text-[0.66rem] text-ink-400 hover:text-brass-200">
+            <Link href="/admin/imports" className="text-[0.66rem] text-ink-400 hover:text-ember-200">
               السجل الكامل
             </Link>
           }
@@ -170,7 +170,7 @@ export default async function AdminSourcesPage() {
                     {job.succeeded}/{job.total}
                   </span>
                   <span className="text-[0.6rem] text-ink-500">{formatDate(job.createdAt)}</span>
-                  <Link href={`/admin/imports/${job.id}`} className="text-[0.6rem] text-brass-200 underline">
+                  <Link href={`/admin/imports/${job.id}`} className="text-[0.6rem] text-ember-200 underline">
                     التقرير
                   </Link>
                 </li>

@@ -7,7 +7,7 @@ import { getAllSettings } from "@/lib/settings";
 export const metadata: Metadata = {
   title: "التواصل والدعم",
   description:
-    "تواصل مع فريق لوميكس للاستفسارات والاقتراحات، أو للإبلاغ عن تريلر معطّل أو خطأ في البيانات، أو لطلبات حقوق الملكية — وقت الرد من يوم إلى ثلاثة أيام عمل.",
+    "تواصل مع فريق لوميكس فيلم للاستفسارات والاقتراحات، أو للإبلاغ عن تريلر معطّل أو خطأ في البيانات، أو لطلبات حقوق الملكية — وقت الرد من يوم إلى ثلاثة أيام عمل.",
   alternates: { canonical: "/contact" },
 };
 
@@ -32,24 +32,24 @@ export default async function ContactPage() {
         <aside className="space-y-3">
           <div className="rounded-xl border border-white/8 bg-ink-900/50 p-4">
             <p className="flex items-center gap-2 text-[0.7rem] font-semibold text-ink-200">
-              <Mail className="h-3.5 w-3.5 text-brass-300" /> البريد المباشر
+              <Mail className="h-3.5 w-3.5 text-ember-300" /> البريد المباشر
             </p>
-            <a href={`mailto:${settings.contact_email}`} dir="ltr" className="mt-2 block text-xs text-brass-200 hover:underline">
+            <a href={`mailto:${settings.contact_email}`} dir="ltr" className="mt-2 block text-xs text-ember-200 hover:underline">
               {settings.contact_email}
             </a>
           </div>
           <div className="rounded-xl border border-white/8 bg-ink-900/50 p-4">
             <p className="flex items-center gap-2 text-[0.7rem] font-semibold text-ink-200">
-              <Timer className="h-3.5 w-3.5 text-brass-300" /> وقت الرد المتوقع
+              <Timer className="h-3.5 w-3.5 text-ember-300" /> وقت الرد المتوقع
             </p>
             <p className="mt-2 text-[0.72rem] leading-6 text-ink-400">من يوم إلى ثلاثة أيام عمل. الطلبات القانونية لها مسار منفصل وأولوية.</p>
           </div>
           <div className="rounded-xl border border-white/8 bg-ink-900/50 p-4">
             <p className="flex items-center gap-2 text-[0.7rem] font-semibold text-ink-200">
-              <MessageSquare className="h-3.5 w-3.5 text-brass-300" /> قبل أن تكتب
+              <MessageSquare className="h-3.5 w-3.5 text-ember-300" /> قبل أن تكتب
             </p>
             <p className="mt-2 text-[0.72rem] leading-6 text-ink-400">
-              لوميكس دليل اكتشاف ولا يوفّر مشاهدة الأعمال كاملة. بلاغات التريلرات المعطّلة مرحّب بها وتُعالج أولًا.
+              لوميكس فيلم دليل اكتشاف ولا يوفّر مشاهدة الأعمال كاملة. بلاغات التريلرات المعطّلة مرحّب بها وتُعالج أولًا.
             </p>
           </div>
           <div className="rounded-xl border border-signal-amber/25 bg-signal-amber/[0.06] p-4">

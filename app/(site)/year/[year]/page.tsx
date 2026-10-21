@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { year } = await params;
   return {
     title: `أعمال سنة ${year}`,
-    description: `كل الأعمال الصادرة في سنة ${year} على لوميكس، مع بياناتها وتريلراتها.`,
+    description: `كل الأعمال الصادرة في سنة ${year} على لوميكس فيلم، مع بياناتها وتريلراتها.`,
     alternates: { canonical: `/year/${year}` },
   };
 }

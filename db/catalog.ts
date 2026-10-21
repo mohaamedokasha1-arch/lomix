@@ -902,7 +902,7 @@ export const HERO_ORDER = [
 ];
 
 export const HOME_SECTIONS = [
-  { key: "hero", titleAr: "مختارات Loomix", kind: "HERO" as const, source: "CURATED", sort: 1 },
+  { key: "hero", titleAr: "مختارات لوميكس فيلم", kind: "HERO" as const, source: "CURATED", sort: 1 },
   { key: "trending", titleAr: "الرائج هذا الأسبوع", subtitleAr: "يختاره المحررون من بين الأكثر تفاعلًا", kind: "POSTER_ROW" as const, source: "TRENDING", sort: 2 },
   { key: "latest", titleAr: "أحدث الإضافات", subtitleAr: "ما وصل إلى المكتبة حديثًا", kind: "POSTER_ROW" as const, source: "LATEST", sort: 3 },
   { key: "editors", titleAr: "اختيارات المحرر", subtitleAr: "قائمة تُبنى يدويًا، لا بخوارزمية", kind: "POSTER_ROW" as const, source: "EDITORS", sort: 4 },

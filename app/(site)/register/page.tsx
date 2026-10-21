@@ -7,7 +7,7 @@ import { getSettings } from "@/lib/settings";
 
 export const metadata: Metadata = {
   title: "إنشاء حساب",
-  description: "أنشئ حسابك على لوميكس لحفظ الأعمال في قائمة المشاهدة.",
+  description: "أنشئ حسابك على لوميكس فيلم لحفظ الأعمال في قائمة المشاهدة.",
   robots: { index: false, follow: true },
 };
 

@@ -23,8 +23,8 @@ export default function GlobalNotFound() {
       <p className="mt-3 max-w-sm text-sm leading-7 text-ink-400">
         قد يكون الرابط قديمًا أو العمل لم يعد منشورًا. يمكنك العودة إلى الرئيسية ومتابعة التصفح.
       </p>
-      <Link href="/" className="mt-7 rounded-xl bg-brass-400 px-5 py-2.5 text-sm font-bold text-[#171006] transition hover:bg-brass-300">
-        العودة إلى لوميكس
+      <Link href="/" className="mt-7 rounded-xl bg-ember-400 px-5 py-2.5 text-sm font-bold text-[#171006] transition hover:bg-ember-300">
+        العودة إلى لوميكس فيلم
       </Link>
     </div>
   );

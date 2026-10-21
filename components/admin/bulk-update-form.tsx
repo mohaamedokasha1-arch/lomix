@@ -56,7 +56,7 @@ export function BulkUpdateForm({ titles }: { titles: TitleOption[] }) {
                 type="checkbox"
                 checked={selected.includes(title.id)}
                 onChange={() => toggle(title.id)}
-                className="h-3.5 w-3.5 accent-brass-400"
+                className="h-3.5 w-3.5 accent-ember-400"
                 aria-label={`تحديد ${title.titleAr}`}
               />
               <span className="min-w-0 flex-1 truncate text-[0.72rem] text-ink-200">{title.titleAr}</span>
@@ -102,7 +102,7 @@ export function BulkUpdateForm({ titles }: { titles: TitleOption[] }) {
               <TextArea name="reason" rows={2} required minLength={6} maxLength={300} placeholder="مثال: توحيد رمز الدولة بعد مراجعة المصدر" />
             </Field>
             <label className="flex items-start gap-2 rounded-lg border border-white/8 bg-ink-950/40 p-2.5 text-[0.65rem] leading-5 text-ink-300">
-              <input type="checkbox" name="protectManual" defaultChecked className="mt-0.5 h-3.5 w-3.5 accent-brass-400" />
+              <input type="checkbox" name="protectManual" defaultChecked className="mt-0.5 h-3.5 w-3.5 accent-ember-400" />
               <span>
                 حماية التعديلات اليدوية — تخطَّ أي عمل يحمل ملاحظة تحريرية مسجّلة.
                 <span className="mt-0.5 block text-[0.6rem] text-ink-500">هذا يمنع الكتابة فوق مراجعة بشرية سابقة.</span>

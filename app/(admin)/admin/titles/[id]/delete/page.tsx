@@ -55,7 +55,7 @@ export default async function DeleteTitlePage({ params }: { params: Promise<{ id
             </p>
             <p className="mt-1 text-xs leading-6 text-ink-400">
               {TITLE_TYPE_LABEL[title.type]} · {title.state === "PUBLISHED" ? "منشور" : "مسودة"} ·{" "}
-              <Link href={`/${seriesRoute}/${title.slug}`} target="_blank" className="text-brass-300 underline-offset-4 hover:underline">
+              <Link href={`/${seriesRoute}/${title.slug}`} target="_blank" className="text-ember-300 underline-offset-4 hover:underline">
                 معاينة الصفحة
               </Link>
             </p>

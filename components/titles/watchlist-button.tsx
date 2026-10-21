@@ -55,7 +55,7 @@ export function WatchlistButton({
         className={cn(
           "flex h-10 w-10 items-center justify-center rounded-xl border transition",
           saved
-            ? "border-brass-400/40 bg-brass-400/12 text-brass-200"
+            ? "border-ember-400/40 bg-ember-400/12 text-ember-200"
             : "border-white/15 bg-white/[0.04] text-ink-200 hover:text-ink-50",
         )}
       >
@@ -74,7 +74,7 @@ export function WatchlistButton({
         className={cn(
           "inline-flex h-11 items-center gap-2 rounded-xl border px-4 text-sm font-semibold transition",
           saved
-            ? "border-brass-400/45 bg-brass-400/12 text-brass-200"
+            ? "border-ember-400/45 bg-ember-400/12 text-ember-200"
             : "border-white/20 bg-white/[0.04] text-ink-50 hover:border-white/35 hover:bg-white/[0.08]",
         )}
       >

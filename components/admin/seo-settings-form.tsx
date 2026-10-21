@@ -11,7 +11,7 @@ export function SeoSettingsForm({ settings }: { settings: Record<string, string>
   return (
     <form action={formAction} className="space-y-4">
       <FormBanner state={state} />
-      <Field label="قالب عنوان الصفحة" hint="المتغيّرات المسموحة: {title} و{year} — مثال: {title} — لوميكس">
+      <Field label="قالب عنوان الصفحة" hint="المتغيّرات المسموحة: {title} و{year} — مثال: {title} — لوميكس فيلم">
         <TextArea name="seo_default_title" defaultValue={settings.seo_default_title} rows={2} maxLength={200} />
       </Field>
       <Field label="قالب وصف الصفحة" hint="المتغيّرات: {title} و{year}">

@@ -6,7 +6,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 
 export const metadata: Metadata = {
   title: "أحدث الإضافات",
-  description: "أحدث الأعمال المضافة إلى مكتبة لوميكس، مرتبة تلقائيًا حسب تاريخ النشر.",
+  description: "أحدث الأعمال المضافة إلى مكتبة لوميكس فيلم، مرتبة تلقائيًا حسب تاريخ النشر.",
   alternates: { canonical: "/latest" },
 };
 

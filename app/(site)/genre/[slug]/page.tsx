@@ -49,7 +49,7 @@ export default async function GenrePage({ params, searchParams }: Props) {
       <JsonLd
         data={collectionJsonLd({
           name: `أفلام ومسلسلات ${genre.nameAr}`,
-          description: `كل أعمال ${genre.nameAr} على لوميكس مع بياناتها وتريلراتها الرسمية.`,
+          description: `كل أعمال ${genre.nameAr} على لوميكس فيلم مع بياناتها وتريلراتها الرسمية.`,
           path: `/genre/${genre.slug}`,
           items: collectionItems(result.items),
           total: result.total,
@@ -68,7 +68,7 @@ export default async function GenrePage({ params, searchParams }: Props) {
               href={`/genre/${g.slug}`}
               className={
                 g.slug === slug
-                  ? "rounded-full border border-brass-400/50 bg-brass-400/15 px-2.5 py-1 text-[0.7rem] font-semibold text-brass-200"
+                  ? "rounded-full border border-ember-400/50 bg-ember-400/15 px-2.5 py-1 text-[0.7rem] font-semibold text-ember-200"
                   : "rounded-full border border-white/10 px-2.5 py-1 text-[0.7rem] text-ink-300 transition hover:border-white/25 hover:text-ink-100"
               }
             >
