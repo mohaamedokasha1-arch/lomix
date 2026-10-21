@@ -128,6 +128,25 @@ function formFor(html: string, needle: string): [string, string][] | null {
   return null;
 }
 
+
+/**
+ * يلغي الجلسة عبر نموذج الخروج الحقيقي (إجراء خادم بلا JS).
+ * المدير يجد النموذج في `/admin`، والمشاهد لا يدخلها — فيُقرأ من `/profile`.
+ */
+async function logout(cookie: string): Promise<boolean> {
+  for (const path of ["/admin", "/profile", "/"]) {
+    const page = await request(path, { headers: { cookie } });
+    for (const fragment of page.body.match(/<form[^>]*>[\s\S]*?<\/form>/g) ?? []) {
+      if (!fragment.includes("$ACTION_ID_")) continue;
+      const fields = hiddenInputs(fragment);
+      if (!fields.length) continue;
+      const res = await postForm(path, fields, cookie);
+      if (res.status === 303 || res.status === 200) return true;
+    }
+  }
+  return false;
+}
+
 async function main() {
   /* 1 — تسجيل الدخول */
   const admin = await login(ADMIN.email, ADMIN.password);
@@ -239,6 +258,18 @@ async function main() {
   check("ملف غير صالح يُرفض بـ415", invalid.status === 415, String(invalid.status));
   const anonymous = await postForm("/api/admin/upload", [], "", [fake]);
   check("الرفع بلا جلسة يُرفض بـ401", anonymous.status === 401, String(anonymous.status));
+
+  /* 10 — تنظيف الجلستين (سجل التدقيق يبقى: سجل غير قابل للمحو) */
+  if (!keep) {
+    await logout(cookie);
+    if (viewer.cookie) await logout(viewer.cookie);
+    const after = await request("/admin", { headers: { cookie } });
+    check(
+      "الخروج يُبطل الجلسة على الخادم",
+      [301, 302, 303, 307, 308].includes(after.status),
+      String(after.status),
+    );
+  }
 
   return report();
 }
