@@ -44,6 +44,8 @@ const nextConfig: NextConfig = {
   // خطوط بطاقات المشاركة تُقرأ من القرص وقت الطلب بمسار متغيّر، فلا يستطيع
   // تتبّع الملفات اكتشافها. نُدرجها صراحةً حتى تُحزَم مع دوال الصور على Vercel.
   outputFileTracingIncludes: {
+    // ملفات الهجرات تُقرأ وقت التشغيل عند الاحتياط بقاعدة مؤقتة على Vercel.
+    "/**": ["./db/migrations/**"],
     "/movie/[slug]/opengraph-image*": ["./assets/fonts/**"],
     "/series/[slug]/opengraph-image*": ["./assets/fonts/**"],
     "/anime/[slug]/opengraph-image*": ["./assets/fonts/**"],

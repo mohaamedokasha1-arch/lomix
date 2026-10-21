@@ -74,6 +74,8 @@ npm run check:data                                   # فحص سلامة الب�
 | المتغيّر | إلزامي | القيمة | ملاحظات |
 |---|---|---|---|
 | `DATABASE_URL` | ✅ | رابط Postgres المجمّع + `sslmode=require` | سرّي |
+
+> ⚠️ **مهم:** إذا غاب `DATABASE_URL` على Vercel، لا يحاول التطبيق كتابة `.data/pglite` (نظام الملفات للقراءة فقط وكان يسبب خطأ 500 بـ `ENOENT`). بدلًا من ذلك تعمل الصفحات على قاعدة **مؤقتة في الذاكرة** بلا بيانات، ويُسجَّل تحذير `[loomix:db]` في السجلات. الموقع لن يحفظ أي بيانات إلى أن تضبط `DATABASE_URL` وتعيد النشر.
 | `NEXT_PUBLIC_SITE_URL` | ✅ | `https://your-domain.com` بلا `/` في النهاية | يدخل في canonical وOG وsitemap |
 | `APP_SECRET` | ✅ | 32 حرفًا عشوائيًا (`openssl rand -base64 32`) | سرّي |
 | `SESSION_COOKIE_NAME` | اختياري | `loomix_session` | غيّره لعزل بيئتين على النطاق نفسه |

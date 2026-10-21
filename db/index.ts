@@ -5,7 +5,7 @@ export type Db = PgDatabase<PgQueryResultHKT, typeof schema>;
 
 type DbGlobal = {
   dbPromise?: Promise<Db>;
-  driver?: "pglite" | "postgres";
+  driver?: "pglite" | "memory" | "postgres";
 };
 
 const globalForDb = globalThis as unknown as { __loomixDb?: DbGlobal };
@@ -15,12 +15,37 @@ export function isLocalDatabase(url = process.env.DATABASE_URL ?? "") {
   return !url || url.startsWith("file:") || url.startsWith("pglite:");
 }
 
+/**
+ * Vercel/Lambda: نظام الملفات للقراءة فقط إلا /tmp، ويُعاد بناء المجلد عند كل
+ * بدء دالة. لذلك لا نحاول أبدًا إنشاء `.data/pglite` هناك (كان يسبب 500 بـ ENOENT).
+ */
+export function isServerlessRuntime() {
+  return Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+}
+
 async function createDb(): Promise<Db> {
   const url = process.env.DATABASE_URL ?? "";
 
+  if (isLocalDatabase(url) && isServerlessRuntime()) {
+    // لا توجد قاعدة إنتاج مضبوطة: نُقلع PGlite في الذاكرة بالهجرات كاملة حتى لا
+    // تنهار الصفحات، لكنها تُفقد عند كل بدء دالة. الخطأ يُسجَّل بوضوح ليُصلَح
+    // بضبط DATABASE_URL في إعدادات Vercel (Neon/Postgres).
+    console.error(
+      "[loomix:db] DATABASE_URL غير مضبوط في Vercel — تعمل الصفحات على قاعدة مؤقتة في الذاكرة ولا تُحفظ البيانات. اضبط DATABASE_URL.",
+    );
+    const { PGlite } = await import("@electric-sql/pglite");
+    const { drizzle } = await import("drizzle-orm/pglite");
+    const { migrate } = await import("drizzle-orm/pglite/migrator");
+    const { join } = await import("node:path");
+    const client = await PGlite.create();
+    const db = drizzle(client, { schema });
+    await migrate(db, { migrationsFolder: join(process.cwd(), "db", "migrations") });
+    g.driver = "memory";
+    return db as unknown as Db;
+  }
+
   if (isLocalDatabase(url)) {
     // تطوير محلي: PGlite — Postgres كامل (WASM) مع تخزين على القرص.
-    // لا يُستخدم في الإنتاج لأن ملفاته غير دائمة على بيئات Serverless.
     const { PGlite } = await import("@electric-sql/pglite");
     const { drizzle } = await import("drizzle-orm/pglite");
     const dir = process.env.PGLITE_DIR || ".data/pglite";
