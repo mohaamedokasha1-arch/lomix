@@ -11,7 +11,7 @@
 import { config } from "dotenv";
 config();
 
-import { existsSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { compare } from "bcryptjs";
 import { sql } from "drizzle-orm";
@@ -130,6 +130,57 @@ if (blobToken) {
   add("ok", "مجلد الرفع موجود (تخزين محلي)");
 }
 
+/* ─────────────── تسميات سجل العمليات (ثابت في الكود) ─────────────── */
+
+function collectSourceFiles(dir: string, out: string[] = []): string[] {
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      if (entry.name === "node_modules" || entry.name.startsWith(".")) continue;
+      collectSourceFiles(full, out);
+    } else if (/\.(ts|tsx)$/.test(entry.name)) {
+      out.push(full);
+    }
+  }
+  return out;
+}
+
+/**
+ * كل حدث يُكتب في سجل العمليات عبر `logAudit({ action: "..." })` يجب أن يكون له تسمية
+ * عربية في `app/(admin)/admin/audit/page.tsx`، وإلا ظهر الكود اللاتيني للمستخدم في اللوحة.
+ * فحص ثابت (بلا قاعدة بيانات) يمنع تكرار الفجوة.
+ */
+function checkAuditLabels() {
+  const auditPage = path.join(process.cwd(), "app", "(admin)", "admin", "audit", "page.tsx");
+  if (!existsSync(auditPage)) {
+    add("info", "تعذّر فحص تسميات سجل العمليات", "صفحة السجل غير موجودة في هذه النسخة.");
+    return;
+  }
+  const mapped = new Set(
+    [...readFileSync(auditPage, "utf8").matchAll(/^\s{2}([A-Z][A-Z0-9_]+):\s*"/gm)].map((m) => m[1]),
+  );
+  const used = new Map<string, string>();
+  for (const root of ["app", "lib", "db", "scripts"]) {
+    const dir = path.join(process.cwd(), root);
+    if (!existsSync(dir)) continue;
+    for (const file of collectSourceFiles(dir)) {
+      for (const m of readFileSync(file, "utf8").matchAll(/action:\s*"([A-Z][A-Z0-9_]+)"/g)) {
+        if (!used.has(m[1])) used.set(m[1], path.relative(process.cwd(), file));
+      }
+    }
+  }
+  const missing = [...used].filter(([action]) => !mapped.has(action));
+  if (missing.length > 0) {
+    add(
+      "error",
+      `${missing.length} حدثًا في سجل العمليات بلا تسمية عربية`,
+      missing.map(([action, file]) => `${action} (${file})`).join(" · "),
+    );
+  } else {
+    add("ok", `كل أحداث سجل العمليات لها تسمية عربية (${used.size} حدثًا)`);
+  }
+}
+
 async function checkDatabase() {
   let db;
   try {
@@ -208,6 +259,7 @@ async function checkDatabase() {
 const ICON: Record<Level, string> = { error: "✖", warn: "!", ok: "✓", info: "·" };
 
 async function main() {
+  checkAuditLabels();
   await checkDatabase();
 
   console.log(`\nفحص جاهزية Loomix — ${prod ? "إنتاج" : "تطوير"}\n`);

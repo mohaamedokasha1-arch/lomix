@@ -42,6 +42,13 @@ const ACTION_LABEL: Record<string, string> = {
   USER_CREATE: "إنشاء مستخدم",
   USER_ROLE_CHANGE: "تغيير دور",
   MESSAGE_STATUS: "تحديث رسالة",
+  BACKUP_RESTORE: "استعادة نسخة",
+  DEMO_FLUSH: "تنظيف المحتوى التجريبي",
+  PASSWORD_CHANGE: "تغيير كلمة المرور",
+  PROFILE_UPDATE: "تحديث الملف الشخصي",
+  REGISTER: "إنشاء حساب",
+  TITLES_BULK_UPDATE: "تحديث جماعي",
+  NAVIGATION_UPDATE: "تحديث التنقل",
 };
 
 export default async function AdminDashboard() {
