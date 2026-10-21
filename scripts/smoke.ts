@@ -110,9 +110,16 @@ async function main() {
 
   /* 4 — 404 حقيقي ولوحة محمية */
   try {
-    const { response } = await request("/movie/__smoke_missing__");
-    if (response.status === 404) add("ok", "صفحة عمل غير موجودة تعيد 404");
-    else add("error", `المسار غير الموجود يعيد ${response.status} بدل 404`);
+    const { response, body } = await request("/movie/__smoke_missing__");
+    if (response.status !== 404) {
+      add("error", `المسار غير الموجود يعيد ${response.status} بدل 404`);
+    } else if (!/<meta name="robots" content="[^"]*noindex/.test(body)) {
+      add("error", "صفحة 404 بلا noindex — قد تُفهرس");
+    } else if (!/<title>[^<]*غير موجودة/.test(body)) {
+      add("error", "صفحة 404 بعنوان غير واضح");
+    } else {
+      add("ok", "404 حقيقي: كود 404 + noindex + عنوان واضح");
+    }
   } catch {
     add("error", "تعذّر فحص 404");
   }

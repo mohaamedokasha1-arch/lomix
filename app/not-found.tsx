@@ -1,5 +1,18 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { LogoMark } from "@/components/brand/logo";
+
+/**
+ * عنوان صفحة 404 ووسم noindex.
+ *
+ * هذا هو المكان الصحيح للبيانات الوصفية: عندما يُرمى `notFound()` أثناء العرض
+ * تُهمَل بيانات الصفحة الأصلية، ولهذا كانت الصفحة تحمل عنوان الموقع العام.
+ */
+export const metadata: Metadata = {
+  title: "الصفحة غير موجودة",
+  robots: { index: false, follow: true },
+};
+
 
 export default function GlobalNotFound() {
   return (
