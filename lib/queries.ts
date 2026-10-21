@@ -2,7 +2,7 @@ import "server-only";
 import { unstable_cache } from "next/cache";
 import { and, asc, desc, eq, exists, gte, inArray, lte, ne, or, sql } from "drizzle-orm";
 import { getDb, schema } from "@/db";
-import { normalizeArabic } from "@/lib/slug";
+import { arabicTokenVariants, normalizeArabic } from "@/lib/slug";
 
 export type TitleCard = {
   id: string;
@@ -114,7 +114,12 @@ async function buildConditions(filters: TitleFilters) {
     const tokens = normalized.split(/\s+/).filter(Boolean).slice(0, 6);
     const searchable = [sql`${schema.titles.titleAr}`, sql`coalesce(${schema.titles.titleEn}, '')`];
     const tokenMatches = tokens.map((token) =>
-      or(sql`${schema.titles.searchText} like ${likeToken(token)}`, ...searchable.map((col) => sql`${col} like ${likeToken(token)}`)),
+      or(
+        ...arabicTokenVariants(token).flatMap((variant) => [
+          sql`${schema.titles.searchText} like ${likeToken(variant)}`,
+          ...searchable.map((col) => sql`${col} like ${likeToken(variant)}`),
+        ]),
+      ),
     );
     conditions.push(and(...tokenMatches)!);
   }
@@ -510,7 +515,11 @@ export async function searchSuggestions(query: string, limit = 6) {
     .where(
       and(
         eq(schema.titles.state, "PUBLISHED"),
-        ...tokens.map((token) => sql`${schema.titles.searchText} like ${likeToken(token)}`),
+        ...tokens.map((token) =>
+          or(
+            ...arabicTokenVariants(token).map((variant) => sql`${schema.titles.searchText} like ${likeToken(variant)}`),
+          ),
+        ),
       ),
     )
     .orderBy(sql`${schema.titles.ratingValue} desc nulls last`)

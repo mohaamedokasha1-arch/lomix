@@ -19,6 +19,20 @@ export function normalizeArabic(input: string) {
     .trim();
 }
 
+/**
+ * بدائل البحث لِلَفظ عربي واحد: الكلمة كما هي، ومعها نسخة بلا «ال» التعريف.
+ * بحث «الظل» لا يطابق «ظل الرمال» بدونها، مع أن البحث يقصد العمل نفسه.
+ * لا تُستخدم في توليد الـslug حتى لا تتغيّر الروابط القائمة.
+ */
+export function arabicTokenVariants(token: string): string[] {
+  const variants = [token];
+  if (token.length >= 4 && token.startsWith("ال")) {
+    const stripped = token.slice(2).trim();
+    if (stripped.length >= 2) variants.push(stripped);
+  }
+  return variants;
+}
+
 /** slug آمن يدعم العربية والإنجليزية (يُستخدم في الروابط الثابتة). */
 export function slugify(input: string, maxLength = 80) {
   const normalized = normalizeArabic(input)
