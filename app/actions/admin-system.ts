@@ -299,7 +299,6 @@ const SETTINGS_ALLOWLIST = [
   "seo_index_genres",
   "seo_index_people",
   "seo_index_search",
-  "show_ratings",
   "show_demo_notice",
   "allow_registration",
 ] as const;
@@ -317,7 +316,7 @@ export async function saveSiteSettingsAction(_prev: SysState, formData: FormData
   }
   // مربعات الاختيار: تُحفظ فقط إن وُجدت في النموذج المرسَل، حتى لا تمسح
   // صفحة SEO قيم إعدادات أخرى موجودة في صفحة الإعدادات.
-  for (const toggle of ["seo_index_titles", "seo_index_genres", "seo_index_people", "seo_index_search", "show_ratings", "show_demo_notice", "allow_registration"] as const) {
+  for (const toggle of ["seo_index_titles", "seo_index_genres", "seo_index_people", "seo_index_search", "show_demo_notice", "allow_registration"] as const) {
     if (formData.has(toggle)) {
       values[toggle] = formData.getAll(toggle).some((value) => value === "on" || value === "true") ? "true" : "false";
     }
@@ -325,6 +324,8 @@ export async function saveSiteSettingsAction(_prev: SysState, formData: FormData
 
   await saveSettings(values);
   await logAudit({ userId: guarded.user.id, action: "SETTINGS_UPDATE", entity: "settings", details: { keys: Object.keys(values) }, ip: guarded.ip });
+  // إعدادات SEO تُقرأ داخل generateMetadata المخزّن — يجب إبطال الكاش معها.
+  revalidateTag("catalog");
   revalidatePath("/", "layout");
   revalidatePath("/admin/settings");
   revalidatePath("/admin/seo");

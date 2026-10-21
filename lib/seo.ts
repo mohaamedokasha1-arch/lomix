@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getSettings } from "@/lib/settings";
 import { absoluteUrl, truncate } from "@/lib/utils";
 import type { TitleDetail } from "@/lib/queries";
 
@@ -122,4 +123,10 @@ export function personJsonLd(person: { nameAr: string; nameEn: string | null; sl
   if (person.bioAr) data.description = person.bioAr;
   if (person.imagePath) data.image = absoluteUrl(person.imagePath);
   return data;
+}
+
+/** robots مبني على إعدادات SEO في اللوحة — التحكم المعلن يجب أن يعمل فعليًا. */
+export async function robotsFor(key: "seo_index_titles" | "seo_index_genres" | "seo_index_people"): Promise<Metadata["robots"]> {
+  const settings = await getSettings([key]);
+  return settings[key] === "true" ? undefined : { index: false, follow: true };
 }

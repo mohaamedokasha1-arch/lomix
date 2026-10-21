@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CatalogView, PageHeader } from "@/components/titles/catalog-view";
 import { cachedFacets, cachedGenres, cachedList, getGenreBySlug } from "@/lib/queries";
+import { robotsFor } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -10,11 +11,12 @@ type Props = { params: Promise<{ slug: string }>; searchParams: Promise<Record<s
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const genre = await getGenreBySlug(slug);
-  if (!genre) return { title: "تصنيف غير موجود" };
+  if (!genre) return { title: "تصنيف غير موجود", robots: { index: false } };
   return {
     title: `أفلام ومسلسلات ${genre.nameAr}`,
     description: `كل أعمال ${genre.nameAr} على لوميكس مع بياناتها وتريلراتها الرسمية.`,
     alternates: { canonical: `/genre/${genre.slug}` },
+    robots: await robotsFor("seo_index_genres"),
   };
 }
 

@@ -61,7 +61,10 @@ export function SiteSettingsForm({ settings }: { settings: Settings }) {
 
       <section className="space-y-2">
         <h2 className="mb-1 text-[0.8rem] font-semibold text-ink-100">إظهار عناصر</h2>
-        <ToggleField name="show_ratings" label="إظهار التقييمات" description="تُعرض فقط عند وجود مصدر مسجّل — لن تظهر أرقام بلا مصدر حتى مع التفعيل." defaultChecked={settings.show_ratings === "true"} />
+        <p className="rounded-lg border border-white/8 bg-ink-950/30 px-3 py-2.5 text-[0.62rem] leading-5 text-ink-500">
+          عرض التقييم ليس مفتاحًا عامًّا: كل تقييم يظهر فقط إذا سُجّلت له قيمة ومصدر معًا. لإخفاء تقييم عملٍ ما، احذف
+          قيمته ومصدره من صفحته — لا تُخفيه بمفتاح عام.
+        </p>
         <ToggleField name="show_demo_notice" label="إظهار شريط «محتوى تجريبي»" description="يجب إبقاؤه مفعّلًا حتى استبدال البيانات التجريبية." defaultChecked={settings.show_demo_notice === "true"} />
         <ToggleField name="allow_registration" label="السماح بإنشاء حسابات" description="تعطيله يغلق صفحة التسجيل ويحفظ رسالة واضحة للزائر." defaultChecked={settings.allow_registration === "true"} />
       </section>

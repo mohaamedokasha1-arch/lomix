@@ -19,7 +19,6 @@ export const SETTING_DEFAULTS = {
   seo_index_genres: "true",
   seo_index_people: "true",
   seo_index_search: "false",
-  show_ratings: "true",
   show_demo_notice: "true",
   allow_registration: "true",
   trailers_mailto: "dmca@loomix.tv",

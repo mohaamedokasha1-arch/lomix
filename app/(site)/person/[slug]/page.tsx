@@ -4,7 +4,7 @@ import Image from "next/image";
 import { CalendarDays } from "lucide-react";
 import { PageHeader, PosterGrid } from "@/components/titles/catalog-view";
 import { cachedPerson } from "@/lib/queries";
-import { personJsonLd } from "@/lib/seo";
+import { personJsonLd, robotsFor } from "@/lib/seo";
 import { initials } from "@/lib/utils";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -17,6 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: data.person.nameAr,
     description: data.person.bioAr ?? `أعمال ${data.person.nameAr} على لوميكس.`,
     alternates: { canonical: `/person/${slug}` },
+    robots: await robotsFor("seo_index_people"),
   };
 }
 
