@@ -798,3 +798,100 @@ export async function markTrailerBrokenAction(formData: FormData) {
 }
 
 export { slugify };
+
+/* ───────────────────────── تحديث جماعي مع سجل تغييرات ───────────────────────── */
+
+const bulkUpdateSchema = z.object({
+  ids: z.array(z.string()).min(1, "اختر عملًا واحدًا على الأقل"),
+  reason: z.string().trim().min(6, "سبب التحديث مطلوب (6 أحرف على الأقل)").max(300),
+  state: z.enum(["", "DRAFT", "PUBLISHED"]).optional(),
+  countryCode: z.string().trim().max(3).optional(),
+  language: z.string().trim().max(60).optional(),
+  status: z.enum(["", "RELEASED", "ONGOING", "UPCOMING", "ENDED", "CANCELLED"]).optional(),
+  protectManual: z.boolean(),
+});
+
+export type BulkUpdateResult = {
+  ok?: boolean;
+  error?: string;
+  message?: string;
+  updated?: { titleAr: string; changes: string[] }[];
+  skipped?: { titleAr: string; reason: string }[];
+};
+
+/** تحديث جماعي محدود الحقول، مع تسجيل «قبل/بعد» لكل عمل وحماية التعديلات اليدوية. */
+export async function bulkUpdateTitlesAction(_prev: BulkUpdateResult | null, formData: FormData): Promise<BulkUpdateResult> {
+  const guarded = await guard();
+  if ("error" in guarded) return { error: guarded.error };
+
+  const parsed = bulkUpdateSchema.safeParse({
+    ids: formData.getAll("ids").map(String).filter(Boolean),
+    reason: String(formData.get("reason") ?? ""),
+    state: String(formData.get("state") ?? ""),
+    countryCode: String(formData.get("countryCode") ?? ""),
+    language: String(formData.get("language") ?? ""),
+    status: String(formData.get("status") ?? ""),
+    protectManual: formData.get("protectManual") === "on",
+  });
+  if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? "بيانات غير صالحة." };
+  const input = parsed.data;
+
+  const updates: Record<string, unknown> = {};
+  if (input.state) {
+    updates.state = input.state;
+    if (input.state === "PUBLISHED") updates.publishedAt = new Date();
+  }
+  if (input.countryCode) updates.countryCode = input.countryCode.toUpperCase();
+  if (input.language) updates.language = input.language;
+  if (input.status) updates.status = input.status;
+
+  if (!Object.keys(updates).length) return { error: "لم تختر أي حقل للتحديث." };
+
+  const db = await getDb();
+  const rows = await db.select().from(schema.titles).where(inArray(schema.titles.id, input.ids));
+  const updated: { titleAr: string; changes: string[] }[] = [];
+  const skipped: { titleAr: string; reason: string }[] = [];
+
+  for (const title of rows) {
+    if (input.protectManual && title.editorNoteAr) {
+      skipped.push({ titleAr: title.titleAr, reason: "محمي: تعديل يدوي مسجّل" });
+      continue;
+    }
+
+    const changes: string[] = [];
+    if (input.state && input.state !== title.state) changes.push(`الحالة: ${title.state} → ${input.state}`);
+    if (input.countryCode && input.countryCode.toUpperCase() !== title.countryCode) {
+      changes.push(`الدولة: ${title.countryCode ?? "—"} → ${input.countryCode.toUpperCase()}`);
+    }
+    if (input.language && input.language !== title.language) changes.push(`اللغة: ${title.language ?? "—"} → ${input.language}`);
+    if (input.status && input.status !== title.status) changes.push(`حالة الإصدار: ${title.status} → ${input.status}`);
+    if (!changes.length) {
+      skipped.push({ titleAr: title.titleAr, reason: "لا تغيير" });
+      continue;
+    }
+
+    await db
+      .update(schema.titles)
+      .set({ ...updates, updatedAt: new Date() })
+      .where(eq(schema.titles.id, title.id));
+
+    updated.push({ titleAr: title.titleAr, changes });
+    invalidateCatalog(title.slug, title.type);
+  }
+
+  await logAudit({
+    userId: guarded.user.id,
+    action: "TITLES_BULK_UPDATE",
+    entity: "title",
+    details: { reason: input.reason, count: updated.length, skipped: skipped.length, changes: updated },
+    ip: guarded.ip,
+  });
+
+  revalidatePath("/admin/titles");
+  return {
+    ok: true,
+    message: `حُدّث ${updated.length} عملًا${skipped.length ? ` وتُخطّي ${skipped.length}` : ""}. السبب مسجّل في سجل العمليات.`,
+    updated,
+    skipped,
+  };
+}

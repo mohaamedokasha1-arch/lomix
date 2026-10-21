@@ -57,6 +57,9 @@ export default async function AdminTitlesPage({
             <Link href="/admin/imports/new" className="inline-flex h-9 items-center rounded-lg border border-white/15 px-3 text-xs text-ink-100 hover:border-white/30">
               استيراد جماعي
             </Link>
+            <Link href="/admin/titles/bulk" className="inline-flex h-9 items-center rounded-lg border border-white/15 px-3 text-xs text-ink-100 hover:border-white/30">
+              تحديث جماعي
+            </Link>
             <Link href="/admin/titles/new" className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-brass-400 px-3.5 text-xs font-bold text-[#171006] hover:bg-brass-300">
               <Plus className="h-3.5 w-3.5" /> عمل جديد
             </Link>
