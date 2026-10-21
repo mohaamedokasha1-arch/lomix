@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1500" viewBox="0 0 1000 1500" role="img">
+    <defs>
+    <linearGradient id="abhg5to-sky" x1="0" y1="0" x2="0.15" y2="1">
+      <stop offset="0" stop-color="#020706"/>
+      <stop offset="0.55" stop-color="#06120F"/>
+      <stop offset="1" stop-color="#0F2C26"/>
+    </linearGradient>
+    <radialGradient id="abhg5to-sun" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#C6F8EB" stop-opacity="1"/>
+      <stop offset="0.28" stop-color="#6ED0B6" stop-opacity="0.85"/>
+      <stop offset="0.62" stop-color="#6ED0B6" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#6ED0B6" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="abhg5to-halo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#6ED0B6" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#6ED0B6" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="abhg5to-beam" x1="0" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#C6F8EB" stop-opacity="0.55"/>
+      <stop offset="0.3" stop-color="#6ED0B6" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#6ED0B6" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="abhg5to-slab" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#020706"/>
+      <stop offset="0.7" stop-color="#06120F"/>
+      <stop offset="1" stop-color="#0F2C26"/>
+    </linearGradient>
+    <linearGradient id="abhg5to-rim" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#C6F8EB" stop-opacity="0"/>
+      <stop offset="0.55" stop-color="#C6F8EB" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#C6F8EB" stop-opacity="0.1"/>
+    </linearGradient>
+    <radialGradient id="abhg5to-vig" cx="0.5" cy="0.42" r="0.8">
+      <stop offset="0.5" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.45"/>
+    </radialGradient>
+    <linearGradient id="abhg5to-floorlight" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6ED0B6" stop-opacity="0.4"/>
+      <stop offset="1" stop-color="#6ED0B6" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="abhg5to-safe" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#020706" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#020706" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.92"/>
+    </linearGradient>
+    <filter id="abhg5to-soft"><feGaussianBlur stdDeviation="35"/></filter>
+    <filter id="abhg5to-grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="11" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+  </defs>
+    <g>
+    <rect width="1000" height="1500" fill="url(#abhg5to-sky)"/>
+    <circle cx="723.23" cy="511.69" r="340" fill="url(#abhg5to-sun)" opacity="0.9"/>
+    <circle cx="723.23" cy="511.69" r="71.5" fill="#C6F8EB" opacity="0.18" filter="url(#abhg5to-soft)"/>
+    <circle cx="723.23" cy="511.69" r="55" fill="#C6F8EB" opacity="0.95"/>
+    <path d="M0 780 C 233.74 667.5, 562.72 870, 1000 746.25 L 1000 1500 L 0 1500 Z" fill="#06120F" opacity="0.98"/><path d="M0 780 C 233.74 667.5, 562.72 870, 1000 746.25" fill="none" stroke="#6ED0B6" stroke-opacity="0.55" stroke-width="1.8"/><path d="M0 915 C 267.66 805.5, 776.42 1002.6, 1000 882.15 L 1000 1500 L 0 1500 Z" fill="#06120F" opacity="0.97"/><path d="M0 915 C 267.66 805.5, 776.42 1002.6, 1000 882.15" fill="none" stroke="#6ED0B6" stroke-opacity="0.53" stroke-width="1.75"/><path d="M0 1050 C 144.13 943.5, 724.98 1135.2, 1000 1018.05 L 1000 1500 L 0 1500 Z" fill="#020706" opacity="0.96"/><path d="M0 1050 C 144.13 943.5, 724.98 1135.2, 1000 1018.05" fill="none" stroke="#6ED0B6" stroke-opacity="0.51" stroke-width="1.7"/><path d="M0 1185 C 338.47 1081.5, 839.73 1267.8, 1000 1153.95 L 1000 1500 L 0 1500 Z" fill="#06120F" opacity="0.94"/><path d="M0 1185 C 338.47 1081.5, 839.73 1267.8, 1000 1153.95" fill="none" stroke="#6ED0B6" stroke-opacity="0.48" stroke-width="1.65"/><path d="M0 1320 C 284.28 1219.5, 660.76 1400.4, 1000 1289.85 L 1000 1500 L 0 1500 Z" fill="#020706" opacity="0.93"/><path d="M0 1320 C 284.28 1219.5, 660.76 1400.4, 1000 1289.85" fill="none" stroke="#6ED0B6" stroke-opacity="0.46" stroke-width="1.6"/>
+    <path d="M0 1125 Q 450 1065 1000 1140" fill="none" stroke="#C6F8EB" stroke-opacity="0.2" stroke-width="1"/>
+  </g>
+    <rect width="1000" height="1500" fill="url(#abhg5to-vig)"/>
+    <rect width="1000" height="1500" filter="url(#abhg5to-grain)" opacity="0.06"/>
+    <rect y="825" width="1000" height="675" fill="url(#abhg5to-safe)"/>
+    <g opacity="0.6">
+    <line x1="448" y1="1455" x2="474" y2="1455" stroke="#C6F8EB" stroke-opacity="0.45" stroke-width="1"/>
+    <line x1="526" y1="1455" x2="552" y2="1455" stroke="#C6F8EB" stroke-opacity="0.45" stroke-width="1"/>
+    <text x="500" y="1460" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="11" letter-spacing="7" fill="#C6F8EB">LOOMIX</text>
+  </g>
+  </svg>

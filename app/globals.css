@@ -1,0 +1,290 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────
+   لوميكس فيلم — نظام التصميم (الإصدار الثاني)
+   سينمائي داكن، إضاءة جمرية، لون مميز مرجاني دافئ.
+   ───────────────────────────────────────────────────────────── */
+
+@theme {
+  --color-ink-950: #050608;
+  --color-ink-900: #070910;
+  --color-ink-850: #0a0d14;
+  --color-ink-800: #0e121a;
+  --color-ink-750: #121722;
+  --color-ink-700: #171d29;
+  --color-ink-600: #212936;
+  /* درجات النص الثانوي مُعايَرة لتجاوز WCAG AA (4.5:1) على أغمق الأسطح وأفتحها
+     معًا (#121722). القيم القديمة (400 = 2.49، 500 = 1.67) كانت تجعل النص غير مقروء. */
+  --color-ink-500: #7b8798;
+  --color-ink-400: #818c9d;
+  --color-ink-300: #8c96a6;
+  --color-ink-200: #9aa4b2;
+  --color-ink-100: #c9d0d9;
+  --color-ink-50: #f2f0ea;
+
+  /* لوحة «الجمر»: كهرماني مائل للمرجاني — بديل الذهبي النحاسي (هوية الإصدار الثاني). */
+  --color-ember-50: #fff4ef;
+  --color-ember-100: #ffe2d4;
+  --color-ember-200: #ffc2a6;
+  --color-ember-300: #ffa27a;
+  --color-ember-400: #ff7f50;
+  --color-ember-500: #f06238;
+  --color-ember-600: #c94a22;
+  --color-ember-700: #9a3618;
+  --color-ember-800: #6a250f;
+  --color-ember-900: #36140a;
+
+  --color-signal-teal: #6ed0b6;
+  --color-signal-green: #7dcf9b;
+  --color-signal-amber: #f2c36b;
+  --color-signal-red: #f2707a;
+
+  --font-display: var(--font-display), "Noto Kufi Arabic", Tahoma, sans-serif;
+  --font-sans: var(--font-body), "IBM Plex Sans Arabic", Tahoma, sans-serif;
+  --font-latin: var(--font-latin), "Manrope", "Helvetica Neue", Arial, sans-serif;
+
+  --shadow-glow: 0 0 0 1px color-mix(in oklab, var(--color-ember-400) 30%, transparent),
+    0 18px 60px -20px color-mix(in oklab, var(--color-ember-400) 45%, transparent);
+  --shadow-card: 0 20px 40px -24px rgba(0, 0, 0, 0.9);
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  color-scheme: dark;
+  --page: var(--color-ink-950);
+  --surface: var(--color-ink-850);
+  --line: rgba(255, 255, 255, 0.075);
+  --line-strong: rgba(255, 255, 255, 0.14);
+}
+
+* {
+  border-color: var(--line);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+body {
+  background-color: var(--page);
+  background-image: radial-gradient(60% 38% at 85% -4%, rgba(255, 127, 80, 0.10), transparent 70%),
+    radial-gradient(45% 30% at 5% 0%, rgba(201, 74, 34, 0.08), transparent 70%);
+  background-repeat: no-repeat;
+  color: var(--color-ink-50);
+  font-family: var(--font-sans);
+  font-feature-settings: "kern", "liga", "calt";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100dvh;
+}
+
+/* النص اللاتيني والأرقام */
+.latin,
+.num,
+.tabular {
+  font-family: var(--font-latin);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* ─رؤوس الصفحات─ */
+.display {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+::selection {
+  background: var(--color-ember-400);
+  color: #171006;
+}
+
+/* تمرير أنيق */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-ink-600);
+  border-radius: 999px;
+  border: 2px solid var(--page);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-ink-500);
+}
+
+/* حلقة تركيز واضحة لإتاحة الوصول */
+:focus-visible {
+  outline: 2px solid var(--color-ember-300);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ─────────────── مكوّنات مساعدة ─────────────── */
+
+@utility container-page {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @media (min-width: 768px) {
+    padding-inline: 2rem;
+  }
+  @media (min-width: 1280px) {
+    padding-inline: 3rem;
+  }
+}
+
+/* شارة زجاجية فوق الصور */
+.glass-chip {
+  background: color-mix(in oklab, var(--color-ink-950) 55%, transparent);
+  backdrop-filter: blur(10px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+/* خط التمييز الذهبي (شعاع) */
+.beam-rule {
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in oklab, var(--color-ember-400) 80%, transparent) 18%,
+    var(--color-ember-200) 50%,
+    color-mix(in oklab, var(--color-ember-400) 80%, transparent) 82%,
+    transparent 100%
+  );
+}
+
+.hairline {
+  border-color: var(--line);
+}
+
+/* تدرّج حماية للنصوص فوق الصور */
+.scrim-b {
+  background: linear-gradient(to top, var(--color-ink-950) 4%, rgba(5, 6, 8, 0.72) 38%, transparent 82%);
+}
+.scrim-r {
+  background: linear-gradient(to left, var(--color-ink-950) 2%, rgba(5, 6, 8, 0.82) 40%, transparent 86%);
+}
+
+/* حبيبات فيلم خفيفة جدًا — تُفعّل فقط حيث يُسمح */
+.film-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+
+/* هيكل عظمي للتحميل */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-ink-800);
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.045), transparent);
+  animation: shimmer 1.6s infinite;
+}
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* ظهور ناعم */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  animation: rise 0.45s var(--ease-out-soft) both;
+}
+
+/* صف أفقي قابل للتمرير */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* رقم عربي مرتّب للترتيب */
+.rank-number {
+  font-family: var(--font-latin);
+  font-weight: 800;
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.55);
+  color: transparent;
+  line-height: 0.8;
+}
+
+/* خطوط المدخلات */
+.field {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid var(--line-strong);
+  background: var(--color-ink-900);
+  padding: 0.625rem 0.875rem;
+  font-size: 0.9375rem;
+  color: var(--color-ink-50);
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+.field::placeholder {
+  color: var(--color-ink-300);
+}
+.field:focus {
+  outline: none;
+  border-color: var(--color-ember-400);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-ember-400) 18%, transparent);
+  background: var(--color-ink-850);
+}
+.field:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.field[aria-invalid="true"] {
+  border-color: var(--color-signal-red);
+}
+select.field {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--color-ink-300) 50%),
+    linear-gradient(135deg, var(--color-ink-300) 50%, transparent 50%);
+  background-position: calc(0% + 14px) calc(50% + 1px), calc(0% + 19px) calc(50% + 1px);
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-inline-start: 2rem;
+}
+textarea.field {
+  min-height: 7rem;
+  line-height: 1.7;
+}

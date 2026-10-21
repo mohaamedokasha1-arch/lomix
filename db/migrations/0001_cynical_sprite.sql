@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX "titles_unique_name_year_idx" ON "titles" USING btree ("title_ar","release_year");

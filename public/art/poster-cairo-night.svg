@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1500" viewBox="0 0 1000 1500" role="img">
+    <defs>
+    <linearGradient id="aivagok-sky" x1="0" y1="0" x2="0.15" y2="1">
+      <stop offset="0" stop-color="#070403"/>
+      <stop offset="0.55" stop-color="#130A07"/>
+      <stop offset="1" stop-color="#2E160D"/>
+    </linearGradient>
+    <radialGradient id="aivagok-sun" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FFD3AC" stop-opacity="1"/>
+      <stop offset="0.28" stop-color="#F58F4B" stop-opacity="0.85"/>
+      <stop offset="0.62" stop-color="#F58F4B" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#F58F4B" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="aivagok-halo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#F58F4B" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#F58F4B" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="aivagok-beam" x1="0" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#FFD3AC" stop-opacity="0.55"/>
+      <stop offset="0.3" stop-color="#F58F4B" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#F58F4B" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="aivagok-slab" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#070403"/>
+      <stop offset="0.7" stop-color="#130A07"/>
+      <stop offset="1" stop-color="#2E160D"/>
+    </linearGradient>
+    <linearGradient id="aivagok-rim" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FFD3AC" stop-opacity="0"/>
+      <stop offset="0.55" stop-color="#FFD3AC" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#FFD3AC" stop-opacity="0.1"/>
+    </linearGradient>
+    <radialGradient id="aivagok-vig" cx="0.5" cy="0.42" r="0.8">
+      <stop offset="0.5" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.45"/>
+    </radialGradient>
+    <linearGradient id="aivagok-floorlight" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F58F4B" stop-opacity="0.4"/>
+      <stop offset="1" stop-color="#F58F4B" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="aivagok-safe" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#070403" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#070403" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.92"/>
+    </linearGradient>
+    <filter id="aivagok-soft"><feGaussianBlur stdDeviation="35"/></filter>
+    <filter id="aivagok-grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="11" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+  </defs>
+    <g>
+    <rect width="1000" height="1500" fill="url(#aivagok-sky)"/>
+    <circle cx="462.64" cy="902.13" r="300" fill="url(#aivagok-halo)" opacity="0.9"/>
+    <circle cx="462.64" cy="894.63" r="45" fill="url(#aivagok-sun)" opacity="0.95"/>
+    <rect x="-50" y="755.36" width="76.3" height="146.77" fill="#070403"/><rect x="-36.27" y="781.78" width="12.21" height="17.61" fill="#F58F4B" opacity="0.41"/><rect x="45.78" y="595.3" width="43.04" height="306.83" fill="#070403"/><rect x="105.05" y="537.22" width="37.25" height="364.91" fill="#070403"/><rect x="147.22" y="780.26" width="43.42" height="121.87" fill="#070403"/><rect x="155.03" y="802.2" width="6.95" height="14.62" fill="#F58F4B" opacity="0.46"/><rect x="202.51" y="807.36" width="47.09" height="94.77" fill="#070403"/><rect x="253.69" y="616.84" width="49.32" height="285.29" fill="#070403"/><rect x="323.05" y="729.73" width="60.91" height="172.4" fill="#070403"/><rect x="391.39" y="721.62" width="79.98" height="180.51" fill="#070403"/><rect x="405.78" y="754.11" width="12.8" height="21.66" fill="#F58F4B" opacity="0.27"/><rect x="489.36" y="539.95" width="55.78" height="362.18" fill="#070403"/><rect x="551.78" y="662.85" width="34.55" height="239.28" fill="#070403"/><rect x="595.4" y="527.34" width="75.24" height="374.79" fill="#070403"/><rect x="679.75" y="607.07" width="38.37" height="295.06" fill="#070403"/><rect x="740.47" y="564.59" width="100.94" height="337.54" fill="#070403"/><rect x="758.64" y="625.35" width="16.15" height="40.5" fill="#F58F4B" opacity="0.18"/><rect x="858.58" y="688.85" width="87.38" height="213.28" fill="#070403"/><rect x="874.3" y="727.24" width="13.98" height="25.59" fill="#F58F4B" opacity="0.3"/><rect x="969.39" y="568.86" width="60.99" height="333.27" fill="#070403"/><rect x="980.37" y="628.85" width="9.76" height="39.99" fill="#F58F4B" opacity="0.37"/><rect x="1038.12" y="668.52" width="47.43" height="233.61" fill="#070403"/><rect x="1046.65" y="710.57" width="7.59" height="28.03" fill="#F58F4B" opacity="0.54"/>
+    <rect y="902.13" width="1000" height="597.87" fill="#070403" opacity="0.6"/>
+    <line x1="462.64" y1="902.13" x2="-887.36" y2="1500" stroke="#F58F4B" stroke-opacity="0.09" stroke-width="1"/><line x1="462.64" y1="902.13" x2="-737.36" y2="1500" stroke="#F58F4B" stroke-opacity="0.08" stroke-width="1"/><line x1="462.64" y1="902.13" x2="-587.36" y2="1500" stroke="#F58F4B" stroke-opacity="0.08" stroke-width="1"/><line x1="462.64" y1="902.13" x2="-437.36" y2="1500" stroke="#F58F4B" stroke-opacity="0.07" stroke-width="1"/><line x1="462.64" y1="902.13" x2="-287.36" y2="1500" stroke="#F58F4B" stroke-opacity="0.07" stroke-width="1"/><line x1="462.64" y1="902.13" x2="-137.36" y2="1500" stroke="#F58F4B" stroke-opacity="0.07" stroke-width="1"/><line x1="462.64" y1="902.13" x2="12.64" y2="1500" stroke="#F58F4B" stroke-opacity="0.06" stroke-width="1"/><line x1="462.64" y1="902.13" x2="162.64" y2="1500" stroke="#F58F4B" stroke-opacity="0.06" stroke-width="1"/><line x1="462.64" y1="902.13" x2="312.64" y2="1500" stroke="#F58F4B" stroke-opacity="0.05" stroke-width="1"/><line x1="462.64" y1="902.13" x2="462.64" y2="1500" stroke="#F58F4B" stroke-opacity="0.05" stroke-width="1"/><line x1="462.64" y1="902.13" x2="612.64" y2="1500" stroke="#F58F4B" stroke-opacity="0.05" stroke-width="1"/><line x1="462.64" y1="902.13" x2="762.64" y2="1500" stroke="#F58F4B" stroke-opacity="0.06" stroke-width="1"/><line x1="462.64" y1="902.13" x2="912.64" y2="1500" stroke="#F58F4B" stroke-opacity="0.06" stroke-width="1"/><line x1="462.64" y1="902.13" x2="1062.64" y2="1500" stroke="#F58F4B" stroke-opacity="0.07" stroke-width="1"/><line x1="462.64" y1="902.13" x2="1212.64" y2="1500" stroke="#F58F4B" stroke-opacity="0.07" stroke-width="1"/><line x1="462.64" y1="902.13" x2="1362.64" y2="1500" stroke="#F58F4B" stroke-opacity="0.07" stroke-width="1"/><line x1="462.64" y1="902.13" x2="1512.64" y2="1500" stroke="#F58F4B" stroke-opacity="0.08" stroke-width="1"/><line x1="462.64" y1="902.13" x2="1662.64" y2="1500" stroke="#F58F4B" stroke-opacity="0.08" stroke-width="1"/><line x1="462.64" y1="902.13" x2="1812.64" y2="1500" stroke="#F58F4B" stroke-opacity="0.09" stroke-width="1"/>
+    <line x1="0" y1="908.29" x2="1000" y2="908.29" stroke="#F58F4B" stroke-opacity="0.05" stroke-width="1"/><line x1="0" y1="930.45" x2="1000" y2="930.45" stroke="#F58F4B" stroke-opacity="0.07" stroke-width="1"/><line x1="0" y1="971.23" x2="1000" y2="971.23" stroke="#F58F4B" stroke-opacity="0.08" stroke-width="1"/><line x1="0" y1="1032.25" x2="1000" y2="1032.25" stroke="#F58F4B" stroke-opacity="0.09" stroke-width="1"/><line x1="0" y1="1114.72" x2="1000" y2="1114.72" stroke="#F58F4B" stroke-opacity="0.1" stroke-width="1"/><line x1="0" y1="1219.63" x2="1000" y2="1219.63" stroke="#F58F4B" stroke-opacity="0.12" stroke-width="1"/><line x1="0" y1="1347.81" x2="1000" y2="1347.81" stroke="#F58F4B" stroke-opacity="0.13" stroke-width="1"/><line x1="0" y1="1500" x2="1000" y2="1500" stroke="#F58F4B" stroke-opacity="0.14" stroke-width="1"/>
+    <line x1="0" y1="902.13" x2="1000" y2="902.13" stroke="#FFD3AC" stroke-opacity="0.6" stroke-width="1.6"/>
+  </g>
+    <rect width="1000" height="1500" fill="url(#aivagok-vig)"/>
+    <rect width="1000" height="1500" filter="url(#aivagok-grain)" opacity="0.06"/>
+    <rect y="825" width="1000" height="675" fill="url(#aivagok-safe)"/>
+    <g opacity="0.6">
+    <line x1="448" y1="1455" x2="474" y2="1455" stroke="#FFD3AC" stroke-opacity="0.45" stroke-width="1"/>
+    <line x1="526" y1="1455" x2="552" y2="1455" stroke="#FFD3AC" stroke-opacity="0.45" stroke-width="1"/>
+    <text x="500" y="1460" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="11" letter-spacing="7" fill="#FFD3AC">LOOMIX</text>
+  </g>
+  </svg>

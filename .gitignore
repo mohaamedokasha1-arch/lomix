@@ -1,0 +1,22 @@
+node_modules
+.data
+.next
+out
+build
+dist
+.env
+.env*.local
+*.log
+# مخرجات تجميع محلية لا تنتمي للمستودع
+a.out
+*.o
+npm-debug.log*
+.DS_Store
+backups/*
+!backups/.gitkeep
+public/uploads/*
+!public/uploads/.gitkeep
+.vercel
+*.tsbuildinfo
+next-env.d.ts
+.arena

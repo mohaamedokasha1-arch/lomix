@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img">
+    <defs>
+    <linearGradient id="av9re7-sky" x1="0" y1="0" x2="0.15" y2="1">
+      <stop offset="0" stop-color="#070503"/>
+      <stop offset="0.55" stop-color="#120D07"/>
+      <stop offset="1" stop-color="#2C2011"/>
+    </linearGradient>
+    <radialGradient id="av9re7-sun" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FFEDCB" stop-opacity="1"/>
+      <stop offset="0.28" stop-color="#EFC27A" stop-opacity="0.85"/>
+      <stop offset="0.62" stop-color="#EFC27A" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#EFC27A" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="av9re7-halo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#EFC27A" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#EFC27A" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="av9re7-beam" x1="0" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#FFEDCB" stop-opacity="0.55"/>
+      <stop offset="0.3" stop-color="#EFC27A" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#EFC27A" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="av9re7-slab" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#070503"/>
+      <stop offset="0.7" stop-color="#120D07"/>
+      <stop offset="1" stop-color="#2C2011"/>
+    </linearGradient>
+    <linearGradient id="av9re7-rim" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FFEDCB" stop-opacity="0"/>
+      <stop offset="0.55" stop-color="#FFEDCB" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#FFEDCB" stop-opacity="0.1"/>
+    </linearGradient>
+    <radialGradient id="av9re7-vig" cx="0.5" cy="0.42" r="0.8">
+      <stop offset="0.5" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.45"/>
+    </radialGradient>
+    <linearGradient id="av9re7-floorlight" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EFC27A" stop-opacity="0.4"/>
+      <stop offset="1" stop-color="#EFC27A" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="av9re7-safe" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#070503" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#070503" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.92"/>
+    </linearGradient>
+    <filter id="av9re7-soft"><feGaussianBlur stdDeviation="67.2"/></filter>
+    <filter id="av9re7-grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="11" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+  </defs>
+    <g>
+    <rect width="1920" height="1080" fill="url(#av9re7-sky)"/>
+    <ellipse cx="960" cy="889.06" rx="960" ry="378" fill="url(#av9re7-halo)" opacity="0.35" filter="url(#av9re7-soft)"/>
+    <path d="M 609.44 907.2 L 609.44 576.84 A 390.02 390.02 0 0 1 1389.49 576.84 L 1389.49 907.2 Z" fill="#2C2011"/>
+    <path d="M 609.44 907.2 L 609.44 576.84 A 390.02 390.02 0 0 1 1389.49 576.84 L 1389.49 907.2 Z" fill="url(#av9re7-sun)" opacity="0.55"/>
+    <clipPath id="av9re7-clip"><path d="M 609.44 907.2 L 609.44 576.84 A 390.02 390.02 0 0 1 1389.49 576.84 L 1389.49 907.2 Z"/></clipPath>
+    <g clip-path="url(#av9re7-clip)">
+      <rect x="609.44" y="537.84" width="780.05" height="1080" fill="#070503" opacity="0.55"/>
+      <rect x="937.06" y="459.83" width="124.81" height="1080" fill="#FFEDCB" opacity="0.14"/>
+      <rect x="656.24" y="576.84" width="35.1" height="907.2" fill="#070503" opacity="0.5"/><rect x="804.45" y="576.84" width="35.1" height="907.2" fill="#070503" opacity="0.5"/><rect x="952.66" y="576.84" width="35.1" height="907.2" fill="#070503" opacity="0.5"/><rect x="1100.87" y="576.84" width="35.1" height="907.2" fill="#070503" opacity="0.5"/><rect x="1249.08" y="576.84" width="35.1" height="907.2" fill="#070503" opacity="0.5"/>
+    </g>
+    <path d="M 609.44 907.2 L 609.44 576.84 A 390.02 390.02 0 0 1 1389.49 576.84 L 1389.49 907.2 Z" fill="none" stroke="#EFC27A" stroke-opacity="0.75" stroke-width="2"/>
+    <path d="M 609.44 907.2 L 609.44 576.84 A 390.02 390.02 0 0 1 1389.49 576.84 L 1389.49 907.2 Z" fill="none" stroke="#FFEDCB" stroke-opacity="0.18" stroke-width="7"/>
+    <rect x="0" y="907.2" width="1920" height="172.8" fill="#070503"/>
+    <rect x="0" y="907.2" width="1920" height="97.2" fill="url(#av9re7-floorlight)" opacity="0.4"/>
+    <line x1="0" y1="907.2" x2="1920" y2="907.2" stroke="#EFC27A" stroke-opacity="0.4" stroke-width="1.5"/>
+  </g>
+    <rect width="1920" height="1080" fill="url(#av9re7-vig)"/>
+    <rect width="1920" height="1080" filter="url(#av9re7-grain)" opacity="0.045"/>
+    <rect y="486" width="1920" height="594" fill="url(#av9re7-safe)"/>
+    <g opacity="0.55">
+    <line x1="882" y1="1053" x2="922" y2="1053" stroke="#FFEDCB" stroke-opacity="0.45" stroke-width="1"/>
+    <line x1="998" y1="1053" x2="1038" y2="1053" stroke="#FFEDCB" stroke-opacity="0.45" stroke-width="1"/>
+    <text x="960" y="1058" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12" letter-spacing="8" fill="#FFEDCB">LOOMIX</text>
+  </g>
+  </svg>

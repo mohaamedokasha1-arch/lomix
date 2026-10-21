@@ -1,0 +1,62 @@
+{
+  "name": "loomix",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Loomix — منصة عربية لاكتشاف الأفلام والمسلسلات والأنمي، مع تريلرات رسمية ولوحة تحكم كاملة.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "db:seed": "tsx db/seed.ts",
+    "db:reset": "rm -rf .data/pglite && tsx db/migrate.ts && tsx db/seed.ts",
+    "demo:flush": "tsx scripts/flush-demo.ts",
+    "art:generate": "tsx scripts/generate-art.ts",
+    "admin:password": "tsx scripts/set-admin-password.ts",
+    "backup": "tsx scripts/backup.ts",
+    "setup": "npm run art:generate && npm run db:reset",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx db/migrate.ts",
+    "db:setup": "tsx db/migrate.ts && tsx db/seed.ts",
+    "check:data": "tsx scripts/check-data.ts",
+    "verify": "npm run typecheck && npm run check:data && npm run check:art",
+    "preflight": "tsx scripts/preflight.ts",
+    "smoke": "tsx scripts/smoke.ts",
+    "seo:audit": "tsx scripts/seo-audit.ts",
+    "e2e": "tsx scripts/e2e.ts",
+    "check:art": "tsx scripts/check-art-source.ts"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "^0.5.10",
+    "@fontsource-variable/manrope": "5.3.0",
+    "@fontsource/ibm-plex-sans-arabic": "5.3.0",
+    "@fontsource/noto-kufi-arabic": "5.3.0",
+    "@vercel/blob": "2.8.2",
+    "bcryptjs": "3.0.3",
+    "clsx": "2.1.1",
+    "dotenv": "^18.0.8",
+    "drizzle-orm": "^0.45.4",
+    "lucide-react": "1.60.0",
+    "next": "16.4.2",
+    "postgres": "^3.4.9",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "server-only": "^0.0.1",
+    "sharp": "^0.35.5",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "drizzle-kit": "^0.31.11",
+    "tailwindcss": "4.3.3",
+    "tsx": "^4.19.2",
+    "typescript": "^5.9.0"
+  },
+  "overrides": {
+    "deepmerge-ts": "8.0.2"
+  }
+}

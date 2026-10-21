@@ -1,0 +1,406 @@
+/**
+ * فحص دخان بعد النشر — يعمل عبر HTTP فقط، بلا وصول لقاعدة البيانات.
+ *
+ * التشغيل:
+ *   npm run smoke -- https://your-domain.com
+ *   npm run smoke -- https://your-domain.com --prod      # يمنع ظهور بيانات دخول تجريبية
+ *   npm run smoke -- https://your-domain.com --crawl     # يفتح أول 40 رابطًا من sitemap
+ *
+ * يخرج بكود 1 عند أي فشل.
+ */
+
+export {};
+
+type Level = "error" | "warn" | "ok";
+type Result = { level: Level; label: string; detail?: string };
+
+const args = process.argv.slice(2);
+const baseArg = args.find((arg) => !arg.startsWith("--"));
+const prod = args.includes("--prod");
+const crawl = args.includes("--crawl");
+
+if (!baseArg || !/^https?:\/\//.test(baseArg)) {
+  console.error("الاستخدام: npm run smoke -- https://your-domain.com [--prod] [--crawl]");
+  process.exit(2);
+}
+
+const base = baseArg.replace(/\/$/, "");
+const results: Result[] = [];
+const add = (level: Level, label: string, detail?: string) => results.push({ level, label, detail });
+
+async function request(path: string, init?: RequestInit) {
+  const response = await fetch(base + path, {
+    redirect: "manual",
+    signal: AbortSignal.timeout(20000),
+    headers: { "user-agent": "loomix-smoke/1.0" },
+    ...init,
+  });
+  const body = await response.text();
+  return { response, body };
+}
+
+async function main() {
+  /* 1 — الصفحة الرئيسية */
+  let home = "";
+  let homeHeaders = new Headers();
+  try {
+    const { response, body } = await request("/");
+    home = body;
+    homeHeaders = response.headers;
+    if (response.status === 200) add("ok", "الرئيسية تعيد 200");
+    else add("error", `الرئيسية تعيد ${response.status}`);
+  } catch (error) {
+    add("error", "تعذّر الوصول إلى الموقع", error instanceof Error ? error.message : String(error));
+    return report();
+  }
+
+  if (/<html[^>]+lang="ar"[^>]*dir="rtl"/.test(home) || /<html[^>]+dir="rtl"[^>]*lang="ar"/.test(home)) {
+    add("ok", "اللغة عربية والاتجاه RTL");
+  } else {
+    add("error", "وسم <html> لا يحمل lang=\"ar\" dir=\"rtl\"");
+  }
+
+  /* 2 — رؤوس الأمان */
+  const csp = homeHeaders.get("content-security-policy") ?? "";
+  if (csp.includes("default-src 'self'") && csp.includes("object-src 'none'")) add("ok", "CSP مفعّل على الصفحات");
+  else add("error", "CSP ناقص أو غائب", csp.slice(0, 120) || "—");
+
+  for (const [header, expected, label] of [
+    ["x-frame-options", "SAMEORIGIN", "X-Frame-Options"],
+    ["referrer-policy", "", "Referrer-Policy"],
+    ["x-content-type-options", "nosniff", "X-Content-Type-Options"],
+  ] as const) {
+    const value = homeHeaders.get(header) ?? "";
+    if (value && (!expected || value.toLowerCase().includes(expected.toLowerCase()))) add("ok", `${label} مضبوط`);
+    else add("error", `${label} غائب أو غير صحيح`, value || "—");
+  }
+
+  if (homeHeaders.get("x-powered-by")) add("warn", "X-Powered-By مكشوف", homeHeaders.get("x-powered-by") ?? "");
+  else add("ok", "X-Powered-By مخفي");
+
+  if (base.startsWith("https://")) {
+    if (homeHeaders.get("strict-transport-security")) add("ok", "HSTS مفعّل");
+    else add(prod ? "error" : "warn", "HSTS غائب على https");
+  } else {
+    add("warn", "الموقع يعمل على http — HSTS لا يُطبَّق خارج https");
+  }
+
+  /* 3 — robots وsitemap */
+  try {
+    const { response, body } = await request("/robots.txt");
+    if (response.status !== 200) add("error", `robots.txt يعيد ${response.status}`);
+    else if (!/Disallow:\s*\/admin/.test(body)) add("error", "robots.txt لا يمنع /admin");
+    else if (!/Sitemap:/i.test(body)) add("error", "robots.txt لا يشير إلى sitemap");
+    else add("ok", "robots.txt يمنع اللوحة ويشير إلى sitemap");
+  } catch {
+    add("error", "تعذّر جلب robots.txt");
+  }
+
+  /* 3b — فحص صحة التشغيل (يستخدمه المراقب الخارجي) */
+  try {
+    const { response, body } = await request("/api/health");
+    const data = JSON.parse(body) as { status?: string; db?: string };
+    if (response.status === 200 && data.status === "ok" && data.db === "up") {
+      add("ok", "فحص الصحة يعيد ok وقاعدة البيانات متصلة");
+    } else {
+      add("error", `فحص الصحة غير سليم (${response.status})`, body.slice(0, 120));
+    }
+    if (!/no-store/.test(response.headers.get("cache-control") ?? "")) {
+      add("error", "فحص الصحة قابل للتخزين المؤقت — قد يعطي نتيجة قديمة");
+    }
+  } catch (error) {
+    add("error", "تعذّر جلب /api/health", error instanceof Error ? error.message : String(error));
+  }
+
+  // مهمة الصيانة يجب ألا تكون مفتوحة لأي زائر: 401 بلا سرّ، أو 503 إن لم يُضبط السرّ أصلًا.
+  // أي 200 هنا يعني أن أي شخص يستطيع حذف الصفوف المنتهية وتشغيل المهمة بلا حدّ.
+  try {
+    const { response } = await request("/api/cron/maintenance");
+    if (response.status === 200) {
+      add("error", "مهمة الصيانة مفتوحة بلا مصادقة — أي زائر يستطيع تشغيلها");
+    } else if (response.status === 401 || response.status === 503) {
+      add("ok", `مهمة الصيانة محمية بلا مصادقة (${response.status})`);
+    } else {
+      add("warn", `مهمة الصيانة تعيد ${response.status} بلا مصادقة`);
+    }
+    if (!/no-store/.test(response.headers.get("cache-control") ?? "")) {
+      add("error", "استجابة مهمة الصيانة قابلة للتخزين المؤقت");
+    }
+  } catch (error) {
+    add("error", "تعذّر جلب /api/cron/maintenance", error instanceof Error ? error.message : String(error));
+  }
+
+  let locs: string[] = [];
+  try {
+    const { response, body } = await request("/sitemap.xml");
+    if (response.status !== 200) add("error", `sitemap.xml يعيد ${response.status}`);
+    locs = [...body.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1] ?? "").filter(Boolean);
+    if (!locs.length) add("error", "sitemap.xml بلا روابط");
+    else if (locs.some((loc) => !loc.startsWith(base))) add("error", "sitemap يحتوي روابط خارج النطاق");
+    else add("ok", `sitemap.xml يحوي ${locs.length} رابطًا`);
+  } catch {
+    add("error", "تعذّر جلب sitemap.xml");
+  }
+
+  /* 4 — 404 حقيقي ولوحة محمية */
+  try {
+    const { response, body } = await request("/movie/__smoke_missing__");
+    if (response.status !== 404) {
+      add("error", `المسار غير الموجود يعيد ${response.status} بدل 404`);
+    } else if (!/<meta name="robots" content="[^"]*noindex/.test(body)) {
+      add("error", "صفحة 404 بلا noindex — قد تُفهرس");
+    } else if (!/<title>[^<]*غير موجودة/.test(body)) {
+      add("error", "صفحة 404 بعنوان غير واضح");
+    } else {
+      add("ok", "404 حقيقي: كود 404 + noindex + عنوان واضح");
+    }
+  } catch {
+    add("error", "تعذّر فحص 404");
+  }
+
+  try {
+    const { response } = await request("/admin");
+    const location = response.headers.get("location") ?? "";
+    if ([301, 302, 303, 307, 308].includes(response.status) && location.includes("/login")) add("ok", "اللوحة تعيد التوجيه إلى الدخول");
+    else if (response.status === 200) add("error", "اللوحة مفتوحة بلا جلسة!", "الصفحة أعادت 200");
+    else add("warn", `اللوحة تعيد ${response.status}`, location);
+  } catch {
+    add("error", "تعذّر فحص حماية اللوحة");
+  }
+
+  /* 5 — صفحة الدخول وبيانات العرض */
+  try {
+    const { response, body } = await request("/login");
+    if (response.status !== 200) add("error", `/login تعيد ${response.status}`);
+    else if (prod && /Loomix@2026|Editor@2026|Viewer@2026/.test(body)) {
+      add("error", "صفحة الدخول تعرض كلمة مرور تجريبية في الإنتاج");
+    } else add("ok", "صفحة الدخول نظيفة");
+  } catch {
+    add("error", "تعذّر جلب /login");
+  }
+
+  /* 6 — البيانات المنظّمة */
+  const ldBlocks = [...home.matchAll(/<script type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].map((m) => m[1] ?? "");
+  if (!ldBlocks.length) add("warn", "لا توجد بيانات منظّمة في الرئيسية");
+  else {
+    let org = false;
+    let site = false;
+    let valid = true;
+    for (const raw of ldBlocks) {
+      try {
+        const data = JSON.parse(raw) as { "@graph"?: { "@type"?: string }[]; "@type"?: string };
+        const nodes = data["@graph"] ?? [data];
+        for (const node of nodes) {
+          if (node["@type"] === "Organization") org = true;
+          if (node["@type"] === "WebSite") site = true;
+        }
+      } catch {
+        valid = false;
+      }
+    }
+    if (!valid) add("error", "JSON-LD غير صالح");
+    else if (!org || !site) add("warn", "JSON-LD ناقص", `Organization=${org} WebSite=${site}`);
+    else add("ok", "JSON-LD صالح ويحوي Organization + WebSite");
+  }
+
+  /* 6b — بيانات منظّمة لصفحة قائمة: CollectionPage + ItemList بأرقام حقيقية */
+  try {
+    const { response, body } = await request("/movies");
+    if (response.status !== 200) {
+      add("warn", "/movies لا يعيد 200 — تعذّر فحص بيانات القوائم");
+    } else {
+      const blocks = [...body.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].map((m) => m[1] ?? "");
+      type Node = { "@type"?: string; mainEntity?: { "@type"?: string; numberOfItems?: number; itemListElement?: { url?: string }[] } };
+      let collection: Node | null = null;
+      let invalid = false;
+      for (const raw of blocks) {
+        try {
+          const parsed = JSON.parse(raw) as { "@graph"?: Node[] } & Node;
+          const nodes = parsed["@graph"] ?? [parsed];
+          for (const node of nodes) if (node["@type"] === "CollectionPage") collection = node;
+        } catch {
+          invalid = true;
+        }
+      }
+      const list = collection?.mainEntity;
+      if (invalid) add("error", "JSON-LD غير صالح في /movies");
+      else if (!collection) add("error", "/movies بلا CollectionPage في JSON-LD");
+      else if (!list || list["@type"] !== "ItemList" || !list.numberOfItems) add("error", "CollectionPage بلا ItemList بأرقام");
+      else if ((list.itemListElement ?? []).some((item) => !item.url?.startsWith(base))) add("error", "عناصر ItemList لا تشير إلى هذا النطاق");
+      else add("ok", `بيانات القوائم سليمة (${list.numberOfItems} عنصرًا في /movies)`);
+    }
+  } catch {
+    add("warn", "تعذّر فحص بيانات القوائم المنظّمة");
+  }
+
+  /* 7 — صور المشاركة الاجتماعية لكل عمل */
+  const titleLink = home.match(/href="(\/(?:movie|series|anime)\/[^"?#]+)"/)?.[1];
+  if (!titleLink) {
+    add("warn", "لا يوجد رابط عمل في الرئيسية — تعذّر فحص صورة المشاركة");
+  } else {
+    try {
+      const { body: page } = await request(titleLink);
+      const ogUrl = page.match(/<meta property="og:image" content="([^"]+)"/)?.[1];
+      if (!ogUrl) add("error", `صفحة ${titleLink} بلا og:image`);
+      else {
+        const response = await fetch(ogUrl, { signal: AbortSignal.timeout(20000) });
+        const type = response.headers.get("content-type") ?? "";
+        // Next يرسل الصورة مجزّأة بلا content-length، فنقيس الجسم فعليًا.
+        const size = (await response.arrayBuffer()).byteLength;
+        if (response.status !== 200 || !type.startsWith("image/")) {
+          add("error", "صورة المشاركة لا تُرسم", `${response.status} ${type}`);
+        } else if (size > 600_000) {
+          add("warn", `صورة المشاركة ثقيلة (${Math.round(size / 1024)}KB) — بعض التطبيقات تتجاهلها`);
+        } else {
+          add("ok", `صورة مشاركة ديناميكية تعمل (${Math.round(size / 1024)}KB)`);
+        }
+      }
+    } catch {
+      add("warn", "تعذّر فحص صورة المشاركة");
+    }
+  }
+
+  /* 8 — كاش الأصول الثابتة */
+  const asset = home.match(/\/_next\/static\/[^"']+\.(?:js|css)/)?.[0];
+  if (asset) {
+    try {
+      const response = await fetch(base + asset, { signal: AbortSignal.timeout(15000) });
+      const cache = response.headers.get("cache-control") ?? "";
+      if (response.status === 200 && /immutable/.test(cache) && /max-age=31536000/.test(cache)) add("ok", "الأصول الثابتة immutable سنة");
+      else add("warn", "كاش الأصول الثابتة غير متوقع", cache || "—");
+    } catch {
+      add("warn", "تعذّر فحص كاش الأصول");
+    }
+  }
+
+  /* 9 — واجهة البحث */
+  try {
+    const { response, body } = await request(`/api/search?q=${encodeURIComponent("ظل")}`);
+    if (response.status !== 200) add("warn", `/api/search يعيد ${response.status}`);
+    else {
+      const parsed = JSON.parse(body) as { results?: unknown[] };
+      const count = Array.isArray(parsed.results) ? parsed.results.length : 0;
+      if (count > 0) add("ok", `البحث يعمل (${count} نتيجة لـ«ظل»)`);
+      else add("warn", "البحث يعيد صفرًا — تأكد أن القاعدة تحوي أعمالًا منشورة");
+    }
+  } catch {
+    add("warn", "تعذّر فحص /api/search");
+  }
+
+  /* 11 — سياسة المحتوى: بيانات وتريلرات فقط، بلا بدائل زائفة */
+  const samplePaths = new Set<string>(["/", "/movies", "/trailers", "/search?q=%D8%B8%D9%84"]);
+  const pickPath = (pattern: RegExp) => {
+    for (const loc of locs) {
+      try {
+        const path = new URL(loc).pathname;
+        if (pattern.test(path)) return path;
+      } catch {
+        /* رابط غير صالح — يتكفّل به فحص sitemap */
+      }
+    }
+    return undefined;
+  };
+  for (const pattern of [/^\/movie\/[^/]+$/, /^\/series\/[^/]+$/, /^\/anime\/[^/]+$/, /^\/person\/[^/]+$/]) {
+    const found = pickPath(pattern);
+    if (found) samplePaths.add(found);
+  }
+
+  // عبارات تعِد بمشاهدة العمل كاملًا — ممنوعة ما لم يوجد مصدر بث مرخّص (لا يوجد).
+  const FORBIDDEN_CTAS = [
+    "مشاهدة الآن",
+    "شاهد الآن",
+    "مشاهدة الفيلم",
+    "شاهد الفيلم",
+    "تحميل الفيلم",
+    "تحميل المسلسل",
+    "watch now",
+    "full movie",
+  ];
+  // حقول غائبة تُخفى ولا تُستبدل ببديل.
+  const PLACEHOLDERS = ["N/A", "غير متوفر", "غير متاحة"];
+  const ctaHits: string[] = [];
+  const placeholderHits: string[] = [];
+  const videoHits: string[] = [];
+  const iframeHits: string[] = [];
+
+  for (const path of samplePaths) {
+    try {
+      const { response, body } = await request(path);
+      if (response.status !== 200) {
+        add("error", `صفحة مفحوصة للسياسة تعيد ${response.status}`, path);
+        continue;
+      }
+      const lower = body.toLowerCase();
+      for (const cta of FORBIDDEN_CTAS) if (lower.includes(cta.toLowerCase())) ctaHits.push(`${path}: ${cta}`);
+      for (const placeholder of PLACEHOLDERS) if (body.includes(placeholder)) placeholderHits.push(`${path}: ${placeholder}`);
+      if (/<video[\s>]/i.test(body)) videoHits.push(path);
+      if (/<iframe/i.test(body)) iframeHits.push(path);
+    } catch {
+      add("warn", `تعذّر فحص سياسة المحتوى في ${path}`);
+    }
+  }
+
+  if (ctaHits.length) add("error", `عبارات «مشاهدة كاملة» على صفحات عامة (${ctaHits.length})`, ctaHits.slice(0, 3).join(" · "));
+  else add("ok", `لا وعود مشاهدة كاملة على ${samplePaths.size} صفحات`);
+  if (placeholderHits.length) add("error", `بدائل زائفة لعناصر غائبة (${placeholderHits.length})`, placeholderHits.slice(0, 3).join(" · "));
+  else add("ok", "لا «N/A» ولا «غير متوفر» — الحقول الغائبة تُخفى");
+  if (videoHits.length) add("error", `فيديو مستضاف داخل الصفحات (${videoHits.length})`, videoHits.slice(0, 3).join(" · "));
+  else add("ok", "لا وسوم <video> — لا نستضيف محتوى مصوّرًا");
+  if (iframeHits.length) add("warn", `تضمين ظاهر في HTML أولي (${iframeHits.length})`, iframeHits.slice(0, 3).join(" · "));
+  else add("ok", "لا <iframe> في HTML الأولي — التضمين يُحمَّل عند الطلب فقط");
+
+  /* 12 — الأداء: لا تحميل مسبق لعشرات البوسترات قبل الطية */
+  const perfPaths = ["/", "/movies", pickPath(/^\/movie\/[^/]+$/)].filter((path): path is string => Boolean(path));
+  const perfIssues: string[] = [];
+  for (const path of perfPaths) {
+    try {
+      const { body } = await request(path);
+      const images = body.match(/<img[^>]*>/g) ?? [];
+      const eager = images.filter((tag) => !tag.includes('loading="lazy"')).length;
+      const preloads = (body.match(/<link rel="preload" as="image"/g) ?? []).length;
+      if (eager > 4 || preloads > 4) perfIssues.push(`${path}: ${eager} eager / ${preloads} preload`);
+    } catch {
+      add("warn", `تعذّر فحص أداء ${path}`);
+    }
+  }
+  if (perfIssues.length) {
+    add("error", `تحميل مسبق مفرط للصور (${perfIssues.length})`, perfIssues.join(" · "));
+  } else {
+    add("ok", `تحميل الصور مضبوط — ≤4 صور مسبقة على ${perfPaths.length} صفحات`);
+  }
+
+  /* 10 — زحف مختصر (اختياري) */
+  if (crawl && locs.length) {
+    const sample = locs.slice(0, 40);
+    let failures = 0;
+    for (const loc of sample) {
+      try {
+        const response = await fetch(loc, { redirect: "manual", signal: AbortSignal.timeout(20000) });
+        if (response.status >= 400) failures += 1;
+      } catch {
+        failures += 1;
+      }
+    }
+    if (failures) add("error", `${failures} من ${sample.length} رابطًا في sitemap لا يعيد < 400`);
+    else add("ok", `${sample.length} رابطًا من sitemap تعمل`);
+  }
+
+  return report();
+}
+
+function report() {
+  const icon: Record<Level, string> = { error: "✖", warn: "!", ok: "✓" };
+  console.log(`\nفحص الدخان — ${base}${prod ? " (إنتاج)" : ""}\n`);
+  for (const result of results) {
+    console.log(`  ${icon[result.level]} ${result.label}${result.detail ? `  ${result.detail}` : ""}`);
+  }
+  const errors = results.filter((r) => r.level === "error").length;
+  const warns = results.filter((r) => r.level === "warn").length;
+  console.log(`\nالنتيجة: ${errors} خطأ · ${warns} تحذير\n`);
+  process.exit(errors ? 1 : 0);
+}
+
+main().catch((error) => {
+  console.error("✗ فشل الفحص:", error);
+  process.exit(1);
+});
