@@ -112,6 +112,24 @@
   `robots.txt` يمنع `/admin` و`/search` — مُتحقَّق.
 - Schema.org من حقول حقيقية: `datePublished` بتاريخ كامل فقط، و`aggregateRating` مشروط بمصدر — مُتحقَّق.
 - `Organization` + `WebSite` + `SearchAction` على مستوى الموقع في كل الصفحات (JSON صالح مُختبَر على 4 مسارات) — مُتحقَّق.
+- **بيانات منظّمة لصفحات القوائم** (CollectionPage + ItemList + BreadcrumbList) على 12 مسارًا:
+  `/movies` `/series` `/anime` `/latest` `/trending` `/top-rated` `/most-viewed` `/trailers`
+  `/genre/[slug]` `/year/[year]` `/country/[code]`، وBreadcrumbList على `/person/[slug]`.
+  **مُتحقَّق:** كل الكتل تُحلَّل كـJSON، و`url` مطلق، وروابط العناصر تعيد 200.
+- **الأرقام في البيانات المنظّمة من القاعدة نفسها**، طابقناها صفًا بصف:
+
+  | الصفحة | `numberOfItems` | القاعدة |
+  |---|---|---|
+  | `/movies` | 12 | 12 فيلمًا منشورًا |
+  | `/series` | 8 | 8 مسلسلات |
+  | `/anime` | 4 | 4 أنمي |
+  | `/genre/drama` | 18 | 18 عملًا مصنّفًا دراما |
+  | `/year/2024` | 6 | 6 أعمال لسنة 2024 |
+  | `/country/EG` | 13 | 13 عملًا مصريًا |
+  | `/trailers` | 36 | 36 تريلرًا فعّالًا |
+
+- `/most-viewed` **لا يُصدر `ItemList` إطلاقًا** عندما تكون القائمة فارغة (لا مشاهدات) — لا نرسل
+  قائمة صفرية ولا أرقامًا مُختلقة.
 - إعدادات الفهرسة (`seo_index_*`) تعمل فعليًا: إطفاؤها يضيف `noindex` على صفحات العمل/السنة/الدولة — مُتحقَّق.
 - OG/Twitter: **صورة مشاركة مرسومة على الخادم لكل صفحة**: 8 مسارات (`movie/[slug]`،
   `series/[slug]`، `anime/[slug]`، `genre/[slug]`، `year/[year]`، `country/[code]`،

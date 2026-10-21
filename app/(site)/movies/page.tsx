@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { CatalogView, PageHeader } from "@/components/titles/catalog-view";
 import { cachedFacets, cachedList } from "@/lib/queries";
+import { collectionItems, collectionJsonLd } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
 
 export const metadata: Metadata = {
   title: "الأفلام",
@@ -33,6 +35,15 @@ export default async function MoviesPage({ searchParams }: { searchParams: SP })
 
   return (
     <div className="container-page pb-10 pt-28 md:pt-32">
+      <JsonLd
+        data={collectionJsonLd({
+          name: "الأفلام",
+          path: "/movies",
+          items: collectionItems(result.items),
+          total: result.total,
+          breadcrumb: [{ name: "الرئيسية", path: "/" }, { name: "الأفلام", path: "/movies" }],
+        })}
+      />
       <PageHeader
         kicker="المكتبة"
         title="الأفلام"

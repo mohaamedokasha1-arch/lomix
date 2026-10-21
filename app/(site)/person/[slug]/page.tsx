@@ -4,7 +4,8 @@ import Image from "next/image";
 import { CalendarDays } from "lucide-react";
 import { PageHeader, PosterGrid } from "@/components/titles/catalog-view";
 import { cachedPerson } from "@/lib/queries";
-import { personJsonLd, robotsFor } from "@/lib/seo";
+import { breadcrumbJsonLd, personJsonLd, robotsFor } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
 import { initials } from "@/lib/utils";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -41,7 +42,13 @@ export default async function PersonPage({ params }: Props) {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd(person)) }} />
+      <JsonLd data={personJsonLd(person)} />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "الرئيسية", path: "/" },
+          { name: person.nameAr, path: `/person/${person.slug}` },
+        ])}
+      />
       <div className="container-page pb-10 pt-28 md:pt-32">
         <div className="flex flex-col gap-6 border-b border-white/6 pb-8 sm:flex-row sm:items-center">
           <div className="relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-ink-700 to-ink-900 text-xl font-bold text-ink-200">

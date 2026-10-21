@@ -4,6 +4,8 @@ import { PageHeader, PosterGrid } from "@/components/titles/catalog-view";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ButtonLink } from "@/components/ui/button";
 import { getMostViewed } from "@/lib/queries";
+import { collectionItems, collectionJsonLd } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
 
 export const metadata: Metadata = {
   title: "الأكثر مشاهدة",
@@ -18,6 +20,14 @@ export default async function MostViewedPage() {
 
   return (
     <div className="container-page pb-10 pt-28 md:pt-32">
+      <JsonLd
+        data={collectionJsonLd({
+          name: "الأكثر مشاهدة",
+          path: "/most-viewed",
+          items: collectionItems(items),
+          breadcrumb: [{ name: "الرئيسية", path: "/" }, { name: "الأكثر مشاهدة", path: "/most-viewed" }],
+        })}
+      />
       <PageHeader
         kicker="اكتشف"
         title="الأكثر مشاهدة"

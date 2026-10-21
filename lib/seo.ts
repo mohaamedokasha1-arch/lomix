@@ -83,7 +83,6 @@ export function buildTitleJsonLd(title: TitleDetail) {
       seasonNumber: s.number,
       numberOfEpisodes: s.episodes.length,
       url: absoluteUrl(`/series/${title.slug}/season/${s.number}`),
-
     }));
   }
   // التقييم في البيانات المنظّمة يتبع نفس قاعدة الواجهة: قيمة + مصدر مسجّل.
@@ -112,6 +111,80 @@ export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
       item: absoluteUrl(item.path),
     })),
   };
+}
+
+export type CollectionItem = { name: string; path: string };
+
+/**
+ * بيانات منظّمة لصفحة قائمة (أفلام/أنمي/تصنيف/سنة/دولة/تريلرات…).
+ *
+ * لا نُصدر تقييمًا ولا ترتيبًا ولا عددًا لم نحسبه: `numberOfItems` يُمرَّر من نتيجة
+ * الاستعلام نفسها التي رسمت الصفحة، و`itemListElement` يمثّل العناصر المعروضة فعلًا
+ * بترتيبها على الشاشة. إن كانت الصفحة فارغة نحذف `ItemList` كلها بدل إرسال قائمة صفرية.
+ */
+export function collectionJsonLd({
+  name,
+  description,
+  path,
+  items,
+  total,
+  breadcrumb,
+}: {
+  name: string;
+  description?: string;
+  path: string;
+  items: CollectionItem[];
+  total?: number;
+  breadcrumb?: { name: string; path: string }[];
+}) {
+  const page: Record<string, unknown> = {
+    "@type": "CollectionPage",
+    "@id": `${absoluteUrl(path)}#page`,
+    name,
+    url: absoluteUrl(path),
+    inLanguage: "ar",
+    isPartOf: { "@id": `${absoluteUrl("/")}#website` },
+  };
+  if (description) page.description = description;
+  if (items.length) {
+    page.mainEntity = {
+      "@type": "ItemList",
+      numberOfItems: total ?? items.length,
+      itemListOrder: "https://schema.org/ItemListOrderAscending",
+      itemListElement: items.map((item, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: item.name,
+        url: absoluteUrl(item.path),
+      })),
+    };
+  }
+
+  const graph: Record<string, unknown>[] = [page];
+  if (breadcrumb?.length) {
+    graph.push({
+      ...breadcrumbJsonLd(breadcrumb),
+      "@context": undefined,
+    });
+  }
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": graph,
+  };
+}
+
+/**
+ * يحوّل بطاقات الصفحة إلى عناصر بيانات منظّمة.
+ * نُمرّر المسار كما يظهر في الواجهة (نوع العمل + slug) لا مسارًا مخمَّنًا.
+ */
+export function collectionItems(
+  titles: { titleAr: string; slug: string; type: string }[],
+): CollectionItem[] {
+  return titles.map((title) => ({
+    name: title.titleAr,
+    path: `${ROUTE[title.type] ?? "/movie"}/${title.slug}`,
+  }));
 }
 
 export function personJsonLd(person: { nameAr: string; nameEn: string | null; slug: string; bioAr: string | null; imagePath: string | null }) {

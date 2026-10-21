@@ -4,6 +4,8 @@ import { PageHeader } from "@/components/titles/catalog-view";
 import { EmptyState } from "@/components/ui/empty-state";
 import { TrailerCard } from "@/components/titles/trailer-card";
 import { getTrailers } from "@/lib/queries";
+import { collectionItems, collectionJsonLd } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
 
 export const metadata: Metadata = {
   title: "التريلرات",
@@ -20,6 +22,18 @@ export default async function TrailersPage() {
 
   return (
     <div className="container-page pb-10 pt-28 md:pt-32">
+
+      <JsonLd
+        data={collectionJsonLd({
+          name: "التريلرات",
+          description: "أرشيف التريلرات الرسمية على لوميكس، مرتبة بالأحدث.",
+          path: "/trailers",
+          items: collectionItems(
+            trailers.map((trailer) => ({ titleAr: trailer.titleAr, slug: trailer.titleSlug, type: trailer.titleType })),
+          ),
+          breadcrumb: [{ name: "الرئيسية", path: "/" }, { name: "التريلرات", path: "/trailers" }],
+        })}
+      />
       <PageHeader
         kicker="أرشيف"
         title="التريلرات"

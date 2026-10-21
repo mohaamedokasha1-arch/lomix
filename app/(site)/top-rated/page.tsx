@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { PageHeader, PosterGrid } from "@/components/titles/catalog-view";
 import { EmptyState } from "@/components/ui/empty-state";
 import { getTopRated } from "@/lib/queries";
+import { collectionItems, collectionJsonLd } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
 
 export const metadata: Metadata = {
   title: "الأعلى تقييمًا",
@@ -16,6 +18,14 @@ export default async function TopRatedPage() {
 
   return (
     <div className="container-page pb-10 pt-28 md:pt-32">
+      <JsonLd
+        data={collectionJsonLd({
+          name: "الأعلى تقييمًا",
+          path: "/top-rated",
+          items: collectionItems(items),
+          breadcrumb: [{ name: "الرئيسية", path: "/" }, { name: "الأعلى تقييمًا", path: "/top-rated" }],
+        })}
+      />
       <PageHeader
         kicker="اكتشف"
         title="الأعلى تقييمًا"

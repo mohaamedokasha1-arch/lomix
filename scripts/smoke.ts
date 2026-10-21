@@ -162,6 +162,36 @@ async function main() {
     else add("ok", "JSON-LD صالح ويحوي Organization + WebSite");
   }
 
+  /* 6b — بيانات منظّمة لصفحة قائمة: CollectionPage + ItemList بأرقام حقيقية */
+  try {
+    const { response, body } = await request("/movies");
+    if (response.status !== 200) {
+      add("warn", "/movies لا يعيد 200 — تعذّر فحص بيانات القوائم");
+    } else {
+      const blocks = [...body.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].map((m) => m[1] ?? "");
+      type Node = { "@type"?: string; mainEntity?: { "@type"?: string; numberOfItems?: number; itemListElement?: { url?: string }[] } };
+      let collection: Node | null = null;
+      let invalid = false;
+      for (const raw of blocks) {
+        try {
+          const parsed = JSON.parse(raw) as { "@graph"?: Node[] } & Node;
+          const nodes = parsed["@graph"] ?? [parsed];
+          for (const node of nodes) if (node["@type"] === "CollectionPage") collection = node;
+        } catch {
+          invalid = true;
+        }
+      }
+      const list = collection?.mainEntity;
+      if (invalid) add("error", "JSON-LD غير صالح في /movies");
+      else if (!collection) add("error", "/movies بلا CollectionPage في JSON-LD");
+      else if (!list || list["@type"] !== "ItemList" || !list.numberOfItems) add("error", "CollectionPage بلا ItemList بأرقام");
+      else if ((list.itemListElement ?? []).some((item) => !item.url?.startsWith(base))) add("error", "عناصر ItemList لا تشير إلى هذا النطاق");
+      else add("ok", `بيانات القوائم سليمة (${list.numberOfItems} عنصرًا في /movies)`);
+    }
+  } catch {
+    add("warn", "تعذّر فحص بيانات القوائم المنظّمة");
+  }
+
   /* 7 — صور المشاركة الاجتماعية لكل عمل */
   const titleLink = home.match(/href="(\/(?:movie|series|anime)\/[^"?#]+)"/)?.[1];
   if (!titleLink) {

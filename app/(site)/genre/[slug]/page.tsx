@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { CatalogView, PageHeader } from "@/components/titles/catalog-view";
 import { cachedFacets, cachedGenres, cachedList, getGenreBySlug } from "@/lib/queries";
 import { robotsFor } from "@/lib/seo";
+import { collectionItems, collectionJsonLd } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
 
 export const dynamic = "force-dynamic";
 
@@ -44,6 +46,16 @@ export default async function GenrePage({ params, searchParams }: Props) {
 
   return (
     <div className="container-page pb-10 pt-28 md:pt-32">
+      <JsonLd
+        data={collectionJsonLd({
+          name: `أفلام ومسلسلات ${genre.nameAr}`,
+          description: `كل أعمال ${genre.nameAr} على لوميكس مع بياناتها وتريلراتها الرسمية.`,
+          path: `/genre/${genre.slug}`,
+          items: collectionItems(result.items),
+          total: result.total,
+          breadcrumb: [{ name: "الرئيسية", path: "/" }, { name: genre.nameAr, path: `/genre/${genre.slug}` }],
+        })}
+      />
       <PageHeader
         kicker="تصنيف"
         title={genre.nameAr}

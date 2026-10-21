@@ -4,6 +4,8 @@ import { PageHeader, PosterGrid } from "@/components/titles/catalog-view";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ButtonLink } from "@/components/ui/button";
 import { getEditorsPicks, getTrending } from "@/lib/queries";
+import { collectionItems, collectionJsonLd } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/json-ld";
 
 export const metadata: Metadata = {
   title: "الرائج الآن",
@@ -19,6 +21,14 @@ export default async function TrendingPage() {
 
   return (
     <div className="container-page pb-10 pt-28 md:pt-32">
+      <JsonLd
+        data={collectionJsonLd({
+          name: "الرائج",
+          path: "/trending",
+          items: collectionItems(items),
+          breadcrumb: [{ name: "الرئيسية", path: "/" }, { name: "الرائج", path: "/trending" }],
+        })}
+      />
       <PageHeader
         kicker="اكتشف"
         title="الرائج الآن"
