@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { ImageResponse } from "next/og";
 import type { TitleDetail } from "@/lib/queries";
+import { blobArtUrl, localArtFile } from "@/lib/art-source";
 
 /**
  * صور المشاركة الاجتماعية لكل عمل — تُرسم على الخادم وقت الطلب.
@@ -14,6 +15,7 @@ import type { TitleDetail } from "@/lib/queries";
 export const OG_SIZE = { width: 1200, height: 630 };
 
 const FONT_DIR = path.join(process.cwd(), "assets", "fonts");
+const MAX_REMOTE_ART_BYTES = 8 * 1024 * 1024;
 const ARABIC_RANGE = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
 
 type LoadedFont = { name: string; data: Buffer; weight: 400 | 600 | 700; style: "normal" };
@@ -41,7 +43,7 @@ function loadFonts(): Promise<LoadedFont[]> {
   return fontsPromise;
 }
 
-/** يحوّل صورة من `public` إلى data URI صغيرة؛ أي مسار مشبوه أو ملف مفقود ⇒ null. */
+/** يحوّل البوستر إلى data URI صغيرة؛ أي مسار مشبوه أو ملف مفقود ⇒ null. */
 async function artwork(
   relativePath: string | null | undefined,
   width: number,
@@ -49,15 +51,33 @@ async function artwork(
   quality = 68,
 ): Promise<string | null> {
   if (!relativePath) return null;
-  const normalized = path.posix.normalize(relativePath);
-  if (!["/media/", "/uploads/", "/art/"].some((prefix) => normalized.startsWith(prefix))) return null;
+  const local = localArtFile(relativePath);
+  const remote = local ? null : blobArtUrl(relativePath);
+  if (!local && !remote) return null;
   try {
-    const absolute = path.join(process.cwd(), "public", normalized);
-    if (!absolute.startsWith(path.join(process.cwd(), "public"))) return null;
     const { default: sharp } = await import("sharp");
-    const buffer = await sharp(await readFile(absolute))
+    let source: Buffer;
+    if (local) {
+      source = await readFile(local);
+    } else {
+      const response = await fetch(remote!, {
+        signal: AbortSignal.timeout(4000),
+        headers: { "user-agent": "loomix-og/1.0" },
+        // أسماء ملفات الوسائط لا تتغيّر أبدًا (uuid + عرض)، فالتخزين المؤقت آمن.
+        next: { revalidate: 86400 },
+      });
+      if (!response.ok) return null;
+      if (!(response.headers.get("content-type") ?? "").startsWith("image/")) return null;
+      const declared = Number(response.headers.get("content-length") ?? 0);
+      if (declared > MAX_REMOTE_ART_BYTES) return null;
+      // بعد أي إعادة توجيه: يبقى المضيف النهائي داخل نطاق Blob.
+      if (!blobArtUrl(response.url)) return null;
+      source = Buffer.from(await response.arrayBuffer());
+      if (source.length > MAX_REMOTE_ART_BYTES) return null;
+    }
+    const buffer = await sharp(source)
       // الغلاف جزء من التكوين لا خلفية كاملة، فتُصغَّر هنا بدقة العرض الفعلي.
-      // الهدف: PNG نهائي خفيف (< 400KB) لأن واتساب تتجاهل صور المشاركة الثقيلة.
+      // الهدف: صورة نهائية خفيفة (< 400KB) لأن واتساب تتجاهل صور المشاركة الثقيلة.
       .resize(width, height, { fit: "cover", position: "centre" })
       .jpeg({ quality })
       .toBuffer();

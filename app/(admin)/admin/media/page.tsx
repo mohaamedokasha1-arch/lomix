@@ -2,9 +2,16 @@ import Image from "next/image";
 import { AdminCard, AdminPageHeader } from "@/components/admin/page-header";
 import { MediaUploader } from "@/components/admin/media-uploader";
 import { getMediaAssets } from "@/lib/admin-queries";
+import { storageDriver, uploadMaxMb } from "@/lib/storage";
 import { formatDate } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
+
+/** اسم الملف للعرض: آخر مقطع من المسار المحلي أو من رابط Blob. */
+function fileLabel(storedPath: string) {
+  const clean = storedPath.split("?")[0] ?? storedPath;
+  return clean.split("/").filter(Boolean).pop() ?? storedPath;
+}
 
 function sizeLabel(bytes: number | null) {
   if (!bytes) return "—";
@@ -16,6 +23,7 @@ function sizeLabel(bytes: number | null) {
 export default async function AdminMediaPage() {
   const assets = await getMediaAssets(200);
   const totalBytes = assets.reduce((sum, asset) => sum + (asset.sizeBytes ?? 0), 0);
+  const driver = storageDriver();
 
   return (
     <>
@@ -25,7 +33,7 @@ export default async function AdminMediaPage() {
       />
 
       <div className="grid gap-5 lg:grid-cols-[300px_minmax(0,1fr)]">
-        <AdminCard title="رفع صورة" description="JPG / PNG / WebP / AVIF — حتى 6MB">
+        <AdminCard title="رفع صورة" description={`JPG / PNG / WebP / AVIF — حتى ${uploadMaxMb()}MB`}>
           <MediaUploader />
         </AdminCard>
 
@@ -41,7 +49,7 @@ export default async function AdminMediaPage() {
                   </div>
                   <div className="p-1.5">
                     <p className="truncate text-[0.58rem] text-ink-400" dir="ltr" title={asset.path}>
-                      {asset.path.replace("/uploads/", "")}
+                      {fileLabel(asset.path)}
                     </p>
                     <p className="num mt-0.5 text-[0.55rem] text-ink-500">
                       {asset.width}×{asset.height} · {sizeLabel(asset.sizeBytes)}
@@ -55,11 +63,23 @@ export default async function AdminMediaPage() {
         </AdminCard>
       </div>
 
-      <div className="mt-4 rounded-xl border border-signal-amber/20 bg-signal-amber/[0.04] p-3.5 text-[0.65rem] leading-5 text-ink-300">
-        <p className="mb-1 font-semibold text-signal-amber">تنبيه بيئة الإنتاج</p>
-        على المنصات ذات نظام الملفات المؤقت (مثل Vercel) لا تُحفظ الملفات المرفوعة بين عمليات النشر. يجب ربط تخزين كائنات
-        خارجي (S3/R2) وتعديل مسار الرفع — الشرح في <span dir="ltr">docs/DEPLOYMENT.md</span>. محليًا تُحفظ الملفات في{" "}
-        <span dir="ltr">public/uploads</span>.
+      <div className={`mt-4 rounded-xl border p-3.5 text-[0.65rem] leading-5 text-ink-300 ${driver === "vercel-blob" ? "border-emerald-500/20 bg-emerald-500/[0.04]" : "border-signal-amber/20 bg-signal-amber/[0.04]"}`}>
+        <p className={`mb-1 font-semibold ${driver === "vercel-blob" ? "text-emerald-400" : "text-signal-amber"}`}>
+          {driver === "vercel-blob" ? "التخزين السحابي مفعّل" : "تنبيه بيئة الإنتاج"}
+        </p>
+        {driver === "vercel-blob" ? (
+          <>
+            الصور تُرفع إلى <span dir="ltr">Vercel Blob</span> ويُخزَّن رابطها المطلق، فتبقى بعد النشر. الصور القديمة
+            المرفوعة محليًا تبقى في <span dir="ltr">public/uploads</span> داخل المستودع.
+          </>
+        ) : (
+          <>
+            التخزين الحالي محلي في <span dir="ltr">public/uploads</span> — غير دائم على المنصات ذات نظام ملفات مؤقت
+            (مثل Vercel). اربط مخزن <span dir="ltr">Vercel Blob</span> بالمشروع فيتحوّل الرفع تلقائيًا دون تعديل كود،
+            أو استخدم S3/R2 عبر <span dir="ltr">lib/storage.ts</span> — الشرح في{" "}
+            <span dir="ltr">docs/DEPLOY-VERCEL.md §7</span>.
+          </>
+        )}
       </div>
     </>
   );

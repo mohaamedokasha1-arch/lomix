@@ -4,14 +4,14 @@ import sharp from "sharp";
 import { getDb, schema } from "@/db";
 import { AuthError, requireStaff } from "@/lib/auth";
 import { logAudit } from "@/lib/audit";
-import { putImage, storageDriver } from "@/lib/storage";
+import { putImage, storageDriver, uploadMaxMb } from "@/lib/storage";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
 
 // الحد الافتراضي 6MB محليًا. على Vercel سقف جسم الطلب 4.5MB عند المنصة نفسها
 // (413 قبل وصول الطلب إلينا) — اضبط UPLOAD_MAX_MB=4 في بيئة الإنتاج.
-const MAX_MB = Math.min(Math.max(Number(process.env.UPLOAD_MAX_MB) || 6, 1), 20);
+const MAX_MB = uploadMaxMb();
 const MAX_BYTES = MAX_MB * 1024 * 1024;
 
 /** فحص نوع الملف من البايتات الأولى، لا من اسم الملف أو Content-Type. */

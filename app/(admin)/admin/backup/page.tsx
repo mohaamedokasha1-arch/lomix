@@ -17,7 +17,7 @@ export default async function AdminBackupPage() {
     <>
       <AdminPageHeader
         title="النسخ الاحتياطي والاستعادة"
-        description="نسخة JSON كاملة من بيانات المحتوى والإعدادات. ملفات الوسائط تُنسخ منفصلة (public/uploads)."
+        description="نسخة JSON كاملة من بيانات المحتوى والإعدادات. ملفات الصور نفسها لا تُضمَّن: تُنسخ منفصلة من مجلد التخزين (public/uploads محليًا أو مخزن Blob في الإنتاج)."
       />
 
       <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_340px]">

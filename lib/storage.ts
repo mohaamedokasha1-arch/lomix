@@ -17,6 +17,11 @@ import path from "node:path";
 
 export type StorageDriver = "local" | "vercel-blob";
 
+/** سقف حجم الصورة بالميجابايت — سقف المنصة (4.5MB على Vercel) يُطبّق قبل وصول الطلب. */
+export function uploadMaxMb(): number {
+  return Math.min(Math.max(Number(process.env.UPLOAD_MAX_MB) || 6, 1), 20);
+}
+
 export function storageDriver(): StorageDriver {
   return process.env.BLOB_READ_WRITE_TOKEN ? "vercel-blob" : "local";
 }
