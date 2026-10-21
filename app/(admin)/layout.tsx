@@ -29,8 +29,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     >
       <noscript>
         <p className="mb-4 rounded-lg border border-signal-amber/40 bg-signal-amber/10 px-3 py-2 text-xs leading-5 text-signal-amber">
-          تعمل نماذج الإضافة والتعديل بلا JavaScript، لكن الإجراءات السريعة في القوائم (حذف، إخفاء/نشر،
-          ترتيب بالسحب) واختيار التصنيفات والأشخاص تحتاج JavaScript. فعّل السكربتات للحصول على اللوحة كاملة.
+          نماذج الإضافة والتعديل، وأزرار النشر/إلغاء النشر، وصفحة تأكيد الحذف تعمل كلها بلا JavaScript.
+          ما يبقى بحاجة إلى السكربتات: السحب والترتيب، واختيار التصنيفات والأشخاص داخل نموذج العمل،
+          والإجراءات السريعة في القوائم الأخرى (المستخدمون، التريلرات، المواسم، الحلقات، الرسائل).
         </p>
       </noscript>
       {children}

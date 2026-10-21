@@ -9,6 +9,8 @@
  * يخرج بكود 1 عند أي فشل.
  */
 
+export {};
+
 type Level = "error" | "warn" | "ok";
 type Result = { level: Level; label: string; detail?: string };
 
