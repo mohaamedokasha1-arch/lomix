@@ -160,7 +160,34 @@ async function main() {
     else add("ok", "JSON-LD صالح ويحوي Organization + WebSite");
   }
 
-  /* 7 — كاش الأصول الثابتة */
+  /* 7 — صور المشاركة الاجتماعية لكل عمل */
+  const titleLink = home.match(/href="(\/(?:movie|series|anime)\/[^"?#]+)"/)?.[1];
+  if (!titleLink) {
+    add("warn", "لا يوجد رابط عمل في الرئيسية — تعذّر فحص صورة المشاركة");
+  } else {
+    try {
+      const { body: page } = await request(titleLink);
+      const ogUrl = page.match(/<meta property="og:image" content="([^"]+)"/)?.[1];
+      if (!ogUrl) add("error", `صفحة ${titleLink} بلا og:image`);
+      else {
+        const response = await fetch(ogUrl, { signal: AbortSignal.timeout(20000) });
+        const type = response.headers.get("content-type") ?? "";
+        // Next يرسل الصورة مجزّأة بلا content-length، فنقيس الجسم فعليًا.
+        const size = (await response.arrayBuffer()).byteLength;
+        if (response.status !== 200 || !type.startsWith("image/")) {
+          add("error", "صورة المشاركة لا تُرسم", `${response.status} ${type}`);
+        } else if (size > 600_000) {
+          add("warn", `صورة المشاركة ثقيلة (${Math.round(size / 1024)}KB) — بعض التطبيقات تتجاهلها`);
+        } else {
+          add("ok", `صورة مشاركة ديناميكية تعمل (${Math.round(size / 1024)}KB)`);
+        }
+      }
+    } catch {
+      add("warn", "تعذّر فحص صورة المشاركة");
+    }
+  }
+
+  /* 8 — كاش الأصول الثابتة */
   const asset = home.match(/\/_next\/static\/[^"']+\.(?:js|css)/)?.[0];
   if (asset) {
     try {
@@ -173,7 +200,7 @@ async function main() {
     }
   }
 
-  /* 8 — واجهة البحث */
+  /* 9 — واجهة البحث */
   try {
     const { response, body } = await request(`/api/search?q=${encodeURIComponent("ظل")}`);
     if (response.status !== 200) add("warn", `/api/search يعيد ${response.status}`);
@@ -187,7 +214,7 @@ async function main() {
     add("warn", "تعذّر فحص /api/search");
   }
 
-  /* 9 — زحف مختصر (اختياري) */
+  /* 10 — زحف مختصر (اختياري) */
   if (crawl && locs.length) {
     const sample = locs.slice(0, 40);
     let failures = 0;

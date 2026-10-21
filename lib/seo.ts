@@ -14,7 +14,6 @@ export function buildTitleMetadata(title: TitleDetail): Metadata {
   const year = title.releaseYear ? ` (${title.releaseYear})` : "";
   const titleText = title.seoTitle || `${title.titleAr}${year}`;
   const description = title.seoDescription || truncate(title.overviewAr, 158);
-  const image = title.backdropPath ?? title.posterPath ?? "/art/og-default.webp";
 
   return {
     title: titleText,
@@ -25,13 +24,13 @@ export function buildTitleMetadata(title: TitleDetail): Metadata {
       title: titleText,
       description,
       url: absoluteUrl(path),
-      images: [{ url: image, alt: `بوستر ${title.titleAr}` }],
+      // الصورة تأتي من ملف `opengraph-image.tsx` لكل مسار (بطاقة مرسومة بالعنوان
+      // والغلاف) — لا نكرّرها هنا حتى لا نُلغي ملف الاصطلاح.
     },
     twitter: {
       card: "summary_large_image",
       title: titleText,
       description,
-      images: [image],
     },
   };
 }

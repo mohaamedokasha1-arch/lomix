@@ -40,6 +40,13 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   serverExternalPackages: ["@electric-sql/pglite", "postgres", "sharp"],
+  // خطوط بطاقات المشاركة تُقرأ من القرص وقت الطلب بمسار متغيّر، فلا يستطيع
+  // تتبّع الملفات اكتشافها. نُدرجها صراحةً حتى تُحزَم مع دوال الصور على Vercel.
+  outputFileTracingIncludes: {
+    "/movie/[slug]/opengraph-image*": ["./assets/fonts/**"],
+    "/series/[slug]/opengraph-image*": ["./assets/fonts/**"],
+    "/anime/[slug]/opengraph-image*": ["./assets/fonts/**"],
+  },
   images: {
     // الصور تُخزَّن محليًا في مرحلة العرض التجريبي. في الإنتاج تُستخدم خدمة
     // تخزين كائنات خارجية ويُضاف نطاقها هنا (انظر docs/DEPLOYMENT.md).
