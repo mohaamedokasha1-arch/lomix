@@ -9,8 +9,8 @@ import { putImage, storageDriver, uploadMaxMb } from "@/lib/storage";
 export const runtime = "nodejs";
 export const maxDuration = 30;
 
-// الحد الافتراضي 6MB محليًا. على Vercel سقف جسم الطلب 4.5MB عند المنصة نفسها
-// (413 قبل وصول الطلب إلينا) — اضبط UPLOAD_MAX_MB=4 في بيئة الإنتاج.
+// الحد الافتراضي 6MB محليًا و4MB على Vercel (سقف جسم الطلب هناك 4.5MB ويُطبَّق
+// قبل وصول الطلب إلينا) — انظر uploadMaxMb في lib/storage.ts.
 const MAX_MB = uploadMaxMb();
 const MAX_BYTES = MAX_MB * 1024 * 1024;
 

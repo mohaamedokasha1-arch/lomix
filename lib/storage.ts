@@ -17,9 +17,19 @@ import path from "node:path";
 
 export type StorageDriver = "local" | "vercel-blob";
 
-/** سقف حجم الصورة بالميجابايت — سقف المنصة (4.5MB على Vercel) يُطبّق قبل وصول الطلب. */
+/**
+ * سقف حجم الصورة بالميجابايت.
+ *
+ * على Vercel سقف جسم الطلب **4.5MB** يُطبَّق عند المنصة قبل وصول الطلب إلينا (413 مبهم
+ * للمستخدم). لذلك الافتراضي هناك 4MB، وأي قيمة أعلى تُقيَّد بها تلقائيًا حتى تُعطي
+ * رسالتنا العربية بدل خطأ المنصة. محليًا الافتراضي 6MB.
+ */
 export function uploadMaxMb(): number {
-  return Math.min(Math.max(Number(process.env.UPLOAD_MAX_MB) || 6, 1), 20);
+  const onVercel = Boolean(process.env.VERCEL);
+  const fallback = onVercel ? 4 : 6;
+  const ceiling = onVercel ? 4 : 20;
+  const requested = Number(process.env.UPLOAD_MAX_MB) || fallback;
+  return Math.min(Math.max(requested, 1), ceiling);
 }
 
 export function storageDriver(): StorageDriver {
