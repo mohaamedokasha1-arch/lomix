@@ -14,6 +14,18 @@ export async function toggleWatchlistAction(titleId: string, slug?: string): Pro
   }
 
   const db = await getDb();
+
+  // تحقّق من وجود العمل قبل الإدراج: معرّف غير موجود كان يُسقط الصف بخطأ مفتاح
+  // أجنبي (500) بدل رسالة مفهومة.
+  const [title] = await db
+    .select({ id: schema.titles.id })
+    .from(schema.titles)
+    .where(and(eq(schema.titles.id, titleId), eq(schema.titles.state, "PUBLISHED")))
+    .limit(1);
+  if (!title) {
+    return { ok: false, message: "هذا العمل غير متاح للحفظ في القائمة." };
+  }
+
   const [existing] = await db
     .select({ id: schema.watchlistItems.id })
     .from(schema.watchlistItems)

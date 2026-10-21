@@ -24,6 +24,11 @@ export default async function LoginPage({
   const next = safeNextPath(typeof sp.next === "string" ? sp.next : "/");
   if (user) redirect(user.role === "VIEWER" ? next : "/admin");
 
+  // بيانات الدخول التجريبية لا تُطبع أبدًا افتراضيًا: كشفها يكفي لاختراق الموقع.
+  const showDemoCredentials = process.env.SHOW_DEMO_CREDENTIALS === "1";
+  const demoEmail = process.env.ADMIN_EMAIL ?? "admin@loomix.tv";
+  const demoPassword = process.env.ADMIN_PASSWORD ?? "";
+
   return (
     <div className="container-page flex min-h-[78vh] items-center justify-center pb-16 pt-32">
       <div className="w-full max-w-md">
@@ -44,11 +49,17 @@ export default async function LoginPage({
           <LoginForm next={next} />
         </div>
 
-        <div className="mt-6 rounded-xl border border-white/6 bg-white/[0.02] p-3 text-center text-[0.68rem] leading-6 text-ink-500">
-          حساب تجريبي للتجربة: <span dir="ltr" className="num">admin@loomix.tv / Loomix@2026</span>
-          <br />
-          <span className="text-ink-600">غيّر هذه البيانات قبل أي نشر علني.</span>
-        </div>
+        {showDemoCredentials && (
+          <div className="mt-6 rounded-xl border border-white/6 bg-white/[0.02] p-3 text-center text-[0.68rem] leading-6 text-ink-500">
+            حساب تجريبي للتجربة:{" "}
+            <span dir="ltr" className="num">
+              {demoEmail}
+              {demoPassword ? ` / ${demoPassword}` : ""}
+            </span>
+            <br />
+            <span className="text-ink-600">غيّر هذه البيانات قبل أي نشر علني.</span>
+          </div>
+        )}
 
         <p className="mt-5 text-center text-[0.7rem] text-ink-500">
           <Link href="/" className="underline-offset-4 hover:text-ink-300 hover:underline">العودة إلى الرئيسية</Link>

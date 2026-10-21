@@ -46,6 +46,12 @@ DATABASE_URL="postgresql://…" npm run db:migrate
 # 3) أنشئ حساب المدير (بدون بيانات تجريبية)
 DATABASE_URL="postgresql://…" npm run admin:password -- admin@example.com "كلمة-قوية"
 
+بعد الاستعادة أو أي تغيير في البيانات، شغّل فحص السلامة:
+`DATABASE_URL="postgresql://…" npm run check:data` — يخرج بكود غير صفري عند أي خلل.
+
+**لا تُفعّل `SHOW_DEMO_CREDENTIALS` في الإنتاج.** المفتاح الافتراضي غير موجود، وبغيابه
+لا تُطبع أي بيانات دخول في صفحة `/login`. فعّله محليًا فقط إن أردت تذكيرًا أثناء التطوير.
+
 # 4) ابنِ وتحقّق
 npm run typecheck
 npm run build
