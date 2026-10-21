@@ -72,7 +72,9 @@ export function TitleRow({
       >
         {items.map((item, index) => (
           <div key={item.id} className="w-[43%] shrink-0 snap-start sm:w-[30%] md:w-[23%] lg:w-[18.5%] xl:w-[16%]">
-            <TitleCard title={item} size={size} showRank={showRank ? index + 1 : undefined} priority={index < 5} />
+            {/* الأشرطة أفقية وأسفل الطية دائمًا: لا preload لأي بوستر هنا.
+                كان `priority={index < 5}` يطلب 5 نسخ كبيرة مسبقًا فتنافس صورة LCP. */}
+            <TitleCard title={item} size={size} showRank={showRank ? index + 1 : undefined} />
           </div>
         ))}
 

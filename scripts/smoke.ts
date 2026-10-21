@@ -331,6 +331,26 @@ async function main() {
   if (iframeHits.length) add("warn", `تضمين ظاهر في HTML أولي (${iframeHits.length})`, iframeHits.slice(0, 3).join(" · "));
   else add("ok", "لا <iframe> في HTML الأولي — التضمين يُحمَّل عند الطلب فقط");
 
+  /* 12 — الأداء: لا تحميل مسبق لعشرات البوسترات قبل الطية */
+  const perfPaths = ["/", "/movies", pickPath(/^\/movie\/[^/]+$/)].filter((path): path is string => Boolean(path));
+  const perfIssues: string[] = [];
+  for (const path of perfPaths) {
+    try {
+      const { body } = await request(path);
+      const images = body.match(/<img[^>]*>/g) ?? [];
+      const eager = images.filter((tag) => !tag.includes('loading="lazy"')).length;
+      const preloads = (body.match(/<link rel="preload" as="image"/g) ?? []).length;
+      if (eager > 4 || preloads > 4) perfIssues.push(`${path}: ${eager} eager / ${preloads} preload`);
+    } catch {
+      add("warn", `تعذّر فحص أداء ${path}`);
+    }
+  }
+  if (perfIssues.length) {
+    add("error", `تحميل مسبق مفرط للصور (${perfIssues.length})`, perfIssues.join(" · "));
+  } else {
+    add("ok", `تحميل الصور مضبوط — ≤4 صور مسبقة على ${perfPaths.length} صفحات`);
+  }
+
   /* 10 — زحف مختصر (اختياري) */
   if (crawl && locs.length) {
     const sample = locs.slice(0, 40);
