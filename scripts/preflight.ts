@@ -130,6 +130,21 @@ if (blobToken) {
   add("ok", "مجلد الرفع موجود (تخزين محلي)");
 }
 
+/* ───────────────────── صيانة دورية (Cron) ───────────────────── */
+
+const cronSecret = env.CRON_SECRET?.trim() ?? "";
+if (!cronSecret) {
+  add(
+    prod ? "warn" : "info",
+    "CRON_SECRET غير مضبوط",
+    "مهمة الصيانة اليومية معطّلة (/api/cron/maintenance): الجلسات المنتهية وسجلات الحدّ تتراكم.",
+  );
+} else if (cronSecret.length < 24) {
+  add(prod ? "warn" : "info", `CRON_SECRET قصير (${cronSecret.length} حرفًا)`, "استخدم 32 حرفًا عشوائيًا على الأقل.");
+} else {
+  add("ok", "مهمة الصيانة مفعّلة بسرّ كافٍ الطول");
+}
+
 /* ─────────────── تسميات سجل العمليات (ثابت في الكود) ─────────────── */
 
 function collectSourceFiles(dir: string, out: string[] = []): string[] {

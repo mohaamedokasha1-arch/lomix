@@ -24,6 +24,7 @@ PGlite **للتطوير فقط**: ملفاتها على القرص المحلي�
 
 - `DATABASE_URL` — رابط Postgres مع `sslmode=require`. استخدم Pooler إن توفّر.
 - `NEXT_PUBLIC_SITE_URL` — النطاق النهائي (بدون `/`).
+- `CRON_SECRET` — سرّ مهمة الصيانة اليومية (`/api/cron/maintenance`). بلا ضبطه تبقى المهمة معطّلة.
 - `SESSION_COOKIE_NAME` — افتراضيًا `loomix_session`.
 - `APP_SECRET` — 32 حرفًا عشوائيًا على الأقل.
 - `ADMIN_EMAIL` / `ADMIN_PASSWORD` / `ADMIN_NAME` — تُستخدم مرة واحدة عند التهيئة.
