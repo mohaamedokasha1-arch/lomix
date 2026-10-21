@@ -115,12 +115,19 @@ if (!existsSync(path.join(process.cwd(), "next.config.ts"))) {
 }
 
 const uploadsDir = path.join(process.cwd(), "public", "uploads");
-if (prod && databaseUrl.startsWith("pglite://")) {
-  add("warn", "رفع الصور إلى قرص محلي في بيئة بلا تخزين دائم", "استخدم تخزين كائنات (R2/S3/Supabase Storage) قبل النشر.");
+const blobToken = process.env.BLOB_READ_WRITE_TOKEN;
+if (blobToken) {
+  add("ok", "تخزين الصور: Vercel Blob مُهيّأ");
+} else if (prod) {
+  add(
+    "warn",
+    "رفع الصور إلى قرص محلي في بيئة بلا تخزين دائم",
+    "اربط مخزن Vercel Blob بالمشروع (BLOB_READ_WRITE_TOKEN) أو استخدم S3/R2 — انظر docs/DEPLOY-VERCEL.md §7.",
+  );
 } else if (!existsSync(uploadsDir)) {
   add("info", "مجلد public/uploads غير موجود بعد", "يُنشأ تلقائيًا عند أول رفع.");
 } else {
-  add("ok", "مجلد الرفع موجود");
+  add("ok", "مجلد الرفع موجود (تخزين محلي)");
 }
 
 async function checkDatabase() {

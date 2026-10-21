@@ -1,16 +1,18 @@
 import { NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
-import { mkdir, writeFile } from "node:fs/promises";
-import path from "node:path";
 import sharp from "sharp";
 import { getDb, schema } from "@/db";
 import { AuthError, requireStaff } from "@/lib/auth";
 import { logAudit } from "@/lib/audit";
+import { putImage, storageDriver } from "@/lib/storage";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
 
-const MAX_BYTES = 6 * 1024 * 1024;
+// الحد الافتراضي 6MB محليًا. على Vercel سقف جسم الطلب 4.5MB عند المنصة نفسها
+// (413 قبل وصول الطلب إلينا) — اضبط UPLOAD_MAX_MB=4 في بيئة الإنتاج.
+const MAX_MB = Math.min(Math.max(Number(process.env.UPLOAD_MAX_MB) || 6, 1), 20);
+const MAX_BYTES = MAX_MB * 1024 * 1024;
 
 /** فحص نوع الملف من البايتات الأولى، لا من اسم الملف أو Content-Type. */
 function detectImageType(buffer: Buffer): { mime: string; ext: string } | null {
@@ -35,7 +37,9 @@ export async function POST(request: Request) {
   const formData = await request.formData().catch(() => null);
   const file = formData?.get("file");
   if (!(file instanceof File)) return NextResponse.json({ error: "لم يُرسل ملف." }, { status: 400 });
-  if (file.size > MAX_BYTES) return NextResponse.json({ error: "الحد الأقصى لحجم الصورة 6MB." }, { status: 413 });
+  if (file.size > MAX_BYTES) {
+    return NextResponse.json({ error: `الحد الأقصى لحجم الصورة ${MAX_MB}MB.` }, { status: 413 });
+  }
 
   const buffer = Buffer.from(await file.arrayBuffer());
   const type = detectImageType(buffer);
@@ -54,23 +58,22 @@ export async function POST(request: Request) {
     }
 
     const id = randomUUID();
-    const dir = path.join(process.cwd(), "public", "uploads");
-    await mkdir(dir, { recursive: true });
 
-    // توليد أحجام متعددة (بطاقة / صفحة / خلفية) بصيغة WebP.
+    // توليد أحجام متعددة (بطاقة / صفحة / خلفية) بصيغة WebP، ورفعها إلى
+    // التخزين المُهيّأ (قرص محلي أو Vercel Blob) دون تغيير شكل المسارات.
     const widths = [400, 900, 1600].filter((w) => w <= Math.max(metadata.width!, 400));
     const sizes = widths.length ? widths : [Math.min(metadata.width!, 1600)];
     const assets: { path: string; width: number; height: number; size: number }[] = [];
 
     for (const width of sizes) {
       const filename = `${id}-${width}.webp`;
-      const output = path.join(dir, filename);
-      const info = await sharp(buffer)
+      const { data: output, info } = await sharp(buffer)
         .rotate()
         .resize({ width, withoutEnlargement: true })
         .webp({ quality: 86 })
-        .toFile(output);
-      assets.push({ path: `/uploads/${filename}`, width: info.width, height: info.height, size: info.size });
+        .toBuffer({ resolveWithObject: true });
+      const publicPath = await putImage(`uploads/${filename}`, output, "image/webp");
+      assets.push({ path: publicPath, width: info.width, height: info.height, size: info.size });
     }
 
     const db = await getDb();
@@ -91,7 +94,13 @@ export async function POST(request: Request) {
       action: "MEDIA_UPLOAD",
       entity: "media",
       entityId: id,
-      details: { originalName: file.name, type: type.mime, bytes: file.size, variants: assets.length },
+      details: {
+        originalName: file.name,
+        type: type.mime,
+        bytes: file.size,
+        variants: assets.length,
+        storage: storageDriver(),
+      },
     });
 
     const largest = assets[assets.length - 1]!;

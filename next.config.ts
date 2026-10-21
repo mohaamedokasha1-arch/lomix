@@ -11,7 +11,8 @@ const csp = [
   "form-action 'self'",
   "script-src 'self' 'unsafe-inline'",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob:",
+  // الصور المرفوعة تُخدَم من نفس الأصل محليًا، أو من مخزن Vercel Blob في الإنتاج.
+  "img-src 'self' data: blob: https://*.public.blob.vercel-storage.com",
   "font-src 'self' data:",
   "media-src 'self'",
   "connect-src 'self'",
@@ -53,9 +54,9 @@ const nextConfig: NextConfig = {
     "/trailers/opengraph-image*": ["./assets/fonts/**"],
   },
   images: {
-    // الصور تُخزَّن محليًا في مرحلة العرض التجريبي. في الإنتاج تُستخدم خدمة
-    // تخزين كائنات خارجية ويُضاف نطاقها هنا (انظر docs/DEPLOYMENT.md).
-    remotePatterns: [],
+    // محليًا: public/uploads (نفس الأصل). في الإنتاج: Vercel Blob عند ربط مخزن
+    // (انظر docs/DEPLOY-VERCEL.md §7). أي مزوّد آخر يُضاف نطاقه هنا أيضًا.
+    remotePatterns: [{ protocol: "https", hostname: "*.public.blob.vercel-storage.com" }],
     formats: ["image/avif", "image/webp"],
     // أعرض أصل عندنا 1584px (لقطات الهيرو) والبوسترات أصغر بكثير.
     // السماح بعرض 3840 يجعل المحسّن يُكبّر أصلًا صغيرًا ويرسل بايتات لا تفيد.

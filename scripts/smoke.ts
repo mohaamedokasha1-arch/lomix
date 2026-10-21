@@ -96,6 +96,22 @@ async function main() {
     add("error", "تعذّر جلب robots.txt");
   }
 
+  /* 3b — فحص صحة التشغيل (يستخدمه المراقب الخارجي) */
+  try {
+    const { response, body } = await request("/api/health");
+    const data = JSON.parse(body) as { status?: string; db?: string };
+    if (response.status === 200 && data.status === "ok" && data.db === "up") {
+      add("ok", "فحص الصحة يعيد ok وقاعدة البيانات متصلة");
+    } else {
+      add("error", `فحص الصحة غير سليم (${response.status})`, body.slice(0, 120));
+    }
+    if (!/no-store/.test(response.headers.get("cache-control") ?? "")) {
+      add("error", "فحص الصحة قابل للتخزين المؤقت — قد يعطي نتيجة قديمة");
+    }
+  } catch (error) {
+    add("error", "تعذّر جلب /api/health", error instanceof Error ? error.message : String(error));
+  }
+
   let locs: string[] = [];
   try {
     const { response, body } = await request("/sitemap.xml");
