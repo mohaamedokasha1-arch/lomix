@@ -8,6 +8,7 @@ import { z } from "zod";
 import { getDb, schema } from "@/db";
 import { AuthError, getSessionUser, requireStaff } from "@/lib/auth";
 import { logAudit } from "@/lib/audit";
+import { isUniqueViolation } from "@/lib/db-errors";
 import { buildSearchText, normalizeArabic, slugify, uniqueSlug } from "@/lib/slug";
 import { extractYouTubeId } from "@/lib/utils";
 import { clientIpFromHeaders } from "@/lib/rate-limit";
@@ -428,7 +429,7 @@ export async function saveSeasonAction(_prev: AdminState, formData: FormData): P
     revalidatePath(`/admin/titles/${titleId}`);
     return { ok: true, message: "حُفظ الموسم." };
   } catch (error) {
-    if (error instanceof Error && /unique/i.test(error.message)) {
+    if (isUniqueViolation(error)) {
       return { fieldErrors: { number: "يوجد موسم بهذا الرقم لهذا العمل بالفعل." } };
     }
     console.error("[loomix:season]", error);
@@ -493,7 +494,7 @@ export async function saveEpisodeAction(_prev: AdminState, formData: FormData): 
     if (titleId) revalidatePath(`/admin/titles/${titleId}`);
     return { ok: true, message: "حُفظت الحلقة." };
   } catch (error) {
-    if (error instanceof Error && /unique/i.test(error.message)) {
+    if (isUniqueViolation(error)) {
       return { fieldErrors: { number: "رقم الحلقة مستخدم في هذا الموسم بالفعل." } };
     }
     console.error("[loomix:episode]", error);

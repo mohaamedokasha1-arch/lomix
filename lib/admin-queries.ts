@@ -1,6 +1,9 @@
 import "server-only";
 import { and, asc, desc, eq, gte, sql } from "drizzle-orm";
 import { getDb, schema } from "@/db";
+
+// ملاحظة: داخل قالب sql تُصدَّر أسماء الأعمدة **بلا اسم جدول**، فتصبح `"season_id" = "id"`
+// ويحلّ الطرفان إلى الجدول الداخلي. لذلك نكتب أسماء مؤهَّلة صريحة في الاستعلامات الفرعية.
 import { getAdminStats, getAdminTitleList } from "@/lib/queries-extra";
 
 export { getAdminStats, getAdminTitleList };
@@ -31,7 +34,7 @@ export async function getTitleForEdit(id: string) {
     db
       .select({
         season: schema.seasons,
-        episodeCount: sql<number>`(select count(*) from ${schema.episodes} where ${schema.episodes.seasonId} = ${schema.seasons.id})::int`,
+        episodeCount: sql<number>`(select count(*) from "episodes" where "episodes"."season_id" = "seasons"."id")::int`,
       })
       .from(schema.seasons)
       .where(eq(schema.seasons.titleId, id))
@@ -49,7 +52,7 @@ export async function getAllGenres() {
       nameAr: schema.genres.nameAr,
       nameEn: schema.genres.nameEn,
       sort: schema.genres.sort,
-      count: sql<number>`(select count(*) from ${schema.titleGenres} where ${schema.titleGenres.genreId} = ${schema.genres.id})::int`,
+      count: sql<number>`(select count(*) from "title_genres" where "title_genres"."genre_id" = "genres"."id")::int`,
     })
     .from(schema.genres)
     .orderBy(asc(schema.genres.sort), asc(schema.genres.nameAr));
@@ -68,7 +71,7 @@ export async function getAllPeople(query?: string) {
       nameEn: schema.people.nameEn,
       imagePath: schema.people.imagePath,
       birthYear: schema.people.birthYear,
-      creditCount: sql<number>`(select count(*) from ${schema.credits} where ${schema.credits.personId} = ${schema.people.id})::int`,
+      creditCount: sql<number>`(select count(*) from "credits" where "credits"."person_id" = "people"."id")::int`,
     })
     .from(schema.people)
     .where(where)
@@ -153,7 +156,7 @@ export async function getUsersAdmin() {
       isActive: schema.users.isActive,
       lastLoginAt: schema.users.lastLoginAt,
       createdAt: schema.users.createdAt,
-      sessionCount: sql<number>`(select count(*) from ${schema.sessions} where ${schema.sessions.userId} = ${schema.users.id} and ${schema.sessions.expiresAt} > now())::int`,
+      sessionCount: sql<number>`(select count(*) from "sessions" where "sessions"."user_id" = "users"."id" and "sessions"."expires_at" > now())::int`,
     })
     .from(schema.users)
     .orderBy(asc(schema.users.createdAt));
@@ -300,8 +303,8 @@ export async function getSeasonsForTitle(titleId: string) {
       nameAr: schema.seasons.nameAr,
       year: schema.seasons.year,
       overviewAr: schema.seasons.overviewAr,
-      episodeCount: sql<number>`(select count(*) from ${schema.episodes} where ${schema.episodes.seasonId} = ${schema.seasons.id})::int`,
-      publishedEpisodeCount: sql<number>`(select count(*) from ${schema.episodes} where ${schema.episodes.seasonId} = ${schema.seasons.id} and ${schema.episodes.state} = 'PUBLISHED')::int`,
+      episodeCount: sql<number>`(select count(*) from "episodes" where "episodes"."season_id" = "seasons"."id")::int`,
+      publishedEpisodeCount: sql<number>`(select count(*) from "episodes" where "episodes"."season_id" = "seasons"."id" and "episodes"."state" = 'PUBLISHED')::int`,
     })
     .from(schema.seasons)
     .where(eq(schema.seasons.titleId, titleId))
