@@ -26,7 +26,7 @@ export function UserRowActions({
   };
 
   if (isSelf) {
-    return <span className="text-[0.58rem] text-ink-600">لا يمكنك تعديل حسابك من هنا</span>;
+    return <span className="text-[0.58rem] text-ink-500">لا يمكنك تعديل حسابك من هنا</span>;
   }
 
   return (

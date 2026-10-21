@@ -92,7 +92,7 @@ export default async function AdminAuditPage({ searchParams }: { searchParams: P
                     <td className="py-2">
                       <p className="text-ink-200">{row.userName ?? "نظام"}</p>
                       {row.userEmail && (
-                        <p className="text-[0.55rem] text-ink-600" dir="ltr">
+                        <p className="text-[0.55rem] text-ink-500" dir="ltr">
                           {row.userEmail}
                         </p>
                       )}
@@ -100,14 +100,14 @@ export default async function AdminAuditPage({ searchParams }: { searchParams: P
                     <td className="py-2 text-ink-200">{ACTION_LABEL[row.action] ?? row.action}</td>
                     <td className="py-2 text-ink-500">
                       <span dir="ltr">{row.entity}</span>
-                      {row.entityId && <span className="num ms-1 text-[0.55rem] text-ink-600" dir="ltr">#{row.entityId.slice(0, 6)}</span>}
+                      {row.entityId && <span className="num ms-1 text-[0.55rem] text-ink-500" dir="ltr">#{row.entityId.slice(0, 6)}</span>}
                     </td>
                     <td className="max-w-[280px] py-2 text-[0.6rem] text-ink-500">
                       <span dir="ltr" className="line-clamp-2 break-all">
                         {row.details ? JSON.stringify(row.details) : "—"}
                       </span>
                     </td>
-                    <td className="py-2 text-[0.6rem] text-ink-600">
+                    <td className="py-2 text-[0.6rem] text-ink-500">
                       <span dir="ltr">{row.ip ?? "—"}</span>
                     </td>
                   </tr>
@@ -136,7 +136,7 @@ export default async function AdminAuditPage({ searchParams }: { searchParams: P
         </nav>
       )}
 
-      <p className="mt-3 text-[0.6rem] text-ink-600">
+      <p className="mt-3 text-[0.6rem] text-ink-500">
         الأدوار في العرض: {Object.values(ROLE_LABEL).join(" · ")}. لا تُخزَّن كلمات المرور أو التوكنات في السجل.
       </p>
     </>

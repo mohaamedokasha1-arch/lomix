@@ -74,7 +74,15 @@ export function TitleHero({
                   {STATUS_LABEL[title.status]}
                 </span>
               )}
-              {title.releaseYear && <span className="num text-ink-300">{title.releaseYear}</span>}
+              {title.releaseYear && (
+                // السنة رابط فعلي: صفحة /year/[year] موجودة، ورابطها يجعلها قابلة للوصول
+                <Link
+                  href={`/year/${title.releaseYear}`}
+                  className="num text-ink-300 underline-offset-4 transition hover:text-brass-200 hover:underline"
+                >
+                  {title.releaseYear}
+                </Link>
+              )}
               {runtime && (
                 <span className="inline-flex items-center gap-1 text-ink-300">
                   <Clock className="h-3 w-3" aria-hidden="true" />

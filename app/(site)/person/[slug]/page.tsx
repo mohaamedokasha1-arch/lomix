@@ -73,7 +73,7 @@ export default async function PersonPage({ params }: Props) {
         <div className="mt-10 space-y-12">
           {Object.entries(grouped).map(([role, items]) => (
             <section key={role}>
-              <PageHeader kicker={ROLE_TITLE[role] ?? role} title={`أعمال ${ROLE_TITLE[role] ?? role}`} />
+              <PageHeader as="h2" kicker={ROLE_TITLE[role] ?? role} title={`أعمال ${ROLE_TITLE[role] ?? role}`} />
               <PosterGrid items={items} />
             </section>
           ))}

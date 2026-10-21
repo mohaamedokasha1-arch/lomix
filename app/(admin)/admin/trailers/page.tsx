@@ -88,7 +88,7 @@ export default async function AdminTrailersPage({
                   </div>
                   <div className="mt-1.5 flex flex-wrap items-center justify-between gap-2 ps-5">
                     <TrailerHealthControls id={trailer.id} health={trailer.health} />
-                    <span className="text-[0.58rem] text-ink-600">{trailer.lastCheckedAt ? `فُحص ${formatDate(trailer.lastCheckedAt)}` : "لم يُفحص بعد"}</span>
+                    <span className="text-[0.58rem] text-ink-500">{trailer.lastCheckedAt ? `فُحص ${formatDate(trailer.lastCheckedAt)}` : "لم يُفحص بعد"}</span>
                   </div>
                 </li>
               ))}

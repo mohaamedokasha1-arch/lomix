@@ -21,7 +21,7 @@ export default async function AdminGenresPage() {
           <ul className="divide-y divide-white/5">
             {genres.map((genre) => (
               <li key={genre.id} className="flex flex-wrap items-center gap-3 py-2.5">
-                <span className="num w-8 text-[0.62rem] text-ink-600">{genre.sort}</span>
+                <span className="num w-8 text-[0.62rem] text-ink-500">{genre.sort}</span>
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-[0.78rem] text-ink-100">{genre.nameAr}</p>
                   <p className="text-[0.6rem] text-ink-500" dir="ltr">

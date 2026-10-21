@@ -77,7 +77,7 @@ export function MediaUploader() {
                 <code dir="ltr" className="min-w-0 flex-1 truncate text-[0.6rem] text-ink-300">
                   {variant.path}
                 </code>
-                <span className="num text-[0.55rem] text-ink-600">{variant.width}px</span>
+                <span className="num text-[0.55rem] text-ink-500">{variant.width}px</span>
                 <button
                   type="button"
                   onClick={() => navigator.clipboard?.writeText(variant.path)}

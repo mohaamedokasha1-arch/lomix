@@ -62,7 +62,7 @@ export function MediaField({
           {value ? (
             <Image src={value} alt="" fill sizes="160px" className="object-cover" />
           ) : (
-            <span className="flex h-full items-center justify-center text-[0.6rem] text-ink-600">لا صورة</span>
+            <span className="flex h-full items-center justify-center text-[0.6rem] text-ink-500">لا صورة</span>
           )}
           {value && (
             <button

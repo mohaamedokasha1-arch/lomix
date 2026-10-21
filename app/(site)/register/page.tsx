@@ -25,7 +25,7 @@ export default async function RegisterPage() {
       <div className="w-full max-w-md">
         <div className="mb-7 text-center">
           <div className="mb-4 flex justify-center">
-            <LogoMark size={48} />
+            <LogoMark size={48} uid="register" />
           </div>
           <h1 className="display text-2xl font-bold text-ink-50">أنشئ حسابك</h1>
           <p className="mt-2 text-sm text-ink-400">احفظ الأعمال التي تريد مشاهدتها، وارجع إليها في أي وقت.</p>

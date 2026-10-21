@@ -28,12 +28,30 @@ export function TitleDetailView({
 
   const facts: { icon: React.ReactNode; label: string; value: React.ReactNode }[] = [];
   facts.push({ icon: <Layers className="h-3.5 w-3.5" />, label: "النوع", value: title.type === "MOVIE" ? "فيلم" : title.type === "ANIME" ? "أنمي" : "مسلسل" });
-  if (title.releaseYear) facts.push({ icon: <CalendarDays className="h-3.5 w-3.5" />, label: "السنة", value: <span className="num">{title.releaseYear}</span> });
+  if (title.releaseYear)
+    facts.push({
+      icon: <CalendarDays className="h-3.5 w-3.5" />,
+      label: "السنة",
+      value: (
+        <Link href={`/year/${title.releaseYear}`} className="num underline-offset-4 transition hover:text-brass-200 hover:underline">
+          {title.releaseYear}
+        </Link>
+      ),
+    });
   if (title.releaseDate) facts.push({ icon: <CalendarDays className="h-3.5 w-3.5" />, label: "تاريخ الإصدار", value: formatDate(title.releaseDate) });
   if (!isSerial && runtime) facts.push({ icon: <Timer className="h-3.5 w-3.5" />, label: "المدة", value: runtime });
   if (isSerial && seasonCount) facts.push({ icon: <Layers className="h-3.5 w-3.5" />, label: "المواسم", value: <span className="num">{seasonCount}</span> });
   if (isSerial && episodeCount) facts.push({ icon: <Clapperboard className="h-3.5 w-3.5" />, label: "الحلقات", value: <span className="num">{episodeCount}</span> });
-  if (title.countryNameAr) facts.push({ icon: <Globe2 className="h-3.5 w-3.5" />, label: "الدولة", value: title.countryNameAr });
+  if (title.countryNameAr && title.countryCode)
+    facts.push({
+      icon: <Globe2 className="h-3.5 w-3.5" />,
+      label: "الدولة",
+      value: (
+        <Link href={`/country/${title.countryCode}`} className="underline-offset-4 transition hover:text-brass-200 hover:underline">
+          {title.countryNameAr}
+        </Link>
+      ),
+    });
   if (title.language) facts.push({ icon: <Languages className="h-3.5 w-3.5" />, label: "اللغة", value: title.language });
   if (title.ratingValue != null)
     facts.push({
@@ -112,7 +130,7 @@ export function TitleDetailView({
                 {facts.map((fact) => (
                   <div key={fact.label} className="flex items-center justify-between gap-3 text-[0.78rem]">
                     <dt className="flex items-center gap-2 text-ink-500">
-                      <span className="text-ink-600">{fact.icon}</span>
+                      <span className="text-ink-500">{fact.icon}</span>
                       {fact.label}
                     </dt>
                     <dd className="text-end text-ink-100">{fact.value}</dd>

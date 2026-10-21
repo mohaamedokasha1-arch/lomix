@@ -51,7 +51,7 @@ export default async function AdminPeoplePage({
                     {person.imagePath ? (
                       <Image src={person.imagePath} alt="" fill sizes="40px" className="object-cover" />
                     ) : (
-                      <span className="flex h-full items-center justify-center text-[0.6rem] text-ink-600">{person.nameAr.slice(0, 1)}</span>
+                      <span className="flex h-full items-center justify-center text-[0.6rem] text-ink-500">{person.nameAr.slice(0, 1)}</span>
                     )}
                   </div>
                   <div className="min-w-0 flex-1">

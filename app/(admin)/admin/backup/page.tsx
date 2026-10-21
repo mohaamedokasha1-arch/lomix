@@ -36,7 +36,7 @@ export default async function AdminBackupPage() {
                     <p className="truncate text-[0.6rem] text-ink-300" dir="ltr">
                       {backup.filename}
                     </p>
-                    <p className="num mt-0.5 text-[0.55rem] text-ink-600">{sizeLabel(backup.size)}</p>
+                    <p className="num mt-0.5 text-[0.55rem] text-ink-500">{sizeLabel(backup.size)}</p>
                   </li>
                 ))}
               </ul>

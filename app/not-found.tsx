@@ -4,7 +4,7 @@ import { LogoMark } from "@/components/brand/logo";
 export default function GlobalNotFound() {
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center bg-ink-950 px-6 text-center">
-      <LogoMark size={44} />
+      <LogoMark size={44} uid="notfound" />
       <p className="num mt-8 text-[0.7rem] font-semibold tracking-[0.4em] text-ink-500">404</p>
       <h1 className="display mt-3 text-3xl font-bold text-ink-50">الصفحة غير موجودة</h1>
       <p className="mt-3 max-w-sm text-sm leading-7 text-ink-400">

@@ -46,7 +46,7 @@ export function TitleRelations({ id, titleAr }: { id: string; titleAr: string; t
           <Trash2 className="h-3 w-3" /> حذف العمل
         </button>
       </form>
-      <p className="text-[0.6rem] leading-4 text-ink-600">الحذف يزيل المواسم والحلقات والتريلرات والارتباطات المرتبطة.</p>
+      <p className="text-[0.6rem] leading-4 text-ink-500">الحذف يزيل المواسم والحلقات والتريلرات والارتباطات المرتبطة.</p>
     </div>
   );
 }

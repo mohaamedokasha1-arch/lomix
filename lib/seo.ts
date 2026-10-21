@@ -56,11 +56,12 @@ export function buildTitleJsonLd(title: TitleDetail) {
 
   if (title.titleEn) data.alternateName = title.titleEn;
   if (title.posterPath) data.image = absoluteUrl(title.posterPath);
+  // تاريخ كامل فقط (YYYY-MM-DD). لا نُصدر سنة مجرّدة لأن schema.org يتوقّع Date،
+  // والسنة وحدها قد تُسقط النتيجة الغنية بدل أن تفيدها.
   if (title.releaseDate) {
     const published = new Date(title.releaseDate);
     if (!Number.isNaN(published.getTime())) data.datePublished = published.toISOString().slice(0, 10);
   }
-  if (!data.datePublished && title.releaseYear) data.datePublished = String(title.releaseYear);
   if (title.genres.length) data.genre = title.genres.map((g) => g.nameAr);
   if (title.countryNameAr) data.countryOfOrigin = title.countryNameAr;
   if (title.language) data.inLanguage = title.language;
@@ -83,10 +84,12 @@ export function buildTitleJsonLd(title: TitleDetail) {
       seasonNumber: s.number,
       numberOfEpisodes: s.episodes.length,
       url: absoluteUrl(`/series/${title.slug}/season/${s.number}`),
-      ...(s.year ? { datePublished: String(s.year) } : {}),
+
     }));
   }
-  if (title.ratingValue != null && title.ratingCount && title.ratingCount > 0) {
+  // التقييم في البيانات المنظّمة يتبع نفس قاعدة الواجهة: قيمة + مصدر مسجّل.
+  // بلا مصدر لا نُخرج تقييمًا إطلاقًا حتى لو وُجدت قيمة في الصف.
+  if (title.ratingValue != null && title.ratingSource && title.ratingCount && title.ratingCount > 0) {
     data.aggregateRating = {
       "@type": "AggregateRating",
       ratingValue: title.ratingValue,

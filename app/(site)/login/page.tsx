@@ -34,7 +34,7 @@ export default async function LoginPage({
       <div className="w-full max-w-md">
         <div className="mb-7 text-center">
           <div className="mb-4 flex justify-center">
-            <LogoMark size={48} />
+            <LogoMark size={48} uid="login" />
           </div>
           <h1 className="display text-2xl font-bold text-ink-50">مرحبًا بعودتك</h1>
           <p className="mt-2 text-sm text-ink-400">سجّل الدخول لمتابعة قائمتك والوصول إلى حسابك.</p>
@@ -57,7 +57,7 @@ export default async function LoginPage({
               {demoPassword ? ` / ${demoPassword}` : ""}
             </span>
             <br />
-            <span className="text-ink-600">غيّر هذه البيانات قبل أي نشر علني.</span>
+            <span className="text-ink-500">غيّر هذه البيانات قبل أي نشر علني.</span>
           </div>
         )}
 

@@ -43,10 +43,10 @@ export default async function AdminMediaPage() {
                     <p className="truncate text-[0.58rem] text-ink-400" dir="ltr" title={asset.path}>
                       {asset.path.replace("/uploads/", "")}
                     </p>
-                    <p className="num mt-0.5 text-[0.55rem] text-ink-600">
+                    <p className="num mt-0.5 text-[0.55rem] text-ink-500">
                       {asset.width}×{asset.height} · {sizeLabel(asset.sizeBytes)}
                     </p>
-                    <p className="text-[0.55rem] text-ink-600">{formatDate(asset.createdAt)}</p>
+                    <p className="text-[0.55rem] text-ink-500">{formatDate(asset.createdAt)}</p>
                   </div>
                 </li>
               ))}

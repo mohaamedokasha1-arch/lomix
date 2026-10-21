@@ -228,7 +228,7 @@ export default async function AdminTitlesPage({
         </nav>
       )}
 
-      <p className="mt-4 flex items-center gap-1.5 text-[0.62rem] text-ink-600">
+      <p className="mt-4 flex items-center gap-1.5 text-[0.62rem] text-ink-500">
         <Eye className="h-3 w-3" /> كل الإجراءات تُسجَّل في سجل العمليات مع هوية المنفّذ.
       </p>
     </>

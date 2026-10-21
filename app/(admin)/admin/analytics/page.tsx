@@ -69,9 +69,9 @@ export default async function AdminAnalyticsPage({ searchParams }: { searchParam
               <ol className="space-y-2">
                 {top.map((item, index) => (
                   <li key={item.slug} className="flex items-center gap-2">
-                    <span className="num w-4 text-[0.6rem] text-ink-600">{index + 1}</span>
+                    <span className="num w-4 text-[0.6rem] text-ink-500">{index + 1}</span>
                     <span className="min-w-0 flex-1 truncate text-[0.72rem] text-ink-200">{item.titleAr}</span>
-                    <span className="text-[0.55rem] text-ink-600">{TITLE_TYPE_LABEL[item.type] ?? item.type}</span>
+                    <span className="text-[0.55rem] text-ink-500">{TITLE_TYPE_LABEL[item.type] ?? item.type}</span>
                     <span className="num text-[0.62rem] text-ink-400">{item.views}</span>
                   </li>
                 ))}
@@ -86,7 +86,7 @@ export default async function AdminAnalyticsPage({ searchParams }: { searchParam
               <ol className="space-y-2">
                 {watchlist.map((item, index) => (
                   <li key={item.slug} className="flex items-center gap-2">
-                    <span className="num w-4 text-[0.6rem] text-ink-600">{index + 1}</span>
+                    <span className="num w-4 text-[0.6rem] text-ink-500">{index + 1}</span>
                     <span className="min-w-0 flex-1 truncate text-[0.72rem] text-ink-200">{item.titleAr}</span>
                     <span className="num text-[0.62rem] text-ink-400">{item.saves}</span>
                   </li>

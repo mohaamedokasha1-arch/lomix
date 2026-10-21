@@ -81,7 +81,7 @@ export function NavigationForm({ nav, footerLinks }: { nav: NavItem[]; footerLin
           <ul className="divide-y divide-white/5">
             {links.map((link, index) => (
               <li key={index} className="flex flex-wrap items-center gap-2 px-4 py-2.5">
-                <GripVertical className="h-3.5 w-3.5 shrink-0 text-ink-600" aria-hidden="true" />
+                <GripVertical className="h-3.5 w-3.5 shrink-0 text-ink-500" aria-hidden="true" />
                 <TextInput
                   name="footerLabel"
                   value={link.label}

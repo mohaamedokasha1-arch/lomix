@@ -124,7 +124,7 @@ export function AdminShell({
               <Menu className="h-5 w-5" />
             </button>
             <Link href="/admin" className="flex items-center gap-2">
-              <LogoMark size={26} />
+              <LogoMark size={26} uid="admin" />
               <span className="text-sm font-semibold text-ink-100">لوميكس · الإدارة</span>
             </Link>
             <span className="hidden rounded border border-white/10 px-1.5 py-0.5 text-[0.6rem] text-ink-400 sm:inline">
@@ -201,7 +201,7 @@ function SidebarContent({
         if (!items.length) return null;
         return (
           <div key={group.title}>
-            <p className="mb-1.5 px-2.5 text-[0.6rem] font-semibold tracking-[0.18em] text-ink-600">{group.title}</p>
+            <p className="mb-1.5 px-2.5 text-[0.6rem] font-semibold tracking-[0.18em] text-ink-500">{group.title}</p>
             <ul className="space-y-0.5">
               {items.map((item) => {
                 const active = isActive(item.href);

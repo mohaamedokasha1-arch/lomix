@@ -100,7 +100,7 @@ export function SiteHeader({ user, nav }: { user: SessionUser | null; nav: Heade
         <div className="container-page">
           <div className={cn("flex items-center justify-between gap-4 transition-all", scrolled ? "h-16" : "h-[4.5rem] md:h-20")}>
             <Link href="/" aria-label="لوميكس — الصفحة الرئيسية" className="shrink-0">
-              <Logo size={scrolled ? 28 : 32} />
+              <Logo size={scrolled ? 28 : 32} uid="header" />
             </Link>
 
             <nav aria-label="التنقل الرئيسي" className="hidden items-center gap-1 lg:flex">
@@ -270,7 +270,7 @@ export function SiteHeader({ user, nav }: { user: SessionUser | null; nav: Heade
           )}
         >
           <div className="flex items-center justify-between border-b border-white/8 px-5 py-4">
-            <Logo size={28} />
+            <Logo size={28} uid="header-mobile" />
             <button
               type="button"
               onClick={() => setMobileOpen(false)}
@@ -338,7 +338,7 @@ export function SiteHeader({ user, nav }: { user: SessionUser | null; nav: Heade
               </div>
             )}
             <div className="mt-4 flex items-center gap-2 text-[0.65rem] text-ink-500">
-              <LogoMark size={16} />
+              <LogoMark size={16} uid="header-compact" />
               <span>لوميكس — دليل الاكتشاف السينمائي</span>
             </div>
           </div>

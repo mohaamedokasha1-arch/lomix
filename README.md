@@ -89,6 +89,7 @@ lib/
 docs/
   DEPLOYMENT.md      Vercel/Postgres/Storage + خطة الخروج
   CONTENT-POLICY.md  الحقوق، التريلرات، DMCA، البيانات التجريبية
+  ACCESSIBILITY.md   تباين WCAG AA، البنية الدلالية، CSP، وما لم يُتحقَّق منه
 ```
 
 ---

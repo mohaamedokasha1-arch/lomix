@@ -38,13 +38,13 @@ export default async function AdminUsersPage() {
                   {ROLE_LABEL[user.role] ?? user.role}
                 </span>
                 <span className={`text-[0.58rem] ${user.isActive ? "text-signal-teal" : "text-signal-red"}`}>{user.isActive ? "نشط" : "موقوف"}</span>
-                <span className="num hidden text-[0.58rem] text-ink-600 sm:inline">{user.sessionCount} جلسة</span>
-                <span className="hidden text-[0.58rem] text-ink-600 md:inline">{user.lastLoginAt ? relativeTime(user.lastLoginAt) : "لم يدخل"}</span>
+                <span className="num hidden text-[0.58rem] text-ink-500 sm:inline">{user.sessionCount} جلسة</span>
+                <span className="hidden text-[0.58rem] text-ink-500 md:inline">{user.lastLoginAt ? relativeTime(user.lastLoginAt) : "لم يدخل"}</span>
                 <UserRowActions id={user.id} role={user.role} isActive={user.isActive} name={user.name} isSelf={user.id === currentUser?.id} />
               </li>
             ))}
           </ul>
-          <p className="mt-3 text-[0.6rem] leading-4 text-ink-600">
+          <p className="mt-3 text-[0.6rem] leading-4 text-ink-500">
             إيقاف حساب يحذف جلساته فورًا من الخادم. آخر حساب ADMIN لا يمكن حذفه.
           </p>
         </AdminCard>

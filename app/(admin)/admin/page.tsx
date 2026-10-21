@@ -154,7 +154,7 @@ export default async function AdminDashboard() {
               {trending.length === 0 && <li className="py-4 text-center text-xs text-ink-500">لا مشاهدات مسجّلة هذا الأسبوع.</li>}
               {trending.map((item, index) => (
                 <li key={item.slug} className="flex items-center gap-2.5">
-                  <span className="num w-4 text-[0.65rem] text-ink-600">{index + 1}</span>
+                  <span className="num w-4 text-[0.65rem] text-ink-500">{index + 1}</span>
                   <Link href={`/${item.type === "MOVIE" ? "movie" : item.type === "ANIME" ? "anime" : "series"}/${item.slug}`} className="min-w-0 flex-1 truncate text-[0.76rem] text-ink-200 hover:text-brass-200" target="_blank">
                     {item.titleAr}
                   </Link>

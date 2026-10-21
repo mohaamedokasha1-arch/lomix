@@ -252,7 +252,7 @@ export function TitleForm({
         <ul className="space-y-2">
           {credits.map((credit, index) => (
             <li key={index} className="flex flex-wrap items-center gap-2 rounded-lg border border-white/8 bg-ink-950/40 p-2">
-              <span className="num w-5 text-[0.62rem] text-ink-600">{index + 1}</span>
+              <span className="num w-5 text-[0.62rem] text-ink-500">{index + 1}</span>
               <select
                 value={credit.role}
                 onChange={(event) =>

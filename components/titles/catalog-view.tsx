@@ -11,16 +11,20 @@ export function PageHeader({
   title,
   description,
   children,
+  as = "h1",
 }: {
   kicker?: string;
   title: string;
   description?: string;
   children?: React.ReactNode;
+  /** مستوى العنوان — الصفحات التي لها h1 بالفعل تستخدم h2 لأقسامها. */
+  as?: "h1" | "h2";
 }) {
+  const Heading = as;
   return (
     <header className="mb-7 border-b border-white/6 pb-6">
       {kicker && <p className="mb-2.5 text-[0.65rem] font-semibold tracking-[0.28em] text-brass-300/80">{kicker}</p>}
-      <h1 className="display text-3xl font-bold text-ink-50 md:text-4xl">{title}</h1>
+      <Heading className="display text-3xl font-bold text-ink-50 md:text-4xl">{title}</Heading>
       {description && <p className="mt-3 max-w-2xl text-sm leading-7 text-ink-300">{description}</p>}
       {children}
     </header>

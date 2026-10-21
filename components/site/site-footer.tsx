@@ -55,7 +55,7 @@ export async function SiteFooter() {
       <div className="container-page py-14">
         <div className="grid gap-10 lg:grid-cols-[1.4fr_repeat(3,1fr)]">
           <div>
-            <Logo size={34} />
+            <Logo size={34} uid="footer" />
             <p className="mt-5 max-w-sm text-sm leading-7 text-ink-300">{settings.meta_description}</p>
             <div className="mt-5 flex flex-wrap items-center gap-3">
               <a

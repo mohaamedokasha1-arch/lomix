@@ -142,7 +142,7 @@ export function ImportWizard() {
               <tbody>
                 {preview.rows.map((row) => (
                   <tr key={row.line} className="border-b border-white/5 align-top last:border-0">
-                    <td className="num px-3 py-1.5 text-ink-600">{row.line}</td>
+                    <td className="num px-3 py-1.5 text-ink-500">{row.line}</td>
                     <td className="px-3 py-1.5">
                       <p className="text-ink-200">{row.data.titleAr || "—"}</p>
                       {row.data.titleEn && (

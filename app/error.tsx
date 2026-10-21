@@ -34,7 +34,7 @@ export default function GlobalError({ error, reset }: { error: Error & { digest?
           الإبلاغ عن المشكلة
         </Link>
       </div>
-      {error.digest && <p className="mt-6 text-[0.65rem] text-ink-600">معرّف الخطأ: {error.digest}</p>}
+      {error.digest && <p className="mt-6 text-[0.65rem] text-ink-500">معرّف الخطأ: {error.digest}</p>}
     </div>
   );
 }

@@ -30,7 +30,7 @@ export function Field({
         <span className="mb-1.5 flex items-center gap-1 text-[0.72rem] font-medium text-ink-200">
           {label}
           {required && <span className="text-signal-red" aria-hidden="true">*</span>}
-          {optional && !required && <span className="text-[0.6rem] font-normal text-ink-600">(اختياري)</span>}
+          {optional && !required && <span className="text-[0.6rem] font-normal text-ink-500">(اختياري)</span>}
         </span>
         {children}
       </label>

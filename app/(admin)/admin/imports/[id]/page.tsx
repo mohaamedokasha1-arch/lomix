@@ -63,7 +63,7 @@ export default async function ImportJobPage({ params }: { params: Promise<{ id: 
                     const errors = row.errors ?? (row.message ? [row.message] : []);
                     return (
                       <tr key={`${line}-${index}`} className="border-b border-white/5 align-top last:border-0">
-                        <td className="num px-2 py-1.5 text-ink-600">{line}</td>
+                        <td className="num px-2 py-1.5 text-ink-500">{line}</td>
                         <td className="px-2 py-1.5 text-ink-200">{title}</td>
                         <td className="px-2 py-1.5 text-[0.6rem]">
                           {errors.length ? (
